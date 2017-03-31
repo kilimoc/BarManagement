@@ -43,7 +43,7 @@ public class SetUpDb {
             System.out.println("All Tables Created");
             
              //employee job_details table;
-            String storeT="CREATE TABLE IF NOT EXISTS store_drinks(drink_name varchar(20) not null primary key, cartons int(5) not null,units int(5) not null,wc_price decimal(9,2) not null,category varchar(50) not null)";
+            String storeT="CREATE TABLE IF NOT EXISTS store_drinks(drink_name varchar(20) not null primary key, cartons int(5) not null,units int(5) not null,wc_price decimal(9,2) not null,category varchar(50) not null,date TIMESTAMP default null CURRENT_TIMESTAMP)";
             setUp=conn.prepareStatement(storeT);
             setUp.execute();
             System.out.println("All Tables Created");
