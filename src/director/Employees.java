@@ -576,8 +576,8 @@ public class Employees extends javax.swing.JFrame {
 
     private void newEmployee() {
         try {
-            state=conn.prepareStatement("INSERT INTO employees VALUES(id_number,first_name,last_name,phone,responsibility,basic_salary) VALUES('"+idno.getText()+"',"
-                    + "'"+fname.getText()+"','"+lname.getText()+"','"+pno.getText()+"','"+resp.getSelectedItem().toString()+"','"+BigDecimal.valueOf(Double.parseDouble(basic.getText()))+"')");
+            state=conn.prepareStatement
+        ("INSERT INTO employees(id_number,first_name,last_name,phone,responsibility,basic_salary) VALUES('"+idno.getText()+"','"+fname.getText()+"','"+lname.getText()+"','"+pno.getText()+"','"+resp.getSelectedItem().toString()+"','"+BigDecimal.valueOf(Double.parseDouble(basic.getText()))+"')");
            state.execute();
            JOptionPane.showMessageDialog(null, "Employee Successfully Registered", "Techflay Software Solutions", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
