@@ -15,38 +15,42 @@
 CREATE DATABASE IF NOT EXISTS `grill_bar` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `grill_bar`;
 
--- Dumping structure for table grill_bar.activated_orders
-CREATE TABLE IF NOT EXISTS `activated_orders` (
-  `item_No` int(11) NOT NULL AUTO_INCREMENT,
-  `orderNo` int(11) NOT NULL,
-  `drink_name` varchar(40) NOT NULL,
-  `units` int(11) NOT NULL,
-  `unit_price` decimal(9,2) NOT NULL,
-  `total_cost` decimal(9,2) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '0',
-  `date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`item_No`),
-  KEY `orderNo` (`orderNo`),
-  CONSTRAINT `activated_orders_ibfk_1` FOREIGN KEY (`orderNo`) REFERENCES `orders` (`orderNo`)
+-- Dumping structure for table grill_bar.administrator
+CREATE TABLE IF NOT EXISTS `administrator` (
+  `first_name` varchar(50) DEFAULT NULL,
+  `last_name` varchar(50) DEFAULT NULL,
+  `id_number` varchar(50) DEFAULT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`username`),
+  UNIQUE KEY `id_number` (`id_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table grill_bar.activated_orders: ~0 rows (approximately)
-/*!40000 ALTER TABLE `activated_orders` DISABLE KEYS */;
-/*!40000 ALTER TABLE `activated_orders` ENABLE KEYS */;
+-- Dumping data for table grill_bar.administrator: ~3 rows (approximately)
+/*!40000 ALTER TABLE `administrator` DISABLE KEYS */;
+INSERT INTO `administrator` (`first_name`, `last_name`, `id_number`, `username`, `password`) VALUES
+	('chris', 'kip', '32060754', 'chris', 'chris'),
+	('CHRIS CHEMUT', 'KIPRUTO', '32060757', 'chrisadriane', 'chris'),
+	('KILIMO KIPKORIR', 'CORNELIUS', '32060756', 'kilimoc@gmail.com', 'Korir9993@');
+/*!40000 ALTER TABLE `administrator` ENABLE KEYS */;
 
 -- Dumping structure for table grill_bar.counter_drinks
 CREATE TABLE IF NOT EXISTS `counter_drinks` (
-  `drinkId` int(11) NOT NULL AUTO_INCREMENT,
   `drink_name` varchar(20) NOT NULL,
-  `cartons` int(5) NOT NULL,
-  `total_units` int(5) DEFAULT NULL,
-  PRIMARY KEY (`drinkId`),
-  KEY `drink_name` (`drink_name`),
-  CONSTRAINT `counter_drinks_ibfk_1` FOREIGN KEY (`drink_name`) REFERENCES `store_drinks` (`drink_name`)
+  `category` varchar(50) NOT NULL,
+  `cartons` float DEFAULT NULL,
+  `total_units` int(11) DEFAULT NULL,
+  `selling_price` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`drink_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table grill_bar.counter_drinks: ~0 rows (approximately)
+-- Dumping data for table grill_bar.counter_drinks: ~4 rows (approximately)
 /*!40000 ALTER TABLE `counter_drinks` DISABLE KEYS */;
+INSERT INTO `counter_drinks` (`drink_name`, `category`, `cartons`, `total_units`, `selling_price`) VALUES
+	('1/2 BOND 7', 'BEER', 4, 50, 170.00),
+	('FOUR COUSIN', 'BEER', 20, 200, 170.00),
+	('JOHN WALKER', 'IRISH WHISKY', 12, 300, 300.00),
+	('SMIRNOFF', 'SPIRITS', 35, 2100, 250.00);
 /*!40000 ALTER TABLE `counter_drinks` ENABLE KEYS */;
 
 -- Dumping structure for table grill_bar.developer_d
@@ -65,32 +69,43 @@ CREATE TABLE IF NOT EXISTS `developer_d` (
 /*!40000 ALTER TABLE `developer_d` DISABLE KEYS */;
 /*!40000 ALTER TABLE `developer_d` ENABLE KEYS */;
 
--- Dumping structure for table grill_bar.employees_details
-CREATE TABLE IF NOT EXISTS `employees_details` (
-  `IdNo` int(8) NOT NULL DEFAULT '0',
-  `f_name` varchar(20) DEFAULT NULL,
-  `l_name` varchar(40) DEFAULT NULL,
-  PRIMARY KEY (`IdNo`)
+-- Dumping structure for table grill_bar.employees
+CREATE TABLE IF NOT EXISTS `employees` (
+  `id_number` varchar(50) NOT NULL,
+  `first_name` varchar(50) DEFAULT NULL,
+  `last_name` varchar(50) DEFAULT NULL,
+  `phone` varchar(50) DEFAULT NULL,
+  `responsibility` varchar(50) DEFAULT NULL,
+  `basic_salary` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`id_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table grill_bar.employees_details: ~0 rows (approximately)
-/*!40000 ALTER TABLE `employees_details` DISABLE KEYS */;
-/*!40000 ALTER TABLE `employees_details` ENABLE KEYS */;
+-- Dumping data for table grill_bar.employees: ~0 rows (approximately)
+/*!40000 ALTER TABLE `employees` DISABLE KEYS */;
+/*!40000 ALTER TABLE `employees` ENABLE KEYS */;
 
--- Dumping structure for table grill_bar.employee_jobd
-CREATE TABLE IF NOT EXISTS `employee_jobd` (
-  `jobNo` int(11) NOT NULL AUTO_INCREMENT,
-  `IdNo` int(8) NOT NULL,
-  `j_group` varchar(20) NOT NULL,
-  `b_salary` decimal(13,2) DEFAULT NULL,
-  PRIMARY KEY (`jobNo`),
-  KEY `IdNo` (`IdNo`),
-  CONSTRAINT `employee_jobd_ibfk_1` FOREIGN KEY (`IdNo`) REFERENCES `employees_details` (`IdNo`)
+-- Dumping structure for function grill_bar.hello
+DELIMITER //
+CREATE DEFINER=`root`@`%` FUNCTION `hello`(s CHAR(20)) RETURNS char(50) CHARSET latin1
+    DETERMINISTIC
+RETURN CONCAT ('Hello ',s,'!')//
+DELIMITER ;
+
+-- Dumping structure for table grill_bar.items_sold
+CREATE TABLE IF NOT EXISTS `items_sold` (
+  `item_id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_no` int(11) DEFAULT NULL,
+  `drink_name` varchar(50) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `price` int(11) DEFAULT '500',
+  `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `p_status` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`item_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table grill_bar.employee_jobd: ~0 rows (approximately)
-/*!40000 ALTER TABLE `employee_jobd` DISABLE KEYS */;
-/*!40000 ALTER TABLE `employee_jobd` ENABLE KEYS */;
+-- Dumping data for table grill_bar.items_sold: ~0 rows (approximately)
+/*!40000 ALTER TABLE `items_sold` DISABLE KEYS */;
+/*!40000 ALTER TABLE `items_sold` ENABLE KEYS */;
 
 -- Dumping structure for table grill_bar.misc_expenses
 CREATE TABLE IF NOT EXISTS `misc_expenses` (
@@ -135,6 +150,26 @@ CREATE TABLE IF NOT EXISTS `orders` (
 -- Dumping data for table grill_bar.orders: ~0 rows (approximately)
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
+
+-- Dumping structure for table grill_bar.order_table
+CREATE TABLE IF NOT EXISTS `order_table` (
+  `order_no` int(11) NOT NULL AUTO_INCREMENT,
+  `waiter` varchar(50) NOT NULL DEFAULT '',
+  PRIMARY KEY (`order_no`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table grill_bar.order_table: ~8 rows (approximately)
+/*!40000 ALTER TABLE `order_table` DISABLE KEYS */;
+INSERT INTO `order_table` (`order_no`, `waiter`) VALUES
+	(1, 'Item 1'),
+	(2, 'Item 1'),
+	(3, 'Item 1'),
+	(4, 'Item 1'),
+	(6, 'Item 3'),
+	(7, 'Item 1'),
+	(8, 'Item 1'),
+	(9, 'Item 1');
+/*!40000 ALTER TABLE `order_table` ENABLE KEYS */;
 
 -- Dumping structure for table grill_bar.sales
 CREATE TABLE IF NOT EXISTS `sales` (
@@ -187,53 +222,50 @@ CREATE TABLE IF NOT EXISTS `store_drinks` (
   `units` int(5) NOT NULL,
   `wc_price` decimal(9,2) NOT NULL,
   `category` varchar(50) NOT NULL,
-  `date _r` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`drink_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table grill_bar.store_drinks: ~35 rows (approximately)
+-- Dumping data for table grill_bar.store_drinks: ~32 rows (approximately)
 /*!40000 ALTER TABLE `store_drinks` DISABLE KEYS */;
-INSERT INTO `store_drinks` (`drink_name`, `cartons`, `units`, `wc_price`, `category`, `date _r`) VALUES
-	('1/4 bond 7', 25, 25, 3000.00, 'SPIRITS', '2017-03-01 14:29:19'),
-	('1/4 gilbeys', 25, 25, 2500.00, 'SPIRITS', '2017-03-01 14:31:06'),
-	('1/4 richot', 25, 25, 3000.00, 'SPIRITS', '2017-03-01 14:30:52'),
-	('1/4 Smirnoff Vodka', 25, 25, 2500.00, 'BEER', '2017-03-01 14:27:36'),
-	('1/4 viceroy', 25, 25, 2500.00, 'SPIRITS', '2017-03-01 14:31:27'),
-	('alvaro', 25, 25, 2500.00, 'SOFT DRINKS', '2017-03-01 14:04:35'),
-	('balozi', 25, 25, 2500.00, 'BEER', '2017-03-01 14:20:24'),
-	('black ice', 15, 25, 2500.00, 'WINE', '2017-03-01 14:22:55'),
-	('Carlsberg', 25, 25, 2500.00, 'BEER', '2017-03-01 14:24:54'),
-	('dasani 1ltr', 25, 25, 1200.00, 'SOFT DRINKS', '2017-03-01 14:03:49'),
-	('dasani 500ml', 25, 20, 1000.00, 'SOFT DRINKS', '2017-03-01 14:02:16'),
-	('delmonte', 25, 25, 2500.00, 'SOFT DRINKS', '2017-03-01 14:05:56'),
-	('guarana', 25, 25, 2500.00, 'WINE', '2017-03-01 14:24:16'),
-	('guiness can', 25, 25, 2500.00, 'BEER', '2017-03-01 14:13:31'),
-	('guiness lager', 25, 25, 2500.00, 'BEER', '2017-03-01 14:13:59'),
-	('Heineken', 25, 25, 2500.00, 'BEER', '2017-03-01 14:20:43'),
-	('keringet 1ltr', 25, 25, 1000.00, 'SOFT DRINKS', '2017-03-01 14:03:08'),
-	('Keringet 500ml', 80, 24, 960.00, 'SOFT DRINKS', '2017-03-01 14:00:30'),
-	('novida', 25, 25, 1250.00, 'SOFT DRINKS', '2017-03-01 14:06:30'),
-	('pilsner lager', 25, 25, 2500.00, 'BEER', '2017-03-01 14:20:11'),
-	('red bull', 25, 25, 2500.00, 'ENERGY DRINK', '2017-03-01 14:07:14'),
-	('red ice', 25, 25, 2500.00, 'WINE', '2017-03-01 14:23:11'),
-	('redds', 25, 25, 2500.00, 'WINE', '2017-03-01 14:23:55'),
-	('shark', 25, 25, 2500.00, 'ENERGY DRINK', '2017-03-01 14:07:32'),
-	('snapp', 25, 25, 2500.00, 'WINE', '2017-03-01 14:23:37'),
-	('soda 300ml', 50, 24, 720.00, 'SOFT DRINKS', '2017-03-01 13:55:33'),
-	('soda 500ml', 25, 24, 960.00, 'SOFT DRINKS', '2017-03-01 13:59:26'),
-	('summit lager', 25, 25, 2500.00, 'BEER', '2017-03-01 14:26:18'),
-	('summit malt', 25, 25, 2500.00, 'BEER', '2017-03-01 14:26:37'),
-	('tusker can', 25, 25, 2500.00, 'BEER', '2017-03-01 14:12:39'),
-	('tusker lager', 25, 25, 2500.00, 'BEER', '2017-03-01 14:11:37'),
-	('tusker lite', 25, 25, 2500.00, 'BEER', '2017-03-01 14:12:10'),
-	('tusker malt', 25, 25, 2500.00, 'BEER', '2017-03-01 14:11:50'),
-	('whitecap', 25, 25, 2500.00, 'BEER', '2017-03-01 14:13:09'),
-	('whitecap can', 25, 25, 2500.00, 'BEER', '2017-03-01 14:19:51');
+INSERT INTO `store_drinks` (`drink_name`, `cartons`, `units`, `wc_price`, `category`) VALUES
+	('1/2 BOND 7', 50, 25, 5000.00, 'BEER'),
+	('1/2 RICHOT', 20, 20, 3000.00, 'BEER'),
+	('1/2 VICEROY', 20, 20, 3000.00, 'WINES'),
+	('AMARULA 750ML', 30, 20, 5000.00, 'WINES'),
+	('ASCDS', 30, 20, 3000.00, 'WINES'),
+	('BEER', 30, 40, 3000.00, 'WHISKY'),
+	('Caprice 1ltr', 50, 25, 5000.00, 'SPIRITS'),
+	('CLAN MURRAY', 20, 25, 2500.00, 'SCOTCH WHISKY'),
+	('Famous Crous', 50, 25, 5000.00, 'SPIRITS'),
+	('FOUR COUSIN', 20, 20, 5000.00, 'BEER'),
+	('GILBEYS 750ML', 50, 25, 5000.00, 'BEER'),
+	('GUINESS CAN', 40, 20, 6000.00, 'BEER'),
+	('GURANA', 20, 40, 2500.00, 'BEER'),
+	('JOHN WALKER', 50, 25, 2500.00, 'IRISH WHISKY'),
+	('KERINGET 300ML', 50, 24, 2500.00, 'SOFT DRINKS'),
+	('KERINGET 500ML', 50, 24, 2500.00, 'SOFT DRINKS'),
+	('KingFisher', 20, 20, 5000.00, 'WINES'),
+	('LimeJuice', 30, 50, 5000.00, 'WINES'),
+	('MALIBU 350ML', 50, 20, 5000.00, 'BEER'),
+	('PENASOL', 50, 25, 5000.00, 'SPIRITS'),
+	('pilsner', 20, 20, 5000.00, 'Beer'),
+	('SMIRNOFF', 5, 60, 5000.00, 'SPIRITS'),
+	('SODA', 20, 20, 2500.00, 'SOFT DRINKS'),
+	('SODA 300ML', 50, 24, 2500.00, 'SOFT DRINKS'),
+	('SODA 500ML', 50, 24, 2500.00, 'SOFT DRINKS'),
+	('TRUST', 20, 25, 3000.00, 'BEER'),
+	('TUSKER CAN', 40, 40, 6000.00, 'BEER'),
+	('TUSKER LAGER', 20, 40, 5000.00, 'BEER'),
+	('TUSKER LIME', 50, 20, 50000.00, 'BEER'),
+	('VAT 69', 50, 80, 5000.00, 'WINES'),
+	('VODKA', 20, 20, 2500.00, 'BEER'),
+	('WELCOME', 20, 50, 2500.00, 'BEER');
 /*!40000 ALTER TABLE `store_drinks` ENABLE KEYS */;
 
 -- Dumping structure for table grill_bar.system_users
 CREATE TABLE IF NOT EXISTS `system_users` (
   `emplId` int(11) DEFAULT NULL,
+  `id_number` varchar(50) DEFAULT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(200) NOT NULL,
   `rank` varchar(20) NOT NULL,
@@ -241,8 +273,10 @@ CREATE TABLE IF NOT EXISTS `system_users` (
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table grill_bar.system_users: ~0 rows (approximately)
+-- Dumping data for table grill_bar.system_users: ~1 rows (approximately)
 /*!40000 ALTER TABLE `system_users` DISABLE KEYS */;
+INSERT INTO `system_users` (`emplId`, `id_number`, `username`, `password`, `rank`, `status`) VALUES
+	(NULL, '32060754', 'chris', 'chris', 'Director', 0);
 /*!40000 ALTER TABLE `system_users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

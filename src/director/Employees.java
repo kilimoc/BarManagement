@@ -5,7 +5,16 @@
  */
 package director;
 
+import bm.admin.DatabaseConfiguration;
 import java.awt.CardLayout;
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,10 +25,15 @@ public class Employees extends javax.swing.JFrame {
     /**
      * Creates new form Employees
      */
+    DatabaseConfiguration  mydb=new DatabaseConfiguration();
+    private Connection conn;
+    private ResultSet rs;
+    private PreparedStatement state;
     CardLayout mycard=new CardLayout();
     public Employees() {
         initComponents();
         setLocationRelativeTo(null);
+        conn=mydb.getConnection();
     }
 
     /**
@@ -53,9 +67,9 @@ public class Employees extends javax.swing.JFrame {
         pno = new javax.swing.JTextField();
         salary_info = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        resp = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        basic = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
@@ -93,6 +107,11 @@ public class Employees extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(421, 40));
 
         save.setText("Save");
+        save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveActionPerformed(evt);
+            }
+        });
 
         cancel.setText("Cancel");
 
@@ -231,10 +250,10 @@ public class Employees extends javax.swing.JFrame {
 
         jLabel5.setText("Job Title");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        resp.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Responsibility", "Waiter", "Cashier", "Manager", "Chef", " " }));
+        resp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                respActionPerformed(evt);
             }
         });
 
@@ -251,8 +270,8 @@ public class Employees extends javax.swing.JFrame {
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(47, 47, 47)
                 .addGroup(salary_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBox1, 0, 147, Short.MAX_VALUE)
-                    .addComponent(jTextField1))
+                    .addComponent(resp, 0, 147, Short.MAX_VALUE)
+                    .addComponent(basic))
                 .addContainerGap(207, Short.MAX_VALUE))
         );
         salary_infoLayout.setVerticalGroup(
@@ -261,11 +280,11 @@ public class Employees extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addGroup(salary_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(resp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(51, 51, 51)
                 .addGroup(salary_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(basic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(198, Short.MAX_VALUE))
         );
 
@@ -447,9 +466,9 @@ public class Employees extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void respActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_respActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_respActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         mycard=(CardLayout)MainPanel.getLayout();
@@ -462,6 +481,10 @@ public class Employees extends javax.swing.JFrame {
         mycard=(CardLayout)MainPanel.getLayout();
         mycard.show(MainPanel, "allemp");
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
+       newEmployee();
+    }//GEN-LAST:event_saveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -501,12 +524,12 @@ public class Employees extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel MainPanel;
     private javax.swing.JPanel allEmployees;
+    private javax.swing.JTextField basic;
     private javax.swing.JPanel basic_info;
     private javax.swing.JButton cancel;
     private javax.swing.JTabbedPane e_Registration;
     private javax.swing.JTextField fname;
     private javax.swing.JTextField idno;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
@@ -538,7 +561,6 @@ public class Employees extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
@@ -547,7 +569,20 @@ public class Employees extends javax.swing.JFrame {
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JTextField lname;
     private javax.swing.JTextField pno;
+    private javax.swing.JComboBox<String> resp;
     private javax.swing.JPanel salary_info;
     private javax.swing.JButton save;
     // End of variables declaration//GEN-END:variables
+
+    private void newEmployee() {
+        try {
+            state=conn.prepareStatement("INSERT INTO employees VALUES(id_number,first_name,last_name,phone,responsibility,basic_salary) VALUES('"+idno.getText()+"',"
+                    + "'"+fname.getText()+"','"+lname.getText()+"','"+pno.getText()+"','"+resp.getSelectedItem().toString()+"','"+BigDecimal.valueOf(Double.parseDouble(basic.getText()))+"')");
+           state.execute();
+           JOptionPane.showMessageDialog(null, "Employee Successfully Registered", "Techflay Software Solutions", JOptionPane.INFORMATION_MESSAGE);
+        } catch (SQLException ex) {
+           JOptionPane.showMessageDialog(null, "There was an error in Registration.Please contact the System Developer"+ex.getMessage(),"Techflay Software Solutions",JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }
 }
