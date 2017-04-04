@@ -14,6 +14,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,36 +24,35 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-
-
 /**
  *
  * @author Developer
  */
 public class Home extends javax.swing.JFrame {
-    
 
     /**
      * Creates new form Home
      */
-    DefaultTableModel mymodel; 
-    DatabaseConfiguration dbc=new DatabaseConfiguration();
+    DefaultTableModel mymodel;
+    DatabaseConfiguration dbc = new DatabaseConfiguration();
     private Connection conn;
     private PreparedStatement prepare;
     private ResultSet rs;
+
     public Home() {
         initComponents();
+        jButton5.setVisible(false);
         setLocationRelativeTo(null);
-        conn=dbc.getConnection();
-         mymodel=(DefaultTableModel)orderContent.getModel();
+        conn = dbc.getConnection();
+        mymodel = (DefaultTableModel) orderContent.getModel();
         loadAllDrinks();
-        loadMenuCategory();       
+        loadMenuCategory();
         addWindowListener(new WindowAdapter() {
-@Override
-public void windowOpened(WindowEvent e) {
-setExtendedState(MAXIMIZED_BOTH);
-}
-});
+            @Override
+            public void windowOpened(WindowEvent e) {
+                setExtendedState(MAXIMIZED_BOTH);
+            }
+        });
     }
 
     /**
@@ -75,7 +75,7 @@ setExtendedState(MAXIMIZED_BOTH);
         side_menu = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         o_manipulation = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
@@ -102,7 +102,7 @@ setExtendedState(MAXIMIZED_BOTH);
         jLabel10 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBox2 = new javax.swing.JComboBox<String>();
         drinks = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -151,8 +151,18 @@ setExtendedState(MAXIMIZED_BOTH);
         jToggleButton1.setText("New Order");
 
         jToggleButton2.setText("Update Order");
+        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton2ActionPerformed(evt);
+            }
+        });
 
         jToggleButton3.setText("Cancel Order");
+        jToggleButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -212,8 +222,13 @@ setExtendedState(MAXIMIZED_BOTH);
         });
         jPanel9.add(jButton3);
 
-        jButton4.setText("Cancel");
-        jPanel9.add(jButton4);
+        jButton5.setText("Update Order");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jPanel9.add(jButton5);
 
         side_menu.add(jPanel9, java.awt.BorderLayout.PAGE_END);
 
@@ -225,6 +240,11 @@ setExtendedState(MAXIMIZED_BOTH);
         jButton2.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
         jButton2.setForeground(new java.awt.Color(153, 0, 51));
         jButton2.setText("x");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout o_manipulationLayout = new javax.swing.GroupLayout(o_manipulation);
         o_manipulation.setLayout(o_manipulationLayout);
@@ -320,6 +340,11 @@ setExtendedState(MAXIMIZED_BOTH);
         });
 
         jButton1.setText("ADD TO ORDER");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -364,11 +389,15 @@ setExtendedState(MAXIMIZED_BOTH);
 
         jLabel10.setText("Order Number");
 
-        jTextField3.setText("10");
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
 
         jLabel11.setText("Waiter Username");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -435,12 +464,130 @@ setExtendedState(MAXIMIZED_BOTH);
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        try {
+            String waiter = jComboBox2.getSelectedItem().toString();
+            conn.prepareStatement("INSERT INTO order_table (waiter) VALUES ('"+waiter+"')").execute();
+            ResultSet rs = conn.prepareStatement("SELECT MAX(order_no) FROM order_table").executeQuery();
+            int order_no = 1;
+            if(rs.next()){
+                order_no = rs.getInt("MAX(order_no)");
+            }
+            int rows = orderContent.getRowCount();
+            for(int i = 0; i < rows; i++){
+                String drink_name = orderContent.getModel().getValueAt(i, 0).toString();
+                String quantity = orderContent.getModel().getValueAt(i, 1).toString();
+                String price = orderContent.getModel().getValueAt(i, 2).toString();
+               conn.prepareStatement("INSERT INTO items_sold (order_no, drink_name, quantity, price) VALUES ("
+                       + "'"+order_no+"', '"+drink_name+"', '"+quantity+"', '"+price+"')").execute();
+             
+            }
+            JOptionPane.showMessageDialog(null, "Order number "+order_no+" saved successfully");
+            mymodel.setRowCount(0);
+            jLabel3.setText("00");
+            jLabel5.setText("00");
+        } catch (SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jToggleButton8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButton8MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jToggleButton8MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int row = orderContent.getSelectedRow();
+        String quantity = jTextField1.getText();
+        if(quantity.trim().equals("")){
+            JOptionPane.showMessageDialog(null, "Input quantity");
+            return;
+        }try{
+        Float quant = Float.parseFloat(quantity);
+        if(quant < 1){
+            JOptionPane.showMessageDialog(null, "Input valid quantity");
+            return;
+        }
+        String unitPrice = orderContent.getModel().getValueAt(row, 2).toString();
+        Float unit_price = Float.parseFloat(unitPrice);
+        Float total = quant * unit_price;
+        mymodel.setValueAt(quantity, row, 1);
+        mymodel.setValueAt(total, row, 3);
+        totalVatAndPrice();
+        jTextField1.setText("");
+        }catch(NumberFormatException e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Input valid quantity");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
+        try {
+            String order_no = jTextField3.getText();
+            ResultSet rs = conn.prepareStatement("SELECT * FROM order_table WHERE order_no = '"+order_no+"'").executeQuery();
+            if(rs.next()){
+                jComboBox2.setSelectedItem(rs.getString("waiter"));
+                rs = conn.prepareStatement("SELECT * FROM items_sold WHERE order_no = '"+order_no+"'").executeQuery();
+                mymodel.setRowCount(0);
+                while(rs.next()){
+                    double total = rs.getDouble("quantity") * rs.getDouble("price");
+                    Object[] row = {rs.getString("drink_name"), rs.getString("quantity"),rs.getString("price"),total};
+                    mymodel.addRow(row);
+                    totalVatAndPrice();
+                }
+                jButton3.setVisible(false);
+                jButton5.setVisible(true);
+                jTextField3.setEditable(false);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jToggleButton2ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        try {
+            String order_no = jTextField3.getText();
+            String waiter = jComboBox2.getSelectedItem().toString();
+            conn.prepareStatement("UPDATE order_table SET waiter = '"+waiter+"' WHERE order_no = '"+order_no+"'").execute();
+            
+            conn.prepareStatement("DELETE FROM items_sold  WHERE order_no = '"+order_no+"'").execute();
+            int rows = orderContent.getRowCount();
+            for(int i = 0; i < rows; i++){
+                String drink_name = orderContent.getModel().getValueAt(i, 0).toString();
+                String quantity = orderContent.getModel().getValueAt(i, 1).toString();
+                String price = orderContent.getModel().getValueAt(i, 2).toString();
+                conn.prepareStatement("INSERT INTO items_sold (order_no, drink_name, quantity, price) VALUES ("
+                       + "'"+order_no+"', '"+drink_name+"', '"+quantity+"', '"+price+"')").execute();
+             
+            }
+            JOptionPane.showMessageDialog(null, "Order number "+order_no+" saved successfully");
+            jButton5.setVisible(false);
+            jButton3.setVisible(true);
+            mymodel.setRowCount(0);
+            jLabel3.setText("00");
+            jLabel5.setText("00");
+        } catch (SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       mymodel.setRowCount(0);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
+          String order_no = jTextField3.getText();            
+        try {
+           conn.prepareStatement("DELETE FROM `order_table`  WHERE order_no = '"+order_no+"'").execute();
+            conn.prepareStatement("DELETE FROM items_sold  WHERE order_no = '"+order_no+"'").execute();
+            mymodel.setRowCount(0);
+        } catch (SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        JOptionPane.showMessageDialog(null, "Order "+order_no+" Deleted Successfully !!");
+    }//GEN-LAST:event_jToggleButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -485,7 +632,7 @@ setExtendedState(MAXIMIZED_BOTH);
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -525,136 +672,143 @@ setExtendedState(MAXIMIZED_BOTH);
     private javax.swing.JPanel side_menu;
     // End of variables declaration//GEN-END:variables
 
-    private void loadMenuCategory() { 
-      
+    private void loadMenuCategory() {
+        Object[] row = {};
+        mymodel.setRowCount(0);
+
         try {
-            prepare=conn.prepareStatement("SELECT DISTINCT(category) FROM store_drinks");
-            rs=prepare.executeQuery();
-            while(rs.next()){
-                String drinkname=rs.getString("category");
-                 JButton drinkbutton=new JButton(drinkname);                 
-                 all_drinks.add(drinkbutton);
-                 drinkbutton.addActionListener(new ActionListener() {
+            prepare = conn.prepareStatement("SELECT DISTINCT(category) FROM counter_drinks");
+            rs = prepare.executeQuery();
+            while (rs.next()) {
+                String drinkname = rs.getString("category");
+                JButton drinkbutton = new JButton(drinkname);
+                all_drinks.add(drinkbutton);
+                drinkbutton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                           String category=drinkbutton.getText();
-                           if(category.equals("ALL")){
-                               loadAllDrinks();
-                           }
-                           else{
-                               loadSpecificDrinks(category);
-                           }
-                       
+                        String category = drinkbutton.getText();
+                        if (category.equals("ALL")) {
+                            loadAllDrinks();
+                        } else {
+                            loadSpecificDrinks(category);
+                        }
+
                     }
                 });
-                
-                
+
                 //
-               
-                
             }
         } catch (SQLException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-        }  
-       
-       
+        }
+
     }
     /*private void loadSoftDrinks() { 
        
+     try {
+     prepare=conn.prepareStatement("SELECT drink_name  FROM store_drinks ORDER BY drink_name ASC");
+     rs=prepare.executeQuery();
+     while(rs.next()){
+     String drinkname=rs.getString("drink_name");
+     JButton drinkbutton=new JButton(drinkname);
+     drinkbutton.setBackground(Color.WHITE);
+     drinkbutton.setForeground(Color.red);                
+     drinks.add(drinkbutton);              
+     //
+               
+               
+                
+     }
+     } catch (SQLException ex) {
+     Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+     }        
+     }*/
+
+    public void loadSpecificDrinks(String dname) {
         try {
-           prepare=conn.prepareStatement("SELECT drink_name  FROM store_drinks ORDER BY drink_name ASC");
-            rs=prepare.executeQuery();
-            while(rs.next()){
-                String drinkname=rs.getString("drink_name");
-                JButton drinkbutton=new JButton(drinkname);
-                drinkbutton.setBackground(Color.WHITE);
-                 drinkbutton.setForeground(Color.red);                
-                 drinks.add(drinkbutton);              
-                //
-               
-               
-                
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-        }        
-    }*/
-    public void loadSpecificDrinks(String dname){
-        Object[]row={};
-        mymodel.setRowCount(0);       
-        
-         try {             
-           GridLayout grid = new GridLayout(0, 3, 10, 10);               
-           drinks.removeAll();
-           drinks.setLayout(grid);
-           drinks.revalidate();
-           drinks.repaint();
-           prepare=conn.prepareStatement("SELECT drink_name  FROM store_drinks WHERE category='"+dname+"'");
-            rs=prepare.executeQuery();
-            while(rs.next()){
-                String drinkname=rs.getString("drink_name");
-                JButton specificdrinks=new JButton(drinkname);
+            GridLayout grid = new GridLayout(0, 3, 10, 10);
+            drinks.removeAll();
+            drinks.setLayout(grid);
+            drinks.revalidate();
+            drinks.repaint();
+            prepare = conn.prepareStatement("SELECT drink_name  FROM counter_drinks WHERE category='" + dname + "'");
+            rs = prepare.executeQuery();
+            while (rs.next()) {
+                String drinkname = rs.getString("drink_name");
+                JButton specificdrinks = new JButton(drinkname);
                 specificdrinks.setBackground(Color.decode("#0080C0"));
-                specificdrinks.setForeground(Color.WHITE);            
-                drinks.add(specificdrinks); 
-                
+                specificdrinks.setForeground(Color.WHITE);
+                drinks.add(specificdrinks);
+
                 specificdrinks.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        
+
                         specificdrinks.setBackground(Color.red);
                         JOptionPane.showMessageDialog(null, specificdrinks.getText());
                         try {
                             //SELECT THE DATA AND POPULATE IT IN A AJTABLE
-                            prepare=conn.prepareStatement("SELECT * FROM store_drinks WHERE drink_name='"+specificdrinks.getText()+"'");
-                            rs=prepare.executeQuery();
-                            while(rs.next()){
-                               String drink=rs.getString("drink_name");
-                                String cartons=rs.getString("cartons");
-                                
-                                Object[]row={drink,cartons};
+                            prepare = conn.prepareStatement("SELECT * FROM counter_drinks WHERE drink_name='" + specificdrinks.getText() + "'");
+                            rs = prepare.executeQuery();
+                            while (rs.next()) {
+                                String drink = rs.getString("drink_name");
+                                String cartons = rs.getString("cartons");
+                                float sellingP=rs.getFloat("selling_price");                     
+                                int qty = 1;
+                                float total =sellingP*qty;
+                                Object[] row = {drink, qty,sellingP,total};
                                 mymodel.addRow(row);
-                            
+                                totalVatAndPrice();
                             }
                            //orderContent.setModel(DbUtils.resultSetToTableModel(rs));
-                         
+
                             //To change body of generated methods, choose Tools | Templates.
                         } catch (SQLException ex) {
                             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
-                    
+
                 });
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-        }     
+        }
     }
-    private void loadAllDrinks(){
-           
+
+    private void loadAllDrinks() {
+
         try {
-            GridLayout grid = new GridLayout(0, 3, 10, 10);               
-           drinks.removeAll();
-           drinks.setLayout(grid);
-           drinks.revalidate();
-           drinks.repaint();
-           
-           prepare=conn.prepareStatement("SELECT drink_name  FROM store_drinks ORDER BY drink_name ASC");
-           rs=prepare.executeQuery();
-            while(rs.next()){
-                String drinkname=rs.getString("drink_name");
-                JButton allbuttons=new JButton(drinkname);               
+            GridLayout grid = new GridLayout(0, 3, 10, 10);
+            drinks.removeAll();
+            drinks.setLayout(grid);
+            drinks.revalidate();
+            drinks.repaint();
+
+            prepare = conn.prepareStatement("SELECT drink_name  FROM counter_drinks ORDER BY drink_name ASC");
+            rs = prepare.executeQuery();
+            while (rs.next()) {
+                String drinkname = rs.getString("drink_name");
+                JButton allbuttons = new JButton(drinkname);
                 allbuttons.setBackground(Color.decode("#0080C0"));
                 allbuttons.setForeground(Color.WHITE);
-                drinks.add(allbuttons);   
-               
-               
-               
-                
+                drinks.add(allbuttons);
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-        }     
+        }
+    }
+    
+    public void totalVatAndPrice(){
+        int rows = orderContent.getRowCount();
+        double Total = 0;
+        for(int i = 0; i < rows; i ++){
+            String total = orderContent.getModel().getValueAt(i, 3).toString();
+            Total += Double.parseDouble(total);
+        }
+        double vat = 0.16 * Total;
+        jLabel3.setText(String.valueOf(vat));
+        jLabel5.setText(String.valueOf(Total));
     }
 }

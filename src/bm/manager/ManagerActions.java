@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 /**
@@ -61,7 +62,58 @@ public class ManagerActions {
      }
      
     }
+    protected void updateCounter(String mydrinkname, String dcategory,float cartons,float tunits,double sellingprice){
+       try{
+           prepare=conn.prepareStatement("SELECT drink_name FROM counter_drinks WHERE drink_name='"+mydrinkname+"'");
+           rs=prepare.executeQuery();
+           if(rs.next()){
+              prepare=conn.prepareStatement("UPDATE counter_drinks SET cartons=`cartons`+cartons WHERE drink_name='"+mydrinkname+"'");
+              prepare.execute();
+              System.out.println("Update Successful");
 
-
+           }
+           //insertion takes place here.
+           else{          
+           
+            prepare=conn.prepareStatement("INSERT INTO counter_drinks(drink_name,category,cartons,total_units,selling_price)VALUES(?,?,?,?,?)");
+            prepare.setString(1, mydrinkname);
+            prepare.setString(2, dcategory);
+            prepare.setFloat(3, cartons);
+            prepare.setFloat(4, tunits);
+            prepare.setBigDecimal(5, BigDecimal.valueOf(sellingprice));
+            
+            prepare.execute();
+            JOptionPane.showMessageDialog(null, "Record Inserted Successfully");
+            
+            
+        
+           }
+           //end of insertion code.
+       }
+       catch(SQLException ex){
+           Logger.getLogger(ManagerActions.class.getName()).log(Level.SEVERE, null, ex);
+       }
+        
+        
+    }
+    //Method to return the number of units per drinkselected
+    protected int getDrinkUnits(String drinkname){
+        int units=0;
+         try{
+            prepare=conn.prepareStatement("SELECT units from store_drinks WHERE drink_name='"+drinkname+"'");
+            rs=prepare.executeQuery();
+           if(rs.next()){
+               units=rs.getInt("units");
+           }
+           else{
+               
+               JOptionPane.showMessageDialog(null, "The drink is invalid");
+           }
+        }
+        catch(SQLException ex){
+            
+        }
+         return units;
+    }
     
 }

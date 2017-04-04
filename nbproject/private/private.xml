@@ -3,13 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/Desktop/Java/BarManagement/src/bm/sales/GridTest.java</file>
-            <file>file:/E:/Desktop/Java/BarManagement/src/bm/sales/Customization.java</file>
-            <file>file:/E:/Desktop/Java/BarManagement/src/Techflay/RegisterBusiness.java</file>
-            <file>file:/E:/Desktop/Java/BarManagement/src/barmanagement/BarManagement.java</file>
-            <file>file:/E:/Desktop/Java/BarManagement/src/bm/sales/Home.java</file>
-            <file>file:/E:/Desktop/Java/BarManagement/src/director/Home.java</file>
-            <file>file:/E:/Desktop/Java/BarManagement/src/director/Employees.java</file>
+            <file>file:/E:/Desktop/Java/BarManagement-master/src/bm/sales/Home.java</file>
+            <file>file:/E:/Desktop/Java/BarManagement-master/src/bm/home/Start.java</file>
+            <file>file:/E:/Desktop/Java/BarManagement-master/src/bm/manager/Home.java</file>
+            <file>file:/E:/Desktop/Java/BarManagement-master/src/bm/home/StartScreen.java</file>
+            <file>file:/E:/Desktop/Java/BarManagement-master/src/director/AdminAccount.java</file>
+            <file>file:/E:/Desktop/Java/BarManagement-master/src/bm/manager/ManagerActions.java</file>
         </group>
     </open-files>
 </project-private>
