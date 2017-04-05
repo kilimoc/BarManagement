@@ -5,11 +5,13 @@
  */
 package bm.sales;
 
+import addins.MyCalculator;
 import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import bm.admin.DatabaseConfiguration;
+import bm.home.StartScreen;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -23,6 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import security.SystemUsers;
 
 /**
  *
@@ -47,6 +50,8 @@ public class Home extends javax.swing.JFrame {
         mymodel = (DefaultTableModel) orderContent.getModel();
         loadAllDrinks();
         loadMenuCategory();
+        getLoggedInUser();
+        getResponsibleWaiters();
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowOpened(WindowEvent e) {
@@ -72,6 +77,8 @@ public class Home extends javax.swing.JFrame {
         jToggleButton2 = new javax.swing.JToggleButton();
         jToggleButton3 = new javax.swing.JToggleButton();
         jPanel3 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        loggedinuser = new javax.swing.JLabel();
         side_menu = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
@@ -102,13 +109,20 @@ public class Home extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<String>();
+        waiterC = new javax.swing.JComboBox<>();
         drinks = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -186,23 +200,42 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(jToggleButton2)
                 .addGap(36, 36, 36)
                 .addComponent(jToggleButton3)
-                .addContainerGap(271, Short.MAX_VALUE))
+                .addContainerGap(260, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.LINE_START);
 
-        jPanel3.setBackground(new java.awt.Color(75, 157, 223));
+        jPanel3.setBackground(new java.awt.Color(90, 213, 213));
         jPanel3.setPreferredSize(new java.awt.Dimension(556, 40));
+
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("You Are Logged In As:");
+
+        loggedinuser.setBackground(new java.awt.Color(255, 199, 92));
+        loggedinuser.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        loggedinuser.setForeground(new java.awt.Color(255, 127, 0));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 697, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(198, 198, 198)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(loggedinuser, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(292, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 40, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(loggedinuser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(14, 14, 14))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel3, java.awt.BorderLayout.PAGE_END);
@@ -314,7 +347,7 @@ public class Home extends javax.swing.JFrame {
                 .addGroup(orderFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5))
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addContainerGap(111, Short.MAX_VALUE))
         );
 
         scrollPane.setViewportView(orderForm);
@@ -367,7 +400,7 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(313, Short.MAX_VALUE))
+                .addContainerGap(302, Short.MAX_VALUE))
         );
 
         main_P.add(jPanel6, java.awt.BorderLayout.LINE_END);
@@ -397,7 +430,7 @@ public class Home extends javax.swing.JFrame {
 
         jLabel11.setText("Waiter Username");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        waiterC.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---Select Waiter---" }));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -411,7 +444,7 @@ public class Home extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(waiterC, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -422,7 +455,7 @@ public class Home extends javax.swing.JFrame {
                     .addComponent(jLabel10)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(waiterC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -442,17 +475,65 @@ public class Home extends javax.swing.JFrame {
 
         getContentPane().add(jPanel5, java.awt.BorderLayout.CENTER);
 
+        jMenuBar1.setBackground(new java.awt.Color(51, 51, 0));
+        jMenuBar1.setBorder(null);
+        jMenuBar1.setForeground(new java.awt.Color(0, 102, 0));
+
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/account.png"))); // NOI18N
         jMenu1.setText("My Account");
+
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/account.png"))); // NOI18N
+        jMenuItem1.setText("Change Account Settings");
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/logout.png"))); // NOI18N
+        jMenuItem2.setText("Logout");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Sales");
+
+        jMenuItem4.setText("Daily Sales");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem4);
+
+        jMenuItem5.setText("Miscellenous");
+        jMenu2.add(jMenuItem5);
+
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Reports");
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("addins");
+
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/calc.png"))); // NOI18N
+        jMenuItem3.setText("Techflay Caculator");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem3);
+
         jMenuBar1.add(jMenu4);
+
+        jMenu5.setText("Operations");
+
+        jMenuItem6.setText("Close Day Stock");
+        jMenu5.add(jMenuItem6);
+
+        jMenuBar1.add(jMenu5);
 
         setJMenuBar(jMenuBar1);
 
@@ -465,7 +546,7 @@ public class Home extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         try {
-            String waiter = jComboBox2.getSelectedItem().toString();
+            String waiter = waiterC.getSelectedItem().toString();
             conn.prepareStatement("INSERT INTO order_table (waiter) VALUES ('"+waiter+"')").execute();
             ResultSet rs = conn.prepareStatement("SELECT MAX(order_no) FROM order_table").executeQuery();
             int order_no = 1;
@@ -528,7 +609,7 @@ public class Home extends javax.swing.JFrame {
             String order_no = jTextField3.getText();
             ResultSet rs = conn.prepareStatement("SELECT * FROM order_table WHERE order_no = '"+order_no+"'").executeQuery();
             if(rs.next()){
-                jComboBox2.setSelectedItem(rs.getString("waiter"));
+                waiterC.setSelectedItem(rs.getString("waiter"));
                 rs = conn.prepareStatement("SELECT * FROM items_sold WHERE order_no = '"+order_no+"'").executeQuery();
                 mymodel.setRowCount(0);
                 while(rs.next()){
@@ -549,7 +630,7 @@ public class Home extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         try {
             String order_no = jTextField3.getText();
-            String waiter = jComboBox2.getSelectedItem().toString();
+            String waiter = waiterC.getSelectedItem().toString();
             conn.prepareStatement("UPDATE order_table SET waiter = '"+waiter+"' WHERE order_no = '"+order_no+"'").execute();
             
             conn.prepareStatement("DELETE FROM items_sold  WHERE order_no = '"+order_no+"'").execute();
@@ -588,6 +669,22 @@ public class Home extends javax.swing.JFrame {
         }
         JOptionPane.showMessageDialog(null, "Order "+order_no+" Deleted Successfully !!");
     }//GEN-LAST:event_jToggleButton3ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        MyCalculator calc=new MyCalculator(Home.this,"Techflay Calculator");
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+       new SystemUsers().logoutUser();
+       new StartScreen().setVisible(true);
+       dispose();
+       
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+       DailySales dsales=new DailySales(Home.this);
+       dsales.setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -633,7 +730,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -641,11 +737,19 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
@@ -664,12 +768,14 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JToggleButton jToggleButton3;
     private javax.swing.JToggleButton jToggleButton8;
     private javax.swing.JToggleButton jToggleButton9;
+    private javax.swing.JLabel loggedinuser;
     private javax.swing.JPanel main_P;
     private javax.swing.JPanel o_manipulation;
     private javax.swing.JTable orderContent;
     private javax.swing.JPanel orderForm;
     private javax.swing.JScrollPane scrollPane;
     private javax.swing.JPanel side_menu;
+    private javax.swing.JComboBox<String> waiterC;
     // End of variables declaration//GEN-END:variables
 
     private void loadMenuCategory() {
@@ -810,5 +916,35 @@ public class Home extends javax.swing.JFrame {
         double vat = 0.16 * Total;
         jLabel3.setText(String.valueOf(vat));
         jLabel5.setText(String.valueOf(Total));
+    }
+    private void getLoggedInUser(){
+        try {
+            prepare=conn.prepareStatement("SELECT username FROM system_users WHERE status=1");
+            rs=prepare.executeQuery();
+            if(rs.next()){
+                String username=rs.getString("username");
+                System.out.println(username);
+                loggedinuser.setText(username);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "You Must be Logged In to Access This Module.","Techflay Software Solutions",JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    private void  getResponsibleWaiters(){
+            try {
+            prepare=conn.prepareStatement("SELECT CONCAT(first_name,' ',last_name) AS 'name' FROM employees");
+            rs=prepare.executeQuery();
+            while(rs.next()){
+                String username=rs.getString("name");
+                waiterC.addItem(username);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

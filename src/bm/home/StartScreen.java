@@ -186,6 +186,7 @@ public class StartScreen extends javax.swing.JFrame {
 
         jPanel5.setLayout(new java.awt.BorderLayout());
 
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setPreferredSize(new java.awt.Dimension(367, 100));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -225,8 +226,10 @@ public class StartScreen extends javax.swing.JFrame {
 
         jPanel5.add(jPanel6, java.awt.BorderLayout.PAGE_START);
 
+        login.setBackground(new java.awt.Color(255, 255, 255));
+
         lusername.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lusername.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select UserName" }));
+        lusername.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Username" }));
         lusername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lusernameActionPerformed(evt);
