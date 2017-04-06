@@ -135,6 +135,11 @@ public class Home extends javax.swing.JFrame {
                 jToggleButton8MouseClicked(evt);
             }
         });
+        jToggleButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton8ActionPerformed(evt);
+            }
+        });
 
         jToggleButton9.setText("Daily Sales");
 
@@ -475,9 +480,9 @@ public class Home extends javax.swing.JFrame {
 
         getContentPane().add(jPanel5, java.awt.BorderLayout.CENTER);
 
-        jMenuBar1.setBackground(new java.awt.Color(51, 51, 0));
+        jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
         jMenuBar1.setBorder(null);
-        jMenuBar1.setForeground(new java.awt.Color(0, 102, 0));
+        jMenuBar1.setForeground(new java.awt.Color(255, 255, 255));
 
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/account.png"))); // NOI18N
         jMenu1.setText("My Account");
@@ -685,6 +690,11 @@ public class Home extends javax.swing.JFrame {
        DailySales dsales=new DailySales(Home.this);
        dsales.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jToggleButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton8ActionPerformed
+       SettleOrder settle=new SettleOrder(Home.this);
+       settle.setVisible(true);
+    }//GEN-LAST:event_jToggleButton8ActionPerformed
 
     /**
      * @param args the command line arguments
