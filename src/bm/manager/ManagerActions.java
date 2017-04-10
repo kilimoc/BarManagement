@@ -49,6 +49,22 @@ public class ManagerActions {
         
         
     }
+     public void saveNewDrinksWithDifferentPrices(String category,String name,float cartons,int units,float cost){
+        try {
+            prepare=conn.prepareStatement("INSERT INTO store_drinks_new(drink_name,cartons,units,wc_price,category) VALUES(?,?,?,?,?)");
+            prepare.setString(1, name);           
+            prepare.setFloat(2, cartons);
+            prepare.setInt(3, units);
+            prepare.setBigDecimal(4, BigDecimal.valueOf(cost));
+            prepare.setString(5, category);
+            
+            
+            prepare.execute();            
+            JOptionPane.showMessageDialog(null, "Drink Recorded Successfully", "Techflay Software Solutions", JOptionPane.INFORMATION_MESSAGE);
+        } catch (SQLException ex) {
+           JOptionPane.showMessageDialog(null, "<html><b>"+name+"</b>  already exists</html>", "Techflay Software Solutions", JOptionPane.WARNING_MESSAGE);
+        }
+     }
     protected void ChangeCh(String str) 
     {
         StringBuilder sb = new StringBuilder("");

@@ -9,6 +9,9 @@ import bm.admin.*;
 import bm.home.StartScreen;
 import security.SystemUsers;
 import java.awt.CardLayout;
+import static java.awt.Frame.MAXIMIZED_BOTH;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,6 +42,13 @@ public class DirectorHome extends javax.swing.JFrame {
         conn=dbc.getConnection();
         getAllEmployees();
         getSystemUsers();
+        
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+                setExtendedState(MAXIMIZED_BOTH);
+            }
+        });
     }
 
     /**
@@ -54,8 +64,6 @@ public class DirectorHome extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        LOGOUT = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -63,15 +71,17 @@ public class DirectorHome extends javax.swing.JFrame {
         mainPanel = new javax.swing.JPanel();
         HomeP = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
         SystemUser = new javax.swing.JPanel();
         menubar = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
@@ -102,6 +112,14 @@ public class DirectorHome extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
+        jMenuItem11 = new javax.swing.JMenuItem();
+        jMenuItem12 = new javax.swing.JMenuItem();
+        jMenuItem13 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("THE DIRECTOR PROFILE");
@@ -159,41 +177,6 @@ public class DirectorHome extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.PAGE_END);
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-
-        LOGOUT.setBackground(new java.awt.Color(0, 102, 102));
-        LOGOUT.setForeground(new java.awt.Color(0, 153, 51));
-        LOGOUT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/logout.png"))); // NOI18N
-        LOGOUT.setText("<html><u>Log Out</u></html>");
-        LOGOUT.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                LOGOUTMouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 133, Short.MAX_VALUE)
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(LOGOUT, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 620, Short.MAX_VALUE)
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addGap(296, 296, 296)
-                    .addComponent(LOGOUT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(276, Short.MAX_VALUE)))
-        );
-
-        getContentPane().add(jPanel3, java.awt.BorderLayout.LINE_END);
-
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -204,7 +187,7 @@ public class DirectorHome extends javax.swing.JFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 620, Short.MAX_VALUE)
+            .addGap(0, 617, Short.MAX_VALUE)
         );
 
         getContentPane().add(jPanel4, java.awt.BorderLayout.LINE_START);
@@ -227,13 +210,9 @@ public class DirectorHome extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/saless.png"))); // NOI18N
-
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/expense.png"))); // NOI18N
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/returns.png"))); // NOI18N
-
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/reports.png"))); // NOI18N
 
         jLabel9.setText("Employees");
 
@@ -244,6 +223,18 @@ public class DirectorHome extends javax.swing.JFrame {
         jLabel12.setText("Expenses");
 
         jLabel13.setText("REPORTS");
+
+        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/success.png"))); // NOI18N
+        jLabel17.setText("Weekly Sales Report");
+
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/success.png"))); // NOI18N
+        jLabel18.setText("Monthly Sales Report");
+
+        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/success.png"))); // NOI18N
+        jLabel19.setText("Monthly Expense Report");
+
+        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/success.png"))); // NOI18N
+        jLabel20.setText("Summary of Returns Report");
 
         javax.swing.GroupLayout HomePLayout = new javax.swing.GroupLayout(HomeP);
         HomeP.setLayout(HomePLayout);
@@ -260,24 +251,24 @@ public class DirectorHome extends javax.swing.JFrame {
                             .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(HomePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(HomePLayout.createSequentialGroup()
-                                .addGap(193, 193, 193)
-                                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(HomePLayout.createSequentialGroup()
                                 .addGap(185, 185, 185)
-                                .addGroup(HomePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(HomePLayout.createSequentialGroup()
+                                .addGap(193, 193, 193)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(HomePLayout.createSequentialGroup()
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(185, 185, 185)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, HomePLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(HomePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(162, 162, 162))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(HomePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(HomePLayout.createSequentialGroup()
+                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(62, 62, 62)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
         HomePLayout.setVerticalGroup(
             HomePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -290,21 +281,25 @@ public class DirectorHome extends javax.swing.JFrame {
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(HomePLayout.createSequentialGroup()
                         .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(51, 51, 51)
+                        .addGap(105, 105, 105)
                         .addGroup(HomePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
                             .addComponent(jLabel12))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(HomePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addComponent(jLabel13)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(120, Short.MAX_VALUE))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(HomePLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel13)
+                        .addComponent(jLabel5)))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel17)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel18)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel19)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel20)
+                .addContainerGap(131, Short.MAX_VALUE))
         );
 
         mainPanel.add(HomeP, "home");
@@ -361,21 +356,21 @@ public class DirectorHome extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(159, 159, 159)
                 .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addContainerGap(246, Short.MAX_VALUE))
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 543, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 676, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel14)
-                .addContainerGap(429, Short.MAX_VALUE))
+                .addContainerGap(426, Short.MAX_VALUE))
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel8Layout.createSequentialGroup()
                     .addGap(39, 39, 39)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(70, Short.MAX_VALUE)))
+                    .addContainerGap(67, Short.MAX_VALUE)))
         );
 
         SystemUser.add(jPanel8, java.awt.BorderLayout.CENTER);
@@ -403,7 +398,7 @@ public class DirectorHome extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(206, 206, 206)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(217, Short.MAX_VALUE))
+                .addContainerGap(303, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -437,14 +432,14 @@ public class DirectorHome extends javax.swing.JFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -488,6 +483,10 @@ public class DirectorHome extends javax.swing.JFrame {
 
         getContentPane().add(jPanel5, java.awt.BorderLayout.CENTER);
 
+        jMenuBar1.setBackground(new java.awt.Color(204, 204, 0));
+        jMenuBar1.setForeground(new java.awt.Color(204, 204, 0));
+
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/accountmenu.png"))); // NOI18N
         jMenu1.setText("Account Settings");
 
         jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/account.png"))); // NOI18N
@@ -514,6 +513,7 @@ public class DirectorHome extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
+        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/user.png"))); // NOI18N
         jMenu2.setText("System Users");
 
         jMenuItem2.setText("System Users");
@@ -526,6 +526,7 @@ public class DirectorHome extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
+        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/settings.png"))); // NOI18N
         jMenu3.setText("System Settings");
 
         jMenuItem4.setText("Configure Database");
@@ -539,6 +540,7 @@ public class DirectorHome extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu3);
 
+        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/payroll.png"))); // NOI18N
         jMenu4.setText("Payroll");
 
         jMenuItem7.setText("Process Payment");
@@ -549,14 +551,36 @@ public class DirectorHome extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu4);
 
+        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/employees.png"))); // NOI18N
+        jMenu5.setText("Employees");
+
+        jMenuItem10.setText("Employee Module");
+        jMenu5.add(jMenuItem10);
+
+        jMenuBar1.add(jMenu5);
+
+        jMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/reports.png"))); // NOI18N
+        jMenu6.setText("Reports");
+
+        jMenuItem11.setText("Weekly Report");
+        jMenu6.add(jMenuItem11);
+
+        jMenuItem12.setText("Monthly Report");
+        jMenu6.add(jMenuItem12);
+
+        jMenuItem13.setText("End Of Stock Report");
+        jMenu6.add(jMenuItem13);
+
+        jMenuItem14.setText("Salary Payment Report");
+        jMenu6.add(jMenuItem14);
+        jMenu6.add(jSeparator1);
+
+        jMenuBar1.add(jMenu6);
+
         setJMenuBar(jMenuBar1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void LOGOUTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LOGOUTMouseClicked
-        new SystemUsers().logoutUser();
-    }//GEN-LAST:event_LOGOUTMouseClicked
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         Employees emp= new Employees(DirectorHome.this);
@@ -644,7 +668,6 @@ public class DirectorHome extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel HomeP;
-    private javax.swing.JLabel LOGOUT;
     private javax.swing.JPanel SystemUser;
     private javax.swing.JPanel allEmployees;
     private javax.swing.JTable allemployees;
@@ -660,20 +683,29 @@ public class DirectorHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -684,7 +716,6 @@ public class DirectorHome extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
@@ -692,6 +723,7 @@ public class DirectorHome extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel menubar;
     private javax.swing.JTable systemUserT;

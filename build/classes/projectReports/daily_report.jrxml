@@ -84,13 +84,6 @@ order_table.order_no]]>
 	<columnHeader>
 		<band height="26" splitType="Stretch">
 			<staticText>
-				<reportElement x="44" y="0" width="59" height="20" uuid="763d0a29-cff3-47bb-a2fd-2c03dd4dd3b0"/>
-				<textElement>
-					<font size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Order No]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="103" y="0" width="92" height="20" uuid="0774ee2f-9469-40d2-8501-f60a833dad1a"/>
 				<textElement>
 					<font size="12" isBold="true"/>
@@ -136,10 +129,6 @@ order_table.order_no]]>
 	</columnHeader>
 	<detail>
 		<band height="26" splitType="Stretch">
-			<textField>
-				<reportElement x="44" y="0" width="59" height="20" uuid="332e7032-5ba4-4e79-afd6-fea2ed72462b"/>
-				<textFieldExpression><![CDATA[$F{order_no}]]></textFieldExpression>
-			</textField>
 			<textField>
 				<reportElement x="103" y="0" width="92" height="20" uuid="211a086d-2f7b-49a5-9961-448134536a34"/>
 				<textFieldExpression><![CDATA[$F{drink_name}]]></textFieldExpression>

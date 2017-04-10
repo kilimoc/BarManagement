@@ -9,6 +9,9 @@ import bm.admin.DatabaseConfiguration;
 import bm.home.StartScreen;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import static java.awt.Frame.MAXIMIZED_BOTH;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -50,6 +53,13 @@ public class ManagerHome extends javax.swing.JFrame {
         ndcategory.setVisible(false);
         newCategory.setVisible(false);
         
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+                setExtendedState(MAXIMIZED_BOTH);
+            }
+        });
+        
     }
 
     /**
@@ -87,7 +97,7 @@ public class ManagerHome extends javax.swing.JFrame {
         jButton8 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton16 = new javax.swing.JButton();
-        counterUpdate = new javax.swing.JPanel();
+        NewDrinksToCounter = new javax.swing.JPanel();
         drinkcategory = new javax.swing.JComboBox<String>();
         drinknameC = new javax.swing.JComboBox<String>();
         jLabel6 = new javax.swing.JLabel();
@@ -126,6 +136,16 @@ public class ManagerHome extends javax.swing.JFrame {
         jButton15 = new javax.swing.JButton();
         jPanel15 = new javax.swing.JPanel();
         totalStockExpense = new javax.swing.JPanel();
+        UpdateCounter = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jCheckBox2 = new javax.swing.JCheckBox();
+        jLabel13 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        jButton17 = new javax.swing.JButton();
+        jButton18 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -177,6 +197,11 @@ public class ManagerHome extends javax.swing.JFrame {
         getContentPane().add(jPanel2, java.awt.BorderLayout.PAGE_END);
 
         jButton1.setText("Update Counter");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Update Stock");
 
@@ -308,9 +333,8 @@ public class ManagerHome extends javax.swing.JFrame {
                 .addContainerGap(23, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jButton7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton16, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -374,7 +398,7 @@ public class ManagerHome extends javax.swing.JFrame {
 
         MainPanel.add(newStock, "newstock");
 
-        counterUpdate.setBackground(new java.awt.Color(255, 255, 242));
+        NewDrinksToCounter.setBackground(new java.awt.Color(255, 255, 242));
 
         drinkcategory.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "---Select Drink Category---" }));
         drinkcategory.addItemListener(new java.awt.event.ItemListener() {
@@ -423,70 +447,70 @@ public class ManagerHome extends javax.swing.JFrame {
 
         total_units.setEnabled(false);
 
-        javax.swing.GroupLayout counterUpdateLayout = new javax.swing.GroupLayout(counterUpdate);
-        counterUpdate.setLayout(counterUpdateLayout);
-        counterUpdateLayout.setHorizontalGroup(
-            counterUpdateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(counterUpdateLayout.createSequentialGroup()
-                .addGroup(counterUpdateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(counterUpdateLayout.createSequentialGroup()
+        javax.swing.GroupLayout NewDrinksToCounterLayout = new javax.swing.GroupLayout(NewDrinksToCounter);
+        NewDrinksToCounter.setLayout(NewDrinksToCounterLayout);
+        NewDrinksToCounterLayout.setHorizontalGroup(
+            NewDrinksToCounterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(NewDrinksToCounterLayout.createSequentialGroup()
+                .addGroup(NewDrinksToCounterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(NewDrinksToCounterLayout.createSequentialGroup()
                         .addGap(140, 140, 140)
-                        .addGroup(counterUpdateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(counterUpdateLayout.createSequentialGroup()
-                                .addGroup(counterUpdateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(counterUpdateLayout.createSequentialGroup()
+                        .addGroup(NewDrinksToCounterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(NewDrinksToCounterLayout.createSequentialGroup()
+                                .addGroup(NewDrinksToCounterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(NewDrinksToCounterLayout.createSequentialGroup()
                                         .addComponent(drinkcategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                                    .addGroup(counterUpdateLayout.createSequentialGroup()
+                                    .addGroup(NewDrinksToCounterLayout.createSequentialGroup()
                                         .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGap(52, 52, 52)))
-                                .addGroup(counterUpdateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(NewDrinksToCounterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(drinknameC, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(counterUpdateLayout.createSequentialGroup()
+                                    .addGroup(NewDrinksToCounterLayout.createSequentialGroup()
                                         .addGap(180, 180, 180)
-                                        .addGroup(counterUpdateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(NewDrinksToCounterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(cartons, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
                                             .addComponent(total_units)
                                             .addComponent(sellingPrice)))))
-                            .addGroup(counterUpdateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(counterUpdateLayout.createSequentialGroup()
-                                    .addGroup(counterUpdateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(NewDrinksToCounterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(NewDrinksToCounterLayout.createSequentialGroup()
+                                    .addGroup(NewDrinksToCounterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGap(254, 254, 254))
                                 .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(counterUpdateLayout.createSequentialGroup()
+                    .addGroup(NewDrinksToCounterLayout.createSequentialGroup()
                         .addGap(136, 136, 136)
                         .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(65, Short.MAX_VALUE))
         );
-        counterUpdateLayout.setVerticalGroup(
-            counterUpdateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(counterUpdateLayout.createSequentialGroup()
+        NewDrinksToCounterLayout.setVerticalGroup(
+            NewDrinksToCounterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(NewDrinksToCounterLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(counterUpdateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(NewDrinksToCounterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(drinkcategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(drinknameC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
-                .addGroup(counterUpdateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(NewDrinksToCounterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cartons, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(counterUpdateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(NewDrinksToCounterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(total_units, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(counterUpdateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(NewDrinksToCounterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(sellingPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(46, 46, 46)
-                .addGroup(counterUpdateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(NewDrinksToCounterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(74, Short.MAX_VALUE))
         );
 
-        MainPanel.add(counterUpdate, "newtocounter");
+        MainPanel.add(NewDrinksToCounter, "newtocounter");
 
         dailyReports.setBackground(new java.awt.Color(255, 255, 242));
         dailyReports.setLayout(new java.awt.BorderLayout());
@@ -751,6 +775,84 @@ public class ManagerHome extends javax.swing.JFrame {
 
         MainPanel.add(totalStockExpense, "totalstockexpense");
 
+        UpdateCounter.setBackground(new java.awt.Color(255, 255, 242));
+
+        jLabel10.setText("An Update Is Done On Counter Either For Prices Or Quantity");
+
+        jCheckBox1.setText("Cartons");
+
+        jCheckBox2.setText("Unit Prices");
+
+        jLabel13.setText("New Caron Number");
+
+        jLabel14.setText("New Unit Price");
+
+        jButton17.setBackground(new java.awt.Color(255, 255, 255));
+        jButton17.setText("Update");
+
+        jButton18.setBackground(new java.awt.Color(255, 255, 255));
+        jButton18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/home.png"))); // NOI18N
+        jButton18.setText("Home");
+        jButton18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton18ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout UpdateCounterLayout = new javax.swing.GroupLayout(UpdateCounter);
+        UpdateCounter.setLayout(UpdateCounterLayout);
+        UpdateCounterLayout.setHorizontalGroup(
+            UpdateCounterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(UpdateCounterLayout.createSequentialGroup()
+                .addGroup(UpdateCounterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(UpdateCounterLayout.createSequentialGroup()
+                        .addGap(167, 167, 167)
+                        .addComponent(jLabel10))
+                    .addGroup(UpdateCounterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(UpdateCounterLayout.createSequentialGroup()
+                            .addGap(113, 113, 113)
+                            .addComponent(jButton18)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, UpdateCounterLayout.createSequentialGroup()
+                            .addGap(120, 120, 120)
+                            .addGroup(UpdateCounterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(UpdateCounterLayout.createSequentialGroup()
+                                    .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(79, 79, 79)
+                                    .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(316, Short.MAX_VALUE))
+        );
+        UpdateCounterLayout.setVerticalGroup(
+            UpdateCounterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(UpdateCounterLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel10)
+                .addGap(39, 39, 39)
+                .addGroup(UpdateCounterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jCheckBox1)
+                    .addComponent(jCheckBox2))
+                .addGap(29, 29, 29)
+                .addComponent(jLabel13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel14)
+                .addGap(18, 18, 18)
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addGroup(UpdateCounterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton18))
+                .addGap(26, 26, 26))
+        );
+
+        MainPanel.add(UpdateCounter, "update");
+
         getContentPane().add(MainPanel, java.awt.BorderLayout.CENTER);
 
         jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/account.png"))); // NOI18N
@@ -849,18 +951,40 @@ public class ManagerHome extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "All Fields Must Be filled Before you save", "Techflay Software Solutions", JOptionPane.ERROR_MESSAGE);
         }
         else{
-           new ManagerActions().saveNewDrinks(dcategory.getSelectedItem().toString(),dname.getText(), Float.parseFloat(dcartons.getText()), Integer.parseInt(dunits.getText()), Float.parseFloat(dbuyingprice.getText()));
-           dname.setText("");
-           dcartons.setText("");
-           dunits.setText("");
-           dbuyingprice.setText("");
+            try{
+           prepare=conn.prepareStatement("SELECT drink_name FROM store_drinks WHERE drink_name='"+dname.getText()+"'");
+           rs=prepare.executeQuery();
+           if(rs.next()){
+               
+               JOptionPane.showMessageDialog(null, "The entered Drink is still Available In Store.But we have stored it .You will Retrieve It Later");
+               new ManagerActions().saveNewDrinksWithDifferentPrices(dcategory.getSelectedItem().toString(),dname.getText(), Float.parseFloat(dcartons.getText()), Integer.parseInt(dunits.getText()), Float.parseFloat(dbuyingprice.getText()));
+                             
+               //Let us call the other function.
+                       getDrinkCategories(dcategory);
            
-           //Let us call the other function.
-           getDrinkCategories(dcategory);
+           }
+           else{
+                  new ManagerActions().saveNewDrinks(dcategory.getSelectedItem().toString(),dname.getText(), Float.parseFloat(dcartons.getText()), Integer.parseInt(dunits.getText()), Float.parseFloat(dbuyingprice.getText()));
+                             
+               //Let us call the other function.
+                       getDrinkCategories(dcategory);
+           }
+           
+       }
+       catch(SQLException ex){
+           ex.getMessage();
+           
+       }
+          
+           
            
         
         
         }
+          dname.setText("");
+          dcartons.setText("");
+          dunits.setText("");
+          dbuyingprice.setText("");
         
     }//GEN-LAST:event_jButton7ActionPerformed
 
@@ -1090,6 +1214,16 @@ public class ManagerHome extends javax.swing.JFrame {
                 }
     }//GEN-LAST:event_jButton16ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+      card=(CardLayout)MainPanel.getLayout();
+      card.show(MainPanel,"update");
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
+        card=(CardLayout)MainPanel.getLayout();
+        card.show(MainPanel,"newstock");
+    }//GEN-LAST:event_jButton18ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1128,8 +1262,9 @@ public class ManagerHome extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel MainPanel;
+    private javax.swing.JPanel NewDrinksToCounter;
+    private javax.swing.JPanel UpdateCounter;
     private javax.swing.JTextField cartons;
-    private javax.swing.JPanel counterUpdate;
     private javax.swing.JPanel dailyReports;
     private javax.swing.JTextField dbuyingprice;
     private javax.swing.JTextField dcartons;
@@ -1148,6 +1283,8 @@ public class ManagerHome extends javax.swing.JFrame {
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton16;
+    private javax.swing.JButton jButton17;
+    private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1156,11 +1293,16 @@ public class ManagerHome extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBox2;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1194,6 +1336,8 @@ public class ManagerHome extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JPanel monthlyReports;
