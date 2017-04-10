@@ -5,14 +5,14 @@
  */
 package bm.sales;
 
+import addins.MyCalculator;
 import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import bm.admin.DatabaseConfiguration;
+import bm.home.StartScreen;
 import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,37 +24,41 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import net.proteanit.sql.DbUtils;
-
+import security.SystemUsers;
 
 /**
  *
  * @author Developer
  */
 public class Home extends javax.swing.JFrame {
-    
 
     /**
      * Creates new form Home
      */
-    DefaultTableModel mymodel; 
-    DatabaseConfiguration dbc=new DatabaseConfiguration();
+    DefaultTableModel mymodel;
+    DatabaseConfiguration dbc = new DatabaseConfiguration();
     private Connection conn;
     private PreparedStatement prepare;
     private ResultSet rs;
+    
+    String order_no;
+
     public Home() {
         initComponents();
+        jButton5.setVisible(false);
         setLocationRelativeTo(null);
-        conn=dbc.getConnection();
-         mymodel=(DefaultTableModel)orderContent.getModel();
+        conn = dbc.getConnection();
+        mymodel = (DefaultTableModel) orderContent.getModel();
         loadAllDrinks();
-        loadMenuCategory();       
+        loadMenuCategory();
+        getLoggedInUser();
+        getResponsibleWaiters();
         addWindowListener(new WindowAdapter() {
-@Override
-public void windowOpened(WindowEvent e) {
-setExtendedState(MAXIMIZED_BOTH);
-}
-});
+            @Override
+            public void windowOpened(WindowEvent e) {
+                setExtendedState(MAXIMIZED_BOTH);
+            }
+        });
     }
 
     /**
@@ -70,14 +74,15 @@ setExtendedState(MAXIMIZED_BOTH);
         jToggleButton8 = new javax.swing.JToggleButton();
         jToggleButton9 = new javax.swing.JToggleButton();
         jPanel2 = new javax.swing.JPanel();
-        jToggleButton1 = new javax.swing.JToggleButton();
         jToggleButton2 = new javax.swing.JToggleButton();
         jToggleButton3 = new javax.swing.JToggleButton();
         jPanel3 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        loggedinuser = new javax.swing.JLabel();
         side_menu = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         o_manipulation = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
@@ -101,18 +106,29 @@ setExtendedState(MAXIMIZED_BOTH);
         jScrollPane2 = new javax.swing.JScrollPane();
         drinks_holder = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        waiterC = new javax.swing.JComboBox<String>();
         drinks = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
+        jMenuItem12 = new javax.swing.JMenuItem();
+        jMenuItem13 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(75, 157, 223));
         jPanel1.setPreferredSize(new java.awt.Dimension(556, 40));
@@ -121,6 +137,11 @@ setExtendedState(MAXIMIZED_BOTH);
         jToggleButton8.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jToggleButton8MouseClicked(evt);
+            }
+        });
+        jToggleButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton8ActionPerformed(evt);
             }
         });
 
@@ -150,51 +171,70 @@ setExtendedState(MAXIMIZED_BOTH);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 242));
 
-        jToggleButton1.setText("New Order");
-
         jToggleButton2.setText("Update Order");
+        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton2ActionPerformed(evt);
+            }
+        });
 
         jToggleButton3.setText("Cancel Order");
+        jToggleButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jToggleButton3)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addComponent(jToggleButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+            .addComponent(jToggleButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jToggleButton1)
-                .addGap(35, 35, 35)
+                .addContainerGap()
                 .addComponent(jToggleButton2)
-                .addGap(36, 36, 36)
+                .addGap(60, 60, 60)
                 .addComponent(jToggleButton3)
-                .addContainerGap(271, Short.MAX_VALUE))
+                .addContainerGap(308, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.LINE_START);
 
-        jPanel3.setBackground(new java.awt.Color(75, 157, 223));
+        jPanel3.setBackground(new java.awt.Color(90, 213, 213));
         jPanel3.setPreferredSize(new java.awt.Dimension(556, 40));
+
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("You Are Logged In As:");
+
+        loggedinuser.setBackground(new java.awt.Color(255, 199, 92));
+        loggedinuser.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        loggedinuser.setForeground(new java.awt.Color(255, 127, 0));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 697, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(198, 198, 198)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(loggedinuser, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(292, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 40, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(loggedinuser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(14, 14, 14))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel3, java.awt.BorderLayout.PAGE_END);
@@ -214,8 +254,13 @@ setExtendedState(MAXIMIZED_BOTH);
         });
         jPanel9.add(jButton3);
 
-        jButton4.setText("Cancel");
-        jPanel9.add(jButton4);
+        jButton5.setText("Update Order");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jPanel9.add(jButton5);
 
         side_menu.add(jPanel9, java.awt.BorderLayout.PAGE_END);
 
@@ -227,6 +272,11 @@ setExtendedState(MAXIMIZED_BOTH);
         jButton2.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
         jButton2.setForeground(new java.awt.Color(153, 0, 51));
         jButton2.setText("x");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout o_manipulationLayout = new javax.swing.GroupLayout(o_manipulation);
         o_manipulation.setLayout(o_manipulationLayout);
@@ -296,12 +346,12 @@ setExtendedState(MAXIMIZED_BOTH);
                 .addGroup(orderFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5))
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addContainerGap(111, Short.MAX_VALUE))
         );
 
         scrollPane.setViewportView(orderForm);
 
-        jPanel10.add(scrollPane, java.awt.BorderLayout.CENTER);
+        jPanel10.add(scrollPane, java.awt.BorderLayout.PAGE_START);
 
         side_menu.add(jPanel10, java.awt.BorderLayout.CENTER);
 
@@ -322,6 +372,11 @@ setExtendedState(MAXIMIZED_BOTH);
         });
 
         jButton1.setText("ADD TO ORDER");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -344,7 +399,7 @@ setExtendedState(MAXIMIZED_BOTH);
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(313, Short.MAX_VALUE))
+                .addContainerGap(302, Short.MAX_VALUE))
         );
 
         main_P.add(jPanel6, java.awt.BorderLayout.LINE_END);
@@ -364,39 +419,29 @@ setExtendedState(MAXIMIZED_BOTH);
 
         jPanel4.setPreferredSize(new java.awt.Dimension(442, 40));
 
-        jLabel10.setText("Order Number");
-
-        jTextField3.setText("10");
-
         jLabel11.setText("Waiter Username");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        waiterC.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "---Select Waiter---" }));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(77, 77, 77)
                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(waiterC, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(87, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addComponent(waiterC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         drinks_holder.add(jPanel4, java.awt.BorderLayout.PAGE_START);
@@ -415,17 +460,94 @@ setExtendedState(MAXIMIZED_BOTH);
 
         getContentPane().add(jPanel5, java.awt.BorderLayout.CENTER);
 
+        jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuBar1.setBorder(null);
+        jMenuBar1.setForeground(new java.awt.Color(255, 255, 255));
+
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/account.png"))); // NOI18N
         jMenu1.setText("My Account");
+
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/account.png"))); // NOI18N
+        jMenuItem1.setText("Change Account Settings");
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/logout.png"))); // NOI18N
+        jMenuItem2.setText("Logout");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Sales");
+
+        jMenuItem4.setText("Daily Sales");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem4);
+
+        jMenuItem5.setText("Miscellenous");
+        jMenu2.add(jMenuItem5);
+
+        jMenuItem7.setText("Unsettled Orders");
+        jMenu2.add(jMenuItem7);
+
+        jMenuItem8.setText("Settled Orders");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem8);
+
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Reports");
+
+        jMenuItem10.setText("Daily Sales");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem10);
+
+        jMenuItem11.setText("Setlled Orders");
+        jMenu3.add(jMenuItem11);
+
+        jMenuItem12.setText("Unsettled Orders");
+        jMenu3.add(jMenuItem12);
+
+        jMenuItem13.setText("End Of Day Report");
+        jMenu3.add(jMenuItem13);
+
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("addins");
+
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/calc.png"))); // NOI18N
+        jMenuItem3.setText("Techflay Caculator");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem3);
+
         jMenuBar1.add(jMenu4);
+
+        jMenu5.setText("Operations");
+
+        jMenuItem6.setText("Close Day Stock");
+        jMenu5.add(jMenuItem6);
+
+        jMenuBar1.add(jMenu5);
 
         setJMenuBar(jMenuBar1);
 
@@ -437,12 +559,165 @@ setExtendedState(MAXIMIZED_BOTH);
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+      int waiterindex=waiterC.getSelectedIndex();
+      if(waiterindex !=0){        
+        try {
+            String waiter = waiterC.getSelectedItem().toString();
+            conn.prepareStatement("INSERT INTO order_table (waiter) VALUES ('"+waiter+"')").execute();
+            ResultSet rs = conn.prepareStatement("SELECT MAX(order_no) FROM order_table").executeQuery();
+            int order_no = 1;
+            if(rs.next()){
+                order_no = rs.getInt("MAX(order_no)");
+            }
+            int rows = orderContent.getRowCount();
+            for(int i = 0; i < rows; i++){
+                String drink_name = orderContent.getModel().getValueAt(i, 0).toString();
+                String quantity = orderContent.getModel().getValueAt(i, 1).toString();
+                String price = orderContent.getModel().getValueAt(i, 2).toString();
+               conn.prepareStatement("INSERT INTO items_sold (order_no, drink_name, quantity, price) VALUES ("
+                       + "'"+order_no+"', '"+drink_name+"', '"+quantity+"', '"+price+"')").execute();
+             
+            }
+            JOptionPane.showMessageDialog(null, "Order number "+order_no+" saved successfully");
+            mymodel.setRowCount(0);
+            jLabel3.setText("00");
+            jLabel5.setText("00");
+        } catch (SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    else{
+          JOptionPane.showMessageDialog(null, "Please Select Waiter UserName","Techflay Software Solutions 1.0.0",JOptionPane.WARNING_MESSAGE);
+      }
+      
+    
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jToggleButton8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButton8MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jToggleButton8MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int row = orderContent.getSelectedRow();
+        String quantity = jTextField1.getText();
+        if(quantity.trim().equals("")){
+            JOptionPane.showMessageDialog(null, "Input quantity");
+            return;
+        }try{
+        Float quant = Float.parseFloat(quantity);
+        if(quant < 1){
+            JOptionPane.showMessageDialog(null, "Input valid quantity");
+            return;
+        }
+        String unitPrice = orderContent.getModel().getValueAt(row, 2).toString();
+        Float unit_price = Float.parseFloat(unitPrice);
+        Float total = quant * unit_price;
+        mymodel.setValueAt(quantity, row, 1);
+        mymodel.setValueAt(total, row, 3);
+        totalVatAndPrice();
+        jTextField1.setText("");
+        }catch(NumberFormatException e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Input valid quantity");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
+        order_no=JOptionPane.showInputDialog(null, "Enter Order Number.");
+        try {
+            //String order_no = jTextField3.getText();
+            ResultSet rs = conn.prepareStatement("SELECT * FROM order_table WHERE order_no = '"+order_no+"'").executeQuery();
+            if(rs.next()){
+                waiterC.setSelectedItem(rs.getString("waiter"));
+                rs = conn.prepareStatement("SELECT * FROM items_sold WHERE order_no = '"+order_no+"'").executeQuery();
+                mymodel.setRowCount(0);
+                while(rs.next()){
+                    double total = rs.getDouble("quantity") * rs.getDouble("price");
+                    Object[] row = {rs.getString("drink_name"), rs.getString("quantity"),rs.getString("price"),total};
+                    mymodel.addRow(row);
+                    totalVatAndPrice();
+                }
+                jButton3.setVisible(false);
+                jButton5.setVisible(true);
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jToggleButton2ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+       
+        try {            
+            String waiter = waiterC.getSelectedItem().toString();
+            conn.prepareStatement("UPDATE order_table SET waiter = '"+waiter+"' WHERE order_no = '"+order_no+"'").execute();
+            
+            conn.prepareStatement("DELETE FROM items_sold  WHERE order_no = '"+order_no+"'").execute();
+            int rows = orderContent.getRowCount();
+            for(int i = 0; i < rows; i++){
+                String drink_name = orderContent.getModel().getValueAt(i, 0).toString();
+                String quantity = orderContent.getModel().getValueAt(i, 1).toString();
+                String price = orderContent.getModel().getValueAt(i, 2).toString();
+                conn.prepareStatement("INSERT INTO items_sold (order_no, drink_name, quantity, price) VALUES ("
+                       + "'"+order_no+"', '"+drink_name+"', '"+quantity+"', '"+price+"')").execute();
+             
+            }
+            JOptionPane.showMessageDialog(null, "Order number "+order_no+" saved successfully");
+            jButton5.setVisible(false);
+            jButton3.setVisible(true);
+            mymodel.setRowCount(0);
+            jLabel3.setText("00");
+            jLabel5.setText("00");
+        } catch (SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       mymodel.setRowCount(0);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
+         // String order_no = jTextField3.getText();            
+        try {
+           conn.prepareStatement("DELETE FROM `order_table`  WHERE order_no = '"+order_no+"'").execute();
+            conn.prepareStatement("DELETE FROM items_sold  WHERE order_no = '"+order_no+"'").execute();
+            mymodel.setRowCount(0);
+        } catch (SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        JOptionPane.showMessageDialog(null, "Order "+order_no+" Deleted Successfully !!");
+    }//GEN-LAST:event_jToggleButton3ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        MyCalculator calc=new MyCalculator(Home.this,"Techflay Calculator");
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+       new SystemUsers().logoutUser();
+       new StartScreen().setVisible(true);
+       dispose();
+       
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+       DailySales dsales=new DailySales(Home.this);
+       dsales.setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jToggleButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton8ActionPerformed
+       SettleOrder settle=new SettleOrder(Home.this);
+       settle.setVisible(true);
+    }//GEN-LAST:event_jToggleButton8ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+      DailySalesReport dreport=new DailySalesReport(Home.this);
+      dreport.setVisible(true);
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -487,20 +762,32 @@ setExtendedState(MAXIMIZED_BOTH);
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
@@ -513,150 +800,189 @@ setExtendedState(MAXIMIZED_BOTH);
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JToggleButton jToggleButton3;
     private javax.swing.JToggleButton jToggleButton8;
     private javax.swing.JToggleButton jToggleButton9;
+    private javax.swing.JLabel loggedinuser;
     private javax.swing.JPanel main_P;
     private javax.swing.JPanel o_manipulation;
     private javax.swing.JTable orderContent;
     private javax.swing.JPanel orderForm;
     private javax.swing.JScrollPane scrollPane;
     private javax.swing.JPanel side_menu;
+    private javax.swing.JComboBox<String> waiterC;
     // End of variables declaration//GEN-END:variables
 
-    private void loadMenuCategory() { 
-      
+    private void loadMenuCategory() {
+        Object[] row = {};
+        mymodel.setRowCount(0);
+
         try {
-            prepare=conn.prepareStatement("SELECT DISTINCT(category) FROM store_drinks");
-            rs=prepare.executeQuery();
-            while(rs.next()){
-                String drinkname=rs.getString("category");
-                 JButton drinkbutton=new JButton(drinkname);                 
-                 all_drinks.add(drinkbutton);
-                 drinkbutton.addActionListener(new ActionListener() {
+            prepare = conn.prepareStatement("SELECT DISTINCT(category) FROM counter_drinks");
+            rs = prepare.executeQuery();
+            while (rs.next()) {
+                String drinkname = rs.getString("category");
+                JButton drinkbutton = new JButton(drinkname);
+                all_drinks.add(drinkbutton);
+                drinkbutton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                           String category=drinkbutton.getText();
-                           if(category.equals("ALL")){
-                               loadAllDrinks();
-                           }
-                           else{
-                               loadSpecificDrinks(category);
-                           }
-                       
+                        String category = drinkbutton.getText();
+                        if (category.equals("ALL")) {
+                            loadAllDrinks();
+                        } else {
+                            loadSpecificDrinks(category);
+                        }
+
                     }
                 });
-                
-                
+
                 //
-               
-                
             }
         } catch (SQLException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-        }  
-       
-       
+        }
+
     }
     /*private void loadSoftDrinks() { 
        
+     try {
+     prepare=conn.prepareStatement("SELECT drink_name  FROM store_drinks ORDER BY drink_name ASC");
+     rs=prepare.executeQuery();
+     while(rs.next()){
+     String drinkname=rs.getString("drink_name");
+     JButton drinkbutton=new JButton(drinkname);
+     drinkbutton.setBackground(Color.WHITE);
+     drinkbutton.setForeground(Color.red);                
+     drinks.add(drinkbutton);              
+     //
+               
+               
+                
+     }
+     } catch (SQLException ex) {
+     Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+     }        
+     }*/
+
+    public void loadSpecificDrinks(String dname) {
         try {
-           prepare=conn.prepareStatement("SELECT drink_name  FROM store_drinks ORDER BY drink_name ASC");
-            rs=prepare.executeQuery();
-            while(rs.next()){
-                String drinkname=rs.getString("drink_name");
-                JButton drinkbutton=new JButton(drinkname);
-                drinkbutton.setBackground(Color.WHITE);
-                 drinkbutton.setForeground(Color.red);                
-                 drinks.add(drinkbutton);              
-                //
-               
-               
-                
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-        }        
-    }*/
-    public void loadSpecificDrinks(String dname){
-        Object[]row={};
-        mymodel.setRowCount(0);       
-        
-         try {             
-           GridLayout grid = new GridLayout(0, 3, 10, 10);               
-           drinks.removeAll();
-           drinks.setLayout(grid);
-           drinks.revalidate();
-           drinks.repaint();
-           prepare=conn.prepareStatement("SELECT drink_name  FROM store_drinks WHERE category='"+dname+"'");
-            rs=prepare.executeQuery();
-            while(rs.next()){
-                String drinkname=rs.getString("drink_name");
-                JButton specificdrinks=new JButton(drinkname);
+            GridLayout grid = new GridLayout(0, 3, 10, 10);
+            drinks.removeAll();
+            drinks.setLayout(grid);
+            drinks.revalidate();
+            drinks.repaint();
+            prepare = conn.prepareStatement("SELECT drink_name  FROM counter_drinks WHERE category='" + dname + "'");
+            rs = prepare.executeQuery();
+            while (rs.next()) {
+                String drinkname = rs.getString("drink_name");
+                JButton specificdrinks = new JButton(drinkname);
                 specificdrinks.setBackground(Color.decode("#0080C0"));
-                specificdrinks.setForeground(Color.WHITE);            
-                drinks.add(specificdrinks); 
-                
+                specificdrinks.setForeground(Color.WHITE);
+                drinks.add(specificdrinks);
+
                 specificdrinks.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        
+
                         specificdrinks.setBackground(Color.red);
                         JOptionPane.showMessageDialog(null, specificdrinks.getText());
                         try {
                             //SELECT THE DATA AND POPULATE IT IN A AJTABLE
-                            prepare=conn.prepareStatement("SELECT * FROM store_drinks WHERE drink_name='"+specificdrinks.getText()+"'");
-                            rs=prepare.executeQuery();
-                            while(rs.next()){
-                               String drink=rs.getString("drink_name");
-                                String cartons=rs.getString("cartons");
-                                
-                                Object[]row={drink,cartons};
+                            prepare = conn.prepareStatement("SELECT * FROM counter_drinks WHERE drink_name='" + specificdrinks.getText() + "'");
+                            rs = prepare.executeQuery();
+                            while (rs.next()) {
+                                String drink = rs.getString("drink_name");
+                                String cartons = rs.getString("cartons");
+                                float sellingP=rs.getFloat("selling_price");                     
+                                int qty = 1;
+                                float total =sellingP*qty;
+                                Object[] row = {drink, qty,sellingP,total};
                                 mymodel.addRow(row);
-                            
+                                totalVatAndPrice();
                             }
                            //orderContent.setModel(DbUtils.resultSetToTableModel(rs));
-                         
+
                             //To change body of generated methods, choose Tools | Templates.
                         } catch (SQLException ex) {
                             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
-                    
+
                 });
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-        }     
+        }
     }
-    private void loadAllDrinks(){
-           
+
+    private void loadAllDrinks() {
+
         try {
-            GridLayout grid = new GridLayout(0, 3, 10, 10);               
-           drinks.removeAll();
-           drinks.setLayout(grid);
-           drinks.revalidate();
-           drinks.repaint();
-           
-           prepare=conn.prepareStatement("SELECT drink_name  FROM store_drinks ORDER BY drink_name ASC");
-           rs=prepare.executeQuery();
-            while(rs.next()){
-                String drinkname=rs.getString("drink_name");
-                JButton allbuttons=new JButton(drinkname);               
+            GridLayout grid = new GridLayout(0, 3, 10, 10);
+            drinks.removeAll();
+            drinks.setLayout(grid);
+            drinks.revalidate();
+            drinks.repaint();
+
+            prepare = conn.prepareStatement("SELECT drink_name  FROM counter_drinks ORDER BY drink_name ASC");
+            rs = prepare.executeQuery();
+            while (rs.next()) {
+                String drinkname = rs.getString("drink_name");
+                JButton allbuttons = new JButton(drinkname);
                 allbuttons.setBackground(Color.decode("#0080C0"));
                 allbuttons.setForeground(Color.WHITE);
-                drinks.add(allbuttons);   
-               
-               
-               
-                
+                drinks.add(allbuttons);
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-        }     
+        }
     }
+    
+    public void totalVatAndPrice(){
+        int rows = orderContent.getRowCount();
+        double Total = 0;
+        for(int i = 0; i < rows; i ++){
+            String total = orderContent.getModel().getValueAt(i, 3).toString();
+            Total += Double.parseDouble(total);
+        }
+        double vat = 0.16 * Total;
+        jLabel3.setText(String.valueOf(vat));
+        jLabel5.setText(String.valueOf(Total));
+    }
+    private void getLoggedInUser(){
+        try {
+            prepare=conn.prepareStatement("SELECT username FROM system_users WHERE status=1");
+            rs=prepare.executeQuery();
+            if(rs.next()){
+                String username=rs.getString("username");
+                System.out.println(username);
+                loggedinuser.setText(username);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "You Must be Logged In to Access This Module.","Techflay Software Solutions",JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    private void  getResponsibleWaiters(){
+            try {
+            prepare=conn.prepareStatement("SELECT CONCAT(first_name,' ',last_name) AS 'name' FROM employees");
+            rs=prepare.executeQuery();
+            while(rs.next()){
+                String username=rs.getString("name");
+                waiterC.addItem(username);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
 }

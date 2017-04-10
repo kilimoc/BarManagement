@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="210" pageHeight="297" columnWidth="170" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="502d1cbf-9128-4a38-b331-2382f82abc8f">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="95"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[select  *,SUM(price*quantity)  as sum_total,price*quantity as total from items_sold LEFT JOIN order_table ON items_sold.order_no =
+order_table.order_no WHERE items_sold.order_no = 4
+group by items_sold.drink_name]]>
+	</queryString>
+	<field name="item_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="order_no" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="drink_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="quantity" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="price" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="time" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="waiter" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sum_total" class="java.math.BigDecimal"/>
+	<field name="total" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="69" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="1" width="170" height="68" backcolor="#FFFFFF" uuid="76521d4c-14a1-47ee-8cdd-13c80e0730f4"/>
+				<staticText>
+					<reportElement style="Column header" x="99" y="54" width="25" height="13" forecolor="#000000" uuid="d310e17d-9c3b-4dd0-877e-b9ae8c4e31d5"/>
+					<textElement>
+						<font size="10" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Time:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="10" y="54" width="26" height="13" forecolor="#000000" uuid="9d9568f1-88fc-47fc-8154-698297293719"/>
+					<textElement>
+						<font size="10" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Date:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Title" x="6" y="18" width="161" height="13" forecolor="#000000" uuid="c2f5f4c8-92d6-4ba1-94e2-0292b6e57dd9"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="10" isBold="false"/>
+					</textElement>
+					<text><![CDATA[P.O Box 10100 - 1815 Eldoret]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Title" x="6" y="31" width="161" height="13" forecolor="#000000" uuid="6e87d9e4-dd3c-46df-a651-57922aff7187"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="10" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Tel: 0700846787 / 0725060177]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Title" x="5" y="0" width="165" height="19" forecolor="#000000" backcolor="#000000" uuid="bd861161-5695-446d-9541-8cda35f745b8"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="SansSerif" size="15" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Grill Bar]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Title" x="6" y="42" width="161" height="13" forecolor="#000000" uuid="eda22673-fcf9-4af9-9d84-4b81fc1252ba"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Grill Bar.Eldoret opposite county govt.]]></text>
+				</staticText>
+				<textField pattern="dd/MM/yy">
+					<reportElement x="38" y="56" width="48" height="11" uuid="a962e944-0039-4594-ba7f-2ca843105b20"/>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+				<textField pattern="h.mm.ss a">
+					<reportElement x="123" y="56" width="34" height="7" uuid="be4c88e6-bcd9-4b9c-a043-84c04121b2b4"/>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="11" splitType="Stretch">
+			<line>
+				<reportElement x="6" y="10" width="162" height="1" uuid="6206dd99-8fc9-4146-abfa-235c3fec32ed"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="6" y="1" width="84" height="10" forecolor="#000000" uuid="6f1da087-197a-422f-aad5-f51200b32441"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[PARTICULARS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="87" y="1" width="23" height="10" forecolor="#000000" uuid="70c98b4e-ea19-4f99-b4e9-1f2573e514b6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[QTY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="110" y="1" width="32" height="10" forecolor="#000000" uuid="d4cc332b-0919-470f-a364-bc6e56da3673"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[PRICE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="142" y="1" width="28" height="10" forecolor="#000000" uuid="83ccdbbe-56e3-4240-8938-f27b96c64c17"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="-1" y="3" width="170" height="20" uuid="cc26149b-3b12-40a1-b29a-bbb96f3b0a9b"/>
+				<staticText>
+					<reportElement style="Column header" x="112" y="0" width="12" height="10" forecolor="#000000" uuid="15b2c0ec-839d-4e45-9936-d608070d00bb"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[X]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="6" y="10" width="104" height="10" uuid="90c77398-e10e-41f9-8f03-af9e89f9618c"/>
+					<textElement>
+						<font fontName="Tahoma" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{drink_name}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="87" y="0" width="24" height="10" uuid="b91fe6ea-806c-4472-ae7c-2a9c962e544b"/>
+					<textElement textAlignment="Center">
+						<font fontName="Tahoma" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="125" y="0" width="43" height="10" uuid="50835bef-2a34-4edc-a4a0-2e02e0aaeab1"/>
+					<textElement textAlignment="Center">
+						<font fontName="Tahoma" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="125" y="10" width="45" height="10" uuid="b7d9772e-1893-44a8-8fda-4756e8cd904c"/>
+					<textElement textAlignment="Center">
+						<font fontName="Tahoma" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<summary>
+		<band height="141">
+			<staticText>
+				<reportElement style="Column header" x="6" y="109" width="60" height="10" forecolor="#000000" uuid="c26feb9e-1aad-48b7-962d-b380c979b827"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[RECEIPT NO:  #]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="6" y="128" width="158" height="12" forecolor="#6699FF" uuid="8d920f10-94e9-4fbc-93d0-21012bcc9de0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Goods once sold will not be re-accepted]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="6" y="14" width="51" height="10" forecolor="#000000" uuid="3578027b-fed2-4fdf-b5f2-51a256244d63"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CASH:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="6" y="4" width="52" height="10" forecolor="#000000" uuid="dcb83413-3e78-42bb-b802-339e6ae7f648"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="6" y="24" width="53" height="10" forecolor="#000000" uuid="7c8b32a4-e610-42d9-adcc-6eb8dbefee1b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CHANGE:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" positionType="Float" x="112" y="4" width="55" height="10" uuid="ed27b571-9bf2-4222-9ff6-bb54bb75d324"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sum_total}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="7" y="0" width="162" height="1" uuid="7cee2b25-8843-4ec2-be3c-46dba1b9299c"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" positionType="Float" x="66" y="109" width="33" height="10" uuid="2fa94c60-a5e2-4e6c-83a7-1c0193ad0d42"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{order_no}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="6" y="96" width="74" height="10" forecolor="#000000" uuid="bca725f4-6d88-464c-b747-57a243eafa8d"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[You were served by:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="6" y="119" width="159" height="10" forecolor="#000000" uuid="09b08dd6-ec10-4ad0-ad90-36188ae89a2b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[By Techflay, 0708402422 / 0700813548]]></text>
+			</staticText>
+			<line>
+				<reportElement x="6" y="93" width="162" height="1" uuid="f436294f-a9fc-496e-bf5e-30846a62351d"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="7" y="34" width="73" height="10" forecolor="#000000" uuid="479eadc8-487c-4b0f-9427-596858569922"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL ITEMS:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="6" y="46" width="162" height="1" uuid="baa5addd-4ac3-48bc-b777-6fcbb7d3448a"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="7" y="48" width="35" height="10" forecolor="#000000" uuid="a9ce5842-f68e-481d-a410-82c35a4eb793"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[RATE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="60" y="47" width="54" height="10" forecolor="#000000" uuid="f7a1302f-467d-47f9-bbed-1294d1b7fb63"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[VATABLE AMT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="125" y="47" width="39" height="10" forecolor="#000000" uuid="156733b5-7dd5-4648-89e2-67a00375fd26"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[VAT AMT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="123" y="65" width="42" height="10" forecolor="#000000" uuid="75aba1dc-12de-4945-9804-83e1301d90cd"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[0.00]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="7" y="58" width="35" height="10" forecolor="#000000" uuid="c01d6493-fa94-4502-8afd-d34975dd79d3"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[0.16%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="7" y="68" width="35" height="10" forecolor="#000000" uuid="1a595c79-ad44-4098-a62d-d1967c24e882"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[0.00%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="8" y="80" width="159" height="10" forecolor="#000000" uuid="82536793-0c77-493a-ae64-02385e520a84"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[PRICES INCLUSIVE OF VAT]]></text>
+			</staticText>
+			<line>
+				<reportElement x="4" y="108" width="162" height="1" uuid="d7aa8798-63d9-4134-b383-2eea2d32dd54"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" positionType="Float" x="80" y="96" width="55" height="10" uuid="48052fd0-bbf2-4d8b-bece-0c9b87d7ff86"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{waiter}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

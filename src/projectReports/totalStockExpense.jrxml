@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="totalStockExpense" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="262de561-3f6f-47b9-8778-948dce0fba07">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT drink_name AS 'DRINK',cartons AS 'CARTONS',units AS 'UNITS PER CARTON',wc_price AS
+'CARTON BUYING PRICE',(wc_price*cartons) AS 'TOTAL COST',COUNT(drink_name) 'NUMBER OF DRINKS',
+SUM(cartons)  AS 'TOTAL CARTONS RECEIVED',(SELECT SUM(wc_price*cartons) FROM store_drinks)  AS 'TOTAL EXPENSE'
+ FROM store_drinks GROUP BY drink_name;]]>
+	</queryString>
+	<field name="DRINK" class="java.lang.String"/>
+	<field name="CARTONS" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="UNITS PER CARTON" class="java.lang.Integer"/>
+	<field name="CARTON BUYING PRICE" class="java.math.BigDecimal"/>
+	<field name="TOTAL COST" class="java.math.BigDecimal"/>
+	<field name="NUMBER OF DRINKS" class="java.lang.Long"/>
+	<field name="TOTAL CARTONS RECEIVED" class="java.math.BigDecimal"/>
+	<field name="TOTAL EXPENSE" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="802" height="20" uuid="308a7aa8-2904-4473-b72e-a3b5a6f758bf"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[THE GRILL PRIME JUNCTION RESTAURANT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="802" height="20" uuid="792679a2-451a-4401-861a-2ac46b8cb8b9"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[P.O BOX 3306,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="802" height="20" uuid="4a317dea-954c-4662-bce2-75056cbfa08b"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[ELDORET.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="59" width="802" height="20" uuid="d54892fe-76d9-4077-8f12-5c248f78cee5"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="370" y="59" width="100" height="20" uuid="66ef7dd2-a33a-42f6-b955-a6c5af8a7c11"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="2" width="100" height="20" uuid="b3d5c722-cbe7-44d7-a500-f2087e95c809"/>
+				<textElement>
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[DRINK]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="188" y="0" width="100" height="20" uuid="6a64df77-5489-4936-86c8-687cccf7a91d"/>
+				<textElement>
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[CARTONS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="0" width="120" height="20" uuid="da28e295-c0cd-4f37-84d5-6a1dadcbe736"/>
+				<textElement>
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[UNITS PER CARTON]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="530" y="0" width="100" height="20" uuid="ad7a018b-9bb0-49e2-a7ef-b0aeecdc9814"/>
+				<textElement>
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[CARTON BUYING PRICE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="685" y="0" width="100" height="20" uuid="db3b528a-b5ce-483e-94a6-98dbcc98324c"/>
+				<textElement>
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[TOTAL COST]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="29" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="e065cd20-5858-4363-aea1-32f84cff66f4"/>
+				<textFieldExpression><![CDATA[$F{DRINK}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="188" y="3" width="100" height="20" uuid="0972d237-3914-41a7-a706-a978369494f1"/>
+				<textFieldExpression><![CDATA[$F{CARTONS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="3" width="100" height="20" uuid="2c04987d-9582-4f9e-bd46-5a55e3088d7c"/>
+				<textFieldExpression><![CDATA[$F{UNITS PER CARTON}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="530" y="3" width="100" height="20" uuid="90dcaa3e-4176-460c-8fdc-4b5be1d8337c"/>
+				<textFieldExpression><![CDATA[$F{CARTON BUYING PRICE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="685" y="0" width="100" height="20" uuid="771e973a-22af-430f-b192-1e345392fe74"/>
+				<textFieldExpression><![CDATA[$F{TOTAL COST}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<textField>
+				<reportElement x="685" y="4" width="152" height="20" uuid="1d9a7f29-cb1e-428d-be9b-8ea67b3076ff"/>
+				<textFieldExpression><![CDATA[$F{TOTAL EXPENSE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="530" y="4" width="143" height="20" forecolor="#CCCC00" uuid="25253b14-7fd8-4a3c-8f0f-c0066295b0e1"/>
+				<textElement>
+					<font fontName="Arial Black" size="10"/>
+				</textElement>
+				<text><![CDATA[Total Stock Expense]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

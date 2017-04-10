@@ -1,0 +1,13 @@
+try{
+		InputStream stream = getClass().getResourceAsStream(("/class_list.jrxml"));
+		JasperDesign jd = JRXmlLoader.load(stream);
+  		
+		JasperReport jr = JasperCompileManager.compileReport(jd);
+		JasperPrint jp = JasperFillManager.fillReport(jr, null,con);
+		panel_3.removeAll();
+		panel_3.setLayout(new BorderLayout());
+		JRViewer jrviewer = new JRViewer(jp);
+		panel_3.add(jrviewer);
+		panel_3.revalidate();
+		panel_3.repaint(50L);
+		} catch (Exception e) {e.printStackTrace();}
