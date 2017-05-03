@@ -73,7 +73,7 @@ private String orderValue;
         debtL = new javax.swing.JLabel();
         debt = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        mode = new javax.swing.JComboBox<String>();
+        mode = new javax.swing.JComboBox<>();
         tcodeL = new javax.swing.JLabel();
         tcodeT = new javax.swing.JTextField();
 
@@ -107,7 +107,7 @@ private String orderValue;
         changep.setFont(new java.awt.Font("DejaVu Sans", 1, 14)); // NOI18N
 
         jButton1.setFont(new java.awt.Font("DejaVu Sans", 1, 12)); // NOI18N
-        jButton1.setText("Settle Order And Print Receipt");
+        jButton1.setText("Settle Order");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -123,7 +123,7 @@ private String orderValue;
         jLabel2.setText("MODE OF PAYMENT");
 
         mode.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        mode.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Select Mode--", "CASH", "M~PESA", "MASTERCARD" }));
+        mode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select Mode--", "CASH", "M~PESA", "MASTERCARD" }));
         mode.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 modeItemStateChanged(evt);
@@ -216,18 +216,47 @@ private String orderValue;
         float change=amountp-Float.parseFloat(amountPayable.getText());        
         if(change>=0){
         changep.setText(String.valueOf(change));
+        debt.setVisible(false);
+        debtL.setVisible(false);
         }
         else{
-            float debts=Float.parseFloat(amountPayable.getText())-Float.parseFloat(amount);
+            /*float debts=Float.parseFloat(amountPayable.getText())-Float.parseFloat(amount);*/
             changep.setText(String.valueOf(0.00));
             debtL.setVisible(true);
             debt.setVisible(true);
-            debt.setText(String.valueOf(debts));
+            debt.setText(String.valueOf(change*(-1)));
         }
     }//GEN-LAST:event_amountPayedKeyReleased
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        savePayments();
+        if(mode.getSelectedIndex() != 0){
+            if(amountPayed.getText().equals("") || Float.parseFloat(amountPayed.getText()) <= 0){
+                 JOptionPane.showMessageDialog(null, "Please Amount Paid Field Should not be empty or less than 0","Techflay Software Solutions",JOptionPane.WARNING_MESSAGE);
+           }
+            else{
+                if(mode.getSelectedIndex()!=1){
+                    if(tcodeT.getText().equals("")){
+                        JOptionPane.showMessageDialog(null, "You Must Insert Transaction Code To Transact","Techflay Software Solutions",JOptionPane.WARNING_MESSAGE);
+                    }
+                    else{
+                    savePayments();
+                    dispose();
+                    }
+                    
+                }
+                else{
+                    savePayments();
+                    dispose();
+                }
+                 
+               
+            }
+           
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Please You must Select Transaction Mode","Techflay Software Solutions",JOptionPane.WARNING_MESSAGE);
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void modeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_modeItemStateChanged
@@ -348,7 +377,7 @@ private String orderValue;
             if(rs.next()){
                 mydata=conn.prepareStatement("UPDATE received_payments SET amount_payed=amount_payed+"+Payable+" WHERE order_no='"+passedOrderNo.getText()+"'");
                 mydata.execute();
-                 recordTransaction();
+                recordTransaction();
            
             }
             else{

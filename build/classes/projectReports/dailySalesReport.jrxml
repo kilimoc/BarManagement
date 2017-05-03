@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dailySalesReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b26cadbc-cf88-4fe8-a7be-020b3482c128">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT drink_name AS 'DRINK',SUM(quantity) AS 'QUANTITY',price AS 'SELLING PRICE',SUM(quantity*price) AS 'Total Money Collected' from items_sold where date(time)=CURDATE() group by drink_name]]>
+	</queryString>
+	<field name="DRINK" class="java.lang.String"/>
+	<field name="QUANTITY" class="java.math.BigDecimal"/>
+	<field name="SELLING PRICE" class="java.lang.Integer"/>
+	<field name="Total Money Collected" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="7" width="555" height="20" uuid="1bad1316-2ede-4a14-9681-2708f4c35069"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[THE GRILL PRIME JUNCTION RESTAURANT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="27" width="555" height="20" uuid="f731c125-a456-4207-a4cb-d9c63ed71651"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[P.O BOX 256]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="47" width="555" height="20" uuid="77f030fa-ffcf-4e33-b98f-675d0f6592f7"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[ELDORET]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement x="245" y="0" width="100" height="15" uuid="720e8774-ba54-49d0-967c-0cd9296d7b42"/>
+				<text><![CDATA[DAILY SALES REPORT]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="0" width="160" height="20" uuid="fc4add8d-0c6d-4cfd-8b2f-a562a9d1d1b7"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="22" y="0" width="100" height="20" uuid="f0c3a3ed-927a-4aa2-a5b9-92c77057244c"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DRINK]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="184" y="2" width="100" height="20" uuid="c667e15f-0d83-4187-96e4-14e3a4c2c26b"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" isBold="true"/>
+				</textElement>
+				<text><![CDATA[QUANTITY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="315" y="2" width="100" height="20" uuid="23807dd8-5864-47da-aba8-779c2d3f77da"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SELLING PRICE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="3" width="100" height="20" uuid="378263c7-08f7-4f6b-9fb5-fe984450c6f7"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Money Collected]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="22" y="0" width="100" height="20" uuid="6040d1f0-e179-4bf2-96a4-acb8a5a16010"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{DRINK}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="184" y="0" width="100" height="20" uuid="6745b2e2-4da1-4062-bfd4-9238fd1e66df"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{QUANTITY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="315" y="3" width="100" height="20" uuid="2a676373-666d-4a9b-872d-ea73c96786b4"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{SELLING PRICE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="3" width="100" height="20" uuid="f4842b78-b56a-4bac-9759-d8674969953c"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Total Money Collected}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

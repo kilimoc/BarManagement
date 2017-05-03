@@ -11,6 +11,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import bm.admin.DatabaseConfiguration;
+import bm.home.Confirm;
 import bm.home.StartScreen;
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -45,7 +46,7 @@ public class Home extends javax.swing.JFrame {
 
     public Home() {
         initComponents();
-        jButton5.setVisible(false);
+        update.setVisible(false);
         setLocationRelativeTo(null);
         conn = dbc.getConnection();
         mymodel = (DefaultTableModel) orderContent.getModel();
@@ -71,8 +72,6 @@ public class Home extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jToggleButton8 = new javax.swing.JToggleButton();
-        jToggleButton9 = new javax.swing.JToggleButton();
         jPanel2 = new javax.swing.JPanel();
         jToggleButton2 = new javax.swing.JToggleButton();
         jToggleButton3 = new javax.swing.JToggleButton();
@@ -81,8 +80,8 @@ public class Home extends javax.swing.JFrame {
         loggedinuser = new javax.swing.JLabel();
         side_menu = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        save = new javax.swing.JButton();
+        update = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         o_manipulation = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
@@ -107,64 +106,23 @@ public class Home extends javax.swing.JFrame {
         drinks_holder = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
-        waiterC = new javax.swing.JComboBox<String>();
+        waiterC = new javax.swing.JComboBox<>();
         drinks = new javax.swing.JPanel();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
-        jMenuItem12 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenu5 = new javax.swing.JMenu();
-        jMenuItem6 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(75, 157, 223));
         jPanel1.setPreferredSize(new java.awt.Dimension(556, 40));
-
-        jToggleButton8.setText("Pay Order");
-        jToggleButton8.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jToggleButton8MouseClicked(evt);
-            }
-        });
-        jToggleButton8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton8ActionPerformed(evt);
-            }
-        });
-
-        jToggleButton9.setText("Daily Sales");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(406, Short.MAX_VALUE)
-                .addComponent(jToggleButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(76, 76, 76)
-                .addComponent(jToggleButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGap(0, 697, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jToggleButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToggleButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 6, Short.MAX_VALUE))
+            .addGap(0, 40, Short.MAX_VALUE)
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
@@ -199,7 +157,7 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(jToggleButton2)
                 .addGap(60, 60, 60)
                 .addComponent(jToggleButton3)
-                .addContainerGap(308, Short.MAX_VALUE))
+                .addContainerGap(340, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.LINE_START);
@@ -246,21 +204,21 @@ public class Home extends javax.swing.JFrame {
         jPanel9.setBackground(new java.awt.Color(0, 51, 51));
         jPanel9.setLayout(new java.awt.GridLayout(1, 0));
 
-        jButton3.setText("Save Order");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        save.setText("Save Order");
+        save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                saveActionPerformed(evt);
             }
         });
-        jPanel9.add(jButton3);
+        jPanel9.add(save);
 
-        jButton5.setText("Update Order");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        update.setText("Update Order");
+        update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                updateActionPerformed(evt);
             }
         });
-        jPanel9.add(jButton5);
+        jPanel9.add(update);
 
         side_menu.add(jPanel9, java.awt.BorderLayout.PAGE_END);
 
@@ -309,11 +267,13 @@ public class Home extends javax.swing.JFrame {
 
         jLabel2.setText("VAT(16%)");
 
-        jLabel3.setText("Ksh.212");
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setText("0.00");
 
         jLabel4.setText("Total Amount");
 
-        jLabel5.setText("Ksh.2000");
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setText("Ksh.0.00");
 
         javax.swing.GroupLayout orderFormLayout = new javax.swing.GroupLayout(orderForm);
         orderForm.setLayout(orderFormLayout);
@@ -399,7 +359,7 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(302, Short.MAX_VALUE))
+                .addContainerGap(334, Short.MAX_VALUE))
         );
 
         main_P.add(jPanel6, java.awt.BorderLayout.LINE_END);
@@ -421,7 +381,7 @@ public class Home extends javax.swing.JFrame {
 
         jLabel11.setText("Waiter Username");
 
-        waiterC.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "---Select Waiter---" }));
+        waiterC.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---Select Waiter---" }));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -460,97 +420,6 @@ public class Home extends javax.swing.JFrame {
 
         getContentPane().add(jPanel5, java.awt.BorderLayout.CENTER);
 
-        jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
-        jMenuBar1.setBorder(null);
-        jMenuBar1.setForeground(new java.awt.Color(255, 255, 255));
-
-        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/account.png"))); // NOI18N
-        jMenu1.setText("My Account");
-
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/account.png"))); // NOI18N
-        jMenuItem1.setText("Change Account Settings");
-        jMenu1.add(jMenuItem1);
-
-        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/logout.png"))); // NOI18N
-        jMenuItem2.setText("Logout");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem2);
-
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Sales");
-
-        jMenuItem4.setText("Daily Sales");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem4);
-
-        jMenuItem5.setText("Miscellenous");
-        jMenu2.add(jMenuItem5);
-
-        jMenuItem7.setText("Unsettled Orders");
-        jMenu2.add(jMenuItem7);
-
-        jMenuItem8.setText("Settled Orders");
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem8);
-
-        jMenuBar1.add(jMenu2);
-
-        jMenu3.setText("Reports");
-
-        jMenuItem10.setText("Daily Sales");
-        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem10ActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuItem10);
-
-        jMenuItem11.setText("Setlled Orders");
-        jMenu3.add(jMenuItem11);
-
-        jMenuItem12.setText("Unsettled Orders");
-        jMenu3.add(jMenuItem12);
-
-        jMenuItem13.setText("End Of Day Report");
-        jMenu3.add(jMenuItem13);
-
-        jMenuBar1.add(jMenu3);
-
-        jMenu4.setText("addins");
-
-        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/calc.png"))); // NOI18N
-        jMenuItem3.setText("Techflay Caculator");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
-            }
-        });
-        jMenu4.add(jMenuItem3);
-
-        jMenuBar1.add(jMenu4);
-
-        jMenu5.setText("Operations");
-
-        jMenuItem6.setText("Close Day Stock");
-        jMenu5.add(jMenuItem6);
-
-        jMenuBar1.add(jMenu5);
-
-        setJMenuBar(jMenuBar1);
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -558,7 +427,7 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
       int waiterindex=waiterC.getSelectedIndex();
       if(waiterindex !=0){        
         try {
@@ -574,11 +443,11 @@ public class Home extends javax.swing.JFrame {
                 String drink_name = orderContent.getModel().getValueAt(i, 0).toString();
                 String quantity = orderContent.getModel().getValueAt(i, 1).toString();
                 String price = orderContent.getModel().getValueAt(i, 2).toString();
-               conn.prepareStatement("INSERT INTO items_sold (order_no, drink_name, quantity, price) VALUES ("
+               conn.prepareStatement("INSERT INTO items_sold (order_no, drink_name, quantity, unit_price) VALUES ("
                        + "'"+order_no+"', '"+drink_name+"', '"+quantity+"', '"+price+"')").execute();
              
             }
-            JOptionPane.showMessageDialog(null, "Order number "+order_no+" saved successfully");
+            JOptionPane.showMessageDialog(null, "<html>Order number<strong><u> "+order_no+"</u></strong> saved successfully</html>");
             mymodel.setRowCount(0);
             jLabel3.setText("00");
             jLabel5.setText("00");
@@ -591,11 +460,7 @@ public class Home extends javax.swing.JFrame {
       }
       
     
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jToggleButton8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButton8MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton8MouseClicked
+    }//GEN-LAST:event_saveActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int row = orderContent.getSelectedRow();
@@ -632,13 +497,13 @@ public class Home extends javax.swing.JFrame {
                 rs = conn.prepareStatement("SELECT * FROM items_sold WHERE order_no = '"+order_no+"'").executeQuery();
                 mymodel.setRowCount(0);
                 while(rs.next()){
-                    double total = rs.getDouble("quantity") * rs.getDouble("price");
-                    Object[] row = {rs.getString("drink_name"), rs.getString("quantity"),rs.getString("price"),total};
+                    double total = rs.getDouble("quantity") * rs.getDouble("unit_price");
+                    Object[] row = {rs.getString("drink_name"), rs.getString("quantity"),rs.getString("unit_price"),total};
                     mymodel.addRow(row);
                     totalVatAndPrice();
                 }
-                jButton3.setVisible(false);
-                jButton5.setVisible(true);
+                save.setVisible(false);
+                update.setVisible(true);
                 
             }
         } catch (SQLException ex) {
@@ -646,7 +511,7 @@ public class Home extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
        
         try {            
             String waiter = waiterC.getSelectedItem().toString();
@@ -658,20 +523,20 @@ public class Home extends javax.swing.JFrame {
                 String drink_name = orderContent.getModel().getValueAt(i, 0).toString();
                 String quantity = orderContent.getModel().getValueAt(i, 1).toString();
                 String price = orderContent.getModel().getValueAt(i, 2).toString();
-                conn.prepareStatement("INSERT INTO items_sold (order_no, drink_name, quantity, price) VALUES ("
+                conn.prepareStatement("INSERT INTO items_sold (order_no, drink_name, quantity, unit_price) VALUES ("
                        + "'"+order_no+"', '"+drink_name+"', '"+quantity+"', '"+price+"')").execute();
              
             }
-            JOptionPane.showMessageDialog(null, "Order number "+order_no+" saved successfully");
-            jButton5.setVisible(false);
-            jButton3.setVisible(true);
+             JOptionPane.showMessageDialog(null, "<html>Order number<strong><u> "+order_no+"</u></strong> saved successfully</html>");
+            update.setVisible(false);
+            save.setVisible(true);
             mymodel.setRowCount(0);
             jLabel3.setText("00");
             jLabel5.setText("00");
         } catch (SQLException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_updateActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
        mymodel.setRowCount(0);
@@ -688,36 +553,6 @@ public class Home extends javax.swing.JFrame {
         }
         JOptionPane.showMessageDialog(null, "Order "+order_no+" Deleted Successfully !!");
     }//GEN-LAST:event_jToggleButton3ActionPerformed
-
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        MyCalculator calc=new MyCalculator(Home.this,"Techflay Calculator");
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
-
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-       new SystemUsers().logoutUser();
-       new StartScreen().setVisible(true);
-       dispose();
-       
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
-
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-       DailySales dsales=new DailySales(Home.this);
-       dsales.setVisible(true);
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
-
-    private void jToggleButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton8ActionPerformed
-       SettleOrder settle=new SettleOrder(Home.this);
-       settle.setVisible(true);
-    }//GEN-LAST:event_jToggleButton8ActionPerformed
-
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
-
-    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
-      DailySalesReport dreport=new DailySalesReport(Home.this);
-      dreport.setVisible(true);
-    }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -761,8 +596,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel drinks_holder;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
@@ -770,24 +603,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
@@ -802,15 +617,15 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JToggleButton jToggleButton3;
-    private javax.swing.JToggleButton jToggleButton8;
-    private javax.swing.JToggleButton jToggleButton9;
     private javax.swing.JLabel loggedinuser;
     private javax.swing.JPanel main_P;
     private javax.swing.JPanel o_manipulation;
     private javax.swing.JTable orderContent;
     private javax.swing.JPanel orderForm;
+    private javax.swing.JButton save;
     private javax.swing.JScrollPane scrollPane;
     private javax.swing.JPanel side_menu;
+    private javax.swing.JButton update;
     private javax.swing.JComboBox<String> waiterC;
     // End of variables declaration//GEN-END:variables
 
@@ -935,6 +750,36 @@ public class Home extends javax.swing.JFrame {
                 allbuttons.setBackground(Color.decode("#0080C0"));
                 allbuttons.setForeground(Color.WHITE);
                 drinks.add(allbuttons);
+                
+                allbuttons.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+
+                        allbuttons.setBackground(Color.red);
+                        JOptionPane.showMessageDialog(null, allbuttons.getText());
+                        try {
+                            //SELECT THE DATA AND POPULATE IT IN A AJTABLE
+                            prepare = conn.prepareStatement("SELECT * FROM counter_drinks WHERE drink_name='" + allbuttons.getText() + "'");
+                            rs = prepare.executeQuery();
+                            while (rs.next()) {
+                                String drink = rs.getString("drink_name");
+                                String cartons = rs.getString("cartons");
+                                float sellingP=rs.getFloat("selling_price");                     
+                                int qty = 1;
+                                float total =sellingP*qty;
+                                Object[] row = {drink, qty,sellingP,total};
+                                mymodel.addRow(row);
+                                totalVatAndPrice();
+                            }
+                           //orderContent.setModel(DbUtils.resultSetToTableModel(rs));
+
+                            //To change body of generated methods, choose Tools | Templates.
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+
+                });
 
             }
         } catch (SQLException ex) {

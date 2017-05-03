@@ -5,7 +5,14 @@
  */
 package bm.home;
 
+import bm.admin.DatabaseConfiguration;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
 import security.SystemUsers;
 
 /**
@@ -13,6 +20,10 @@ import security.SystemUsers;
  * @author Developer
  */
 public class StartScreen extends javax.swing.JFrame {
+    DatabaseConfiguration dbc = new DatabaseConfiguration();
+    private Connection conn;
+    private PreparedStatement prepare;
+    private ResultSet rs;
 
     /**
      * Creates new form StartScreen
@@ -20,7 +31,9 @@ public class StartScreen extends javax.swing.JFrame {
     public StartScreen() {
         initComponents();
         setLocationRelativeTo(null);
+        conn=dbc.getConnection();
         new SystemUsers().getUsernames(lusername);
+        getColumnTitles();
     }
 
     /**
@@ -47,7 +60,7 @@ public class StartScreen extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        availableDrinksTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         login = new javax.swing.JPanel();
         lusername = new javax.swing.JComboBox<>();
@@ -189,7 +202,7 @@ public class StartScreen extends javax.swing.JFrame {
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setPreferredSize(new java.awt.Dimension(367, 100));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        availableDrinksTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -200,7 +213,7 @@ public class StartScreen extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(availableDrinksTable);
 
         jLabel2.setText("ALL AVAILABLE DRINK CATEGORY");
 
@@ -333,6 +346,7 @@ public class StartScreen extends javax.swing.JFrame {
         
         //Call the login method
         new SystemUsers().getLoginDetails(username, password);
+        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -371,6 +385,7 @@ public class StartScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable availableDrinksTable;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -392,9 +407,37 @@ public class StartScreen extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JPanel login;
     private javax.swing.JPasswordField lpassword;
     private javax.swing.JComboBox<String> lusername;
     // End of variables declaration//GEN-END:variables
+
+    private void getColumnTitles() {
+        ArrayList <String> drinkcategories=new ArrayList<>();
+        try{
+            prepare=conn.prepareStatement("SELECT DISTINCT(category) FROM counter_drinks");
+            rs=prepare.executeQuery();
+            while(rs.next()){
+                String drink_name=rs.getString("category");
+                drinkcategories.add(drink_name);                
+        }
+        
+            
+            for(int i=0;i<drinkcategories.size();i++){
+                System.out.println(drinkcategories.get(i));
+            }
+            System.out.println(availableDrinksTable.getColumnModel().getColumns());
+            //availableDrinksTable.setModel(DbUtils.resultSetToTableModel(rs));
+            
+        }
+        catch(SQLException ex){
+            
+        }
+        
+        
+
+
+
+//To change body of generated methods, choose Tools | Templates.
+    }
 }

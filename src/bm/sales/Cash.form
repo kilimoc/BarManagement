@@ -184,7 +184,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="DejaVu Sans" size="12" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Settle Order And Print Receipt"/>
+        <Property name="text" type="java.lang.String" value="Settle Order"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>

@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
@@ -131,5 +132,27 @@ public class ManagerActions {
         }
          return units;
     }
+    protected void saveDrinks(String drinkname,String quantity,String bprice){
+      //  prepare=conn.prepareStatement("INSERT INTO store_drinks () VALUES(?,?,?)");
+        
+        
+        
+    }
+    protected void saveBottledDrinks(String category,String name,String quantity,String price){
+        
+            try {
+                prepare=conn.prepareStatement("INSERT INTO store_drinks (drink_name,units,wc_price,category) VALUES(?,?,?,?)");
+                prepare.setString(1, name);
+                prepare.setString(2, quantity);
+                prepare.setString(1, name);
+                prepare.setString(1, name);
+                prepare.execute();
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(ManagerActions.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+    
     
 }

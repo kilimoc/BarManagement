@@ -3,12 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Hornbill/BarManagement/src/bm/sales/DailySalesReport.java</file>
-            <file>file:/D:/Hornbill/BarManagement/src/projectReports/daily_report.jrxml</file>
-            <file>file:/D:/Hornbill/BarManagement/src/bm/sales/DailySales.java</file>
-            <file>file:/D:/Hornbill/BarManagement/src/bm/manager/ManagerHome.java</file>
-            <file>file:/D:/Hornbill/BarManagement/src/bm/sales/Home.java</file>
-            <file>file:/D:/Hornbill/BarManagement/src/bm/sales/PayedOrders.java</file>
+            <file>file:/D:/Academics/Java/BarManagement/src/bm/sales/SettleOrder.java</file>
+            <file>file:/D:/Academics/Java/BarManagement/src/Interface/CashierHome.java</file>
+            <file>file:/D:/Academics/Java/BarManagement/src/bm/sales/Home.java</file>
+            <file>file:/D:/Academics/Java/BarManagement/src/Interface/SettleOrder.java</file>
+            <file>file:/D:/Academics/Java/BarManagement/src/worker/WorkerActions.java</file>
+            <file>file:/D:/Academics/Java/BarManagement/src/Interface/DailySales.java</file>
+            <file>file:/D:/Academics/Java/BarManagement/src/Interface/CashierActivities.java</file>
+            <file>file:/D:/Academics/Java/BarManagement/src/bm/manager/ManagerHome.java</file>
+            <file>file:/D:/Academics/Java/BarManagement/src/bm/manager/ManagerActions.java</file>
+            <file>file:/D:/Academics/Java/BarManagement/src/Interface/WaiterFloat.java</file>
         </group>
     </open-files>
 </project-private>

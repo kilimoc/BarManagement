@@ -3,6 +3,30 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT * FROM items_sold;]]>
+	</queryString>
+	<field name="item_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="order_no" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="drink_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="quantity" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="price" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="time" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="p_status" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -34,7 +58,10 @@
 	<pageHeader>
 		<band height="35" splitType="Stretch">
 			<staticText>
-				<reportElement x="201" y="0" width="100" height="20" uuid="5634cc3d-a95a-42c7-95e6-c9133498924c"/>
+				<reportElement x="260" y="0" width="41" height="20" uuid="5634cc3d-a95a-42c7-95e6-c9133498924c"/>
+				<textElement>
+					<font fontName="Arial Black"/>
+				</textElement>
 				<text><![CDATA[FROM]]></text>
 			</staticText>
 			<staticText>
@@ -49,20 +76,49 @@
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="467" y="0" width="100" height="20" uuid="e7206f3b-58bd-43cd-b8e6-5c14aec423af"/>
+				<reportElement x="547" y="0" width="20" height="20" uuid="e7206f3b-58bd-43cd-b8e6-5c14aec423af"/>
+				<textElement>
+					<font fontName="Arial Black"/>
+				</textElement>
 				<text><![CDATA[TO]]></text>
 			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="589" y="0" width="149" height="20" uuid="498c5302-df09-418e-88bc-17cf606d2ecc"/>
+				<reportElement x="567" y="0" width="171" height="20" uuid="498c5302-df09-418e-88bc-17cf606d2ecc"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch"/>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement x="77" y="2" width="100" height="20" uuid="b3e18c13-5b2a-41cf-959a-022edeb1be0a"/>
+				<text><![CDATA[drink_name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="233" y="2" width="100" height="20" uuid="e55c7306-42e2-4f79-b284-0f631ea28f8f"/>
+				<text><![CDATA[quantity]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="421" y="2" width="100" height="20" uuid="ceb8c252-4e11-4e68-b772-67a83cc9ed32"/>
+				<text><![CDATA[price]]></text>
+			</staticText>
+		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch"/>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="76" y="0" width="100" height="20" uuid="1525e533-d14c-4825-ab27-b9e9d4b52973"/>
+				<textFieldExpression><![CDATA[$F{drink_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="233" y="0" width="100" height="20" uuid="51242837-c63e-4fa0-a494-6f11f803a801"/>
+				<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="421" y="0" width="100" height="20" uuid="01a383f1-b071-494b-9317-a8fae92a1617"/>
+				<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
+			</textField>
+		</band>
 	</detail>
 	<columnFooter>
 		<band height="45" splitType="Stretch"/>

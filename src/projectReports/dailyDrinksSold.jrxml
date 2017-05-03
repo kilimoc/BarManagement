@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="salesReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b4015b3c-9276-402f-9ccc-40bc2d81d244">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT drink_name AS 'DRINK NAME',unit_price AS 'SELLING PRICE',SUM(quantity) AS 'QUANTITY SOLD',SUM(quantity*unit_price) AS 'EXPECTED RETURNS' from items_sold where date(time)=CURDATE() GROUP BY drink_name;]]>
+	</queryString>
+	<field name="DRINK NAME" class="java.lang.String"/>
+	<field name="SELLING PRICE" class="java.math.BigDecimal"/>
+	<field name="QUANTITY SOLD" class="java.math.BigDecimal"/>
+	<field name="EXPECTED RETURNS" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="88" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="802" height="20" forecolor="#CCCC00" uuid="410ea33c-12ee-4b10-adff-fe1fc5fac591"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="14"/>
+				</textElement>
+				<text><![CDATA[THE GRILL PRIME JUNCTION ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="802" height="20" forecolor="#CCCC00" uuid="41842e3c-b2b0-47e4-8d48-14a234dea597"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="14"/>
+				</textElement>
+				<text><![CDATA[P.O BOX 256]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="802" height="20" forecolor="#CCCC00" uuid="a9d3b29a-dfc2-4acb-8621-bf91822f4f20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="14"/>
+				</textElement>
+				<text><![CDATA[ELDORET]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement x="228" y="0" width="410" height="24" forecolor="#CCCC00" uuid="66409abc-1bfd-4763-8c6d-e2484642f20a"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="14"/>
+				</textElement>
+				<text><![CDATA[GENERAL SALES REPORT]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="2" width="184" height="22" uuid="318fb934-1a06-48f7-8012-21ff952df70f"/>
+				<textElement>
+					<font fontName="Century Gothic" size="14" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="5" width="112" height="20" forecolor="#009999" uuid="beb06852-4eff-4980-8a54-00fbfa711de0"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DRINK NAME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="158" y="5" width="112" height="20" forecolor="#009999" uuid="7a13d6c1-aa55-47f4-81b9-ba28fd951dd3"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SELLING PRICE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="399" y="5" width="112" height="20" forecolor="#009999" uuid="f16b72f5-a90c-47db-8a4f-1716c64daeee"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[QUANTITY SOLD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="678" y="2" width="126" height="20" forecolor="#009999" uuid="0f93620c-244c-4c74-b451-e2ff7c5cbaa7"/>
+				<textElement textAlignment="Center">
+					<font fontName="Microsoft YaHei UI" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EXPECTED RETURNS]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="11" width="100" height="20" uuid="22259d95-87c2-4993-aa45-fa29d33985f8"/>
+				<textFieldExpression><![CDATA[$F{DRINK NAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="158" y="10" width="100" height="20" uuid="70ac1fae-5136-4b8e-9607-b5c5afcfae16"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{SELLING PRICE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="399" y="11" width="112" height="20" uuid="b8c98eec-2478-4b10-982f-026a66a486e0"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{QUANTITY SOLD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="678" y="10" width="124" height="20" uuid="36a8885e-7be6-4ef3-87d8-d5adf15b50f4"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{EXPECTED RETURNS}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="2" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="802" height="20" uuid="8fe0fe12-f385-4731-9be1-00f6d8c6f742"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="30" splitType="Stretch"/>
+	</summary>
+</jasperReport>

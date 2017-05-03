@@ -68,6 +68,8 @@ public class DailySales extends javax.swing.JDialog {
         dailyReport = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         totalsales = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        dailySalesT = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Daily Sales Report");
@@ -120,6 +122,19 @@ public class DailySales extends javax.swing.JDialog {
         totalsales.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         totalsales.setText("Ksh.10500");
 
+        dailySalesT.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(dailySalesT);
+
         javax.swing.GroupLayout dailyReportLayout = new javax.swing.GroupLayout(dailyReport);
         dailyReport.setLayout(dailyReportLayout);
         dailyReportLayout.setHorizontalGroup(
@@ -130,6 +145,8 @@ public class DailySales extends javax.swing.JDialog {
                 .addGap(29, 29, 29)
                 .addComponent(totalsales, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(200, Short.MAX_VALUE))
+            .addGroup(dailyReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE))
         );
         dailyReportLayout.setVerticalGroup(
             dailyReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,6 +155,10 @@ public class DailySales extends javax.swing.JDialog {
                 .addGroup(dailyReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(totalsales)))
+            .addGroup(dailyReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(dailyReportLayout.createSequentialGroup()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 30, Short.MAX_VALUE)))
         );
 
         getContentPane().add(dailyReport, java.awt.BorderLayout.CENTER);
@@ -151,10 +172,12 @@ public class DailySales extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel dailyReport;
+    private javax.swing.JTable dailySalesT;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel totalsales;
     // End of variables declaration//GEN-END:variables
 
@@ -162,7 +185,7 @@ public class DailySales extends javax.swing.JDialog {
     
     private void getDailySalesReport(){
         try{
-		InputStream stream = getClass().getResourceAsStream(("/projectReports/daily_report.jrxml"));
+		InputStream stream = getClass().getResourceAsStream(("/projectReports/salesReport.jrxml"));
 		JasperDesign jd = JRXmlLoader.load(stream);
   		
 		JasperReport jr = JasperCompileManager.compileReport(jd);

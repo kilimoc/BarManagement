@@ -6,6 +6,7 @@
 package director;
 
 import bm.admin.*;
+import bm.home.Confirm;
 import bm.home.StartScreen;
 import security.SystemUsers;
 import java.awt.CardLayout;
@@ -99,12 +100,6 @@ public class DirectorHome extends javax.swing.JFrame {
         allemployees = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -114,12 +109,21 @@ public class DirectorHome extends javax.swing.JFrame {
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem10 = new javax.swing.JMenuItem();
+        jMenu7 = new javax.swing.JMenu();
+        jMenuItem15 = new javax.swing.JMenuItem();
+        jMenuItem16 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem17 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("THE DIRECTOR PROFILE");
@@ -187,7 +191,7 @@ public class DirectorHome extends javax.swing.JFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 617, Short.MAX_VALUE)
+            .addGap(0, 616, Short.MAX_VALUE)
         );
 
         getContentPane().add(jPanel4, java.awt.BorderLayout.LINE_START);
@@ -299,7 +303,7 @@ public class DirectorHome extends javax.swing.JFrame {
                 .addComponent(jLabel19)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel20)
-                .addContainerGap(131, Short.MAX_VALUE))
+                .addContainerGap(130, Short.MAX_VALUE))
         );
 
         mainPanel.add(HomeP, "home");
@@ -365,12 +369,12 @@ public class DirectorHome extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel14)
-                .addContainerGap(426, Short.MAX_VALUE))
+                .addContainerGap(425, Short.MAX_VALUE))
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel8Layout.createSequentialGroup()
                     .addGap(39, 39, 39)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(67, Short.MAX_VALUE)))
+                    .addContainerGap(66, Short.MAX_VALUE)))
         );
 
         SystemUser.add(jPanel8, java.awt.BorderLayout.CENTER);
@@ -439,7 +443,7 @@ public class DirectorHome extends javax.swing.JFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -486,12 +490,106 @@ public class DirectorHome extends javax.swing.JFrame {
         jMenuBar1.setBackground(new java.awt.Color(204, 204, 0));
         jMenuBar1.setForeground(new java.awt.Color(204, 204, 0));
 
+        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/settings.png"))); // NOI18N
+        jMenu3.setText("System Settings");
+
+        jMenuItem4.setText("Configure Database");
+        jMenu3.add(jMenuItem4);
+
+        jMenuItem5.setText("Set  Priorities");
+        jMenu3.add(jMenuItem5);
+
+        jMenuItem6.setText("Set Accounts");
+        jMenu3.add(jMenuItem6);
+
+        jMenuBar1.add(jMenu3);
+
+        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/payroll.png"))); // NOI18N
+        jMenu4.setText("Payroll");
+
+        jMenuItem7.setText("Process Payment");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem7);
+
+        jMenuItem8.setText("Generate Payroll Report");
+        jMenu4.add(jMenuItem8);
+
+        jMenuBar1.add(jMenu4);
+
+        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/employees.png"))); // NOI18N
+        jMenu5.setText("Employees");
+
+        jMenuItem10.setText("Employee Module");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem10);
+
+        jMenuBar1.add(jMenu5);
+
+        jMenu7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/message.png"))); // NOI18N
+        jMenu7.setText("Finance");
+
+        jMenuItem15.setText("Expenses");
+        jMenu7.add(jMenuItem15);
+
+        jMenuItem16.setText("Profits And Loss");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuItem16);
+
+        jMenuBar1.add(jMenu7);
+
+        jMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/reports.png"))); // NOI18N
+        jMenu6.setText("Reports");
+
+        jMenuItem11.setText("Weekly Report");
+        jMenu6.add(jMenuItem11);
+
+        jMenuItem12.setText("Monthly Report");
+        jMenu6.add(jMenuItem12);
+
+        jMenuItem13.setText("End Of Stock Report");
+        jMenu6.add(jMenuItem13);
+
+        jMenuItem14.setText("Salary Payment Report");
+        jMenu6.add(jMenuItem14);
+        jMenu6.add(jSeparator1);
+
+        jMenuItem2.setText("CumulativeSales Report");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu6);
+
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/accountmenu.png"))); // NOI18N
         jMenu1.setText("Account Settings");
 
         jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/account.png"))); // NOI18N
         jMenuItem1.setText("Edit Account");
         jMenu1.add(jMenuItem1);
+
+        jMenuItem17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/user.png"))); // NOI18N
+        jMenuItem17.setText("System Users");
+        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem17ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem17);
 
         jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/home.png"))); // NOI18N
         jMenuItem3.setText("Home");
@@ -513,70 +611,6 @@ public class DirectorHome extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/user.png"))); // NOI18N
-        jMenu2.setText("System Users");
-
-        jMenuItem2.setText("System Users");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem2);
-
-        jMenuBar1.add(jMenu2);
-
-        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/settings.png"))); // NOI18N
-        jMenu3.setText("System Settings");
-
-        jMenuItem4.setText("Configure Database");
-        jMenu3.add(jMenuItem4);
-
-        jMenuItem5.setText("Set  Priorities");
-        jMenu3.add(jMenuItem5);
-
-        jMenuItem6.setText("Set Accounts");
-        jMenu3.add(jMenuItem6);
-
-        jMenuBar1.add(jMenu3);
-
-        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/payroll.png"))); // NOI18N
-        jMenu4.setText("Payroll");
-
-        jMenuItem7.setText("Process Payment");
-        jMenu4.add(jMenuItem7);
-
-        jMenuItem8.setText("Generate Payroll Report");
-        jMenu4.add(jMenuItem8);
-
-        jMenuBar1.add(jMenu4);
-
-        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/employees.png"))); // NOI18N
-        jMenu5.setText("Employees");
-
-        jMenuItem10.setText("Employee Module");
-        jMenu5.add(jMenuItem10);
-
-        jMenuBar1.add(jMenu5);
-
-        jMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/reports.png"))); // NOI18N
-        jMenu6.setText("Reports");
-
-        jMenuItem11.setText("Weekly Report");
-        jMenu6.add(jMenuItem11);
-
-        jMenuItem12.setText("Monthly Report");
-        jMenu6.add(jMenuItem12);
-
-        jMenuItem13.setText("End Of Stock Report");
-        jMenu6.add(jMenuItem13);
-
-        jMenuItem14.setText("Salary Payment Report");
-        jMenu6.add(jMenuItem14);
-        jMenu6.add(jSeparator1);
-
-        jMenuBar1.add(jMenu6);
-
         setJMenuBar(jMenuBar1);
 
         pack();
@@ -586,11 +620,6 @@ public class DirectorHome extends javax.swing.JFrame {
         Employees emp= new Employees(DirectorHome.this);
         emp.setVisible(true);
     }//GEN-LAST:event_jLabel3MouseClicked
-
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-       mycard=(CardLayout)mainPanel.getLayout();
-       mycard.show(mainPanel, "systemuser");
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         mycard=(CardLayout)mainPanel.getLayout();
@@ -615,6 +644,31 @@ public class DirectorHome extends javax.swing.JFrame {
         new StartScreen().setVisible(true);
         dispose();
     }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+      Employees emp= new Employees(DirectorHome.this);
+      emp.setVisible(true);
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+      Profits myprof=new Profits(DirectorHome.this);
+      myprof.setVisible(true);
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
+
+    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+        mycard=(CardLayout)mainPanel.getLayout();
+        mycard.show(mainPanel, "systemuser");
+    }//GEN-LAST:event_jMenuItem17ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+       GeneralSalesReport greport=new GeneralSalesReport();
+       greport.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        Confirm confirm=new Confirm(DirectorHome.this);
+       confirm.setVisible(true);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -694,11 +748,11 @@ public class DirectorHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
@@ -706,6 +760,9 @@ public class DirectorHome extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
+    private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

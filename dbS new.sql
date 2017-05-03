@@ -43,11 +43,7 @@ CREATE TABLE IF NOT EXISTS `counter_drinks` (
 
 -- Dumping structure for view grill_bar.dailysales
 -- Creating temporary table to overcome VIEW dependency errors
-CREATE TABLE `dailysales` (
-	`DRINK NAME` VARCHAR(50) NULL COLLATE 'latin1_swedish_ci',
-	`TOTAL QUANTITY` DECIMAL(32,0) NULL,
-	`TOTAL AMOUNT` DECIMAL(42,0) NULL
-) ENGINE=MyISAM;
+
 
 
 -- Dumping structure for table grill_bar.developer_d
@@ -80,11 +76,7 @@ CREATE TABLE IF NOT EXISTS `employees` (
 
 
 -- Dumping structure for function grill_bar.hello
-DELIMITER //
-CREATE DEFINER=`root`@`%` FUNCTION `hello`(s CHAR(20)) RETURNS char(50) CHARSET latin1
-    DETERMINISTIC
-RETURN CONCAT ('Hello ',s,'!')//
-DELIMITER ;
+
 
 
 -- Dumping structure for table grill_bar.items_sold
@@ -140,16 +132,7 @@ CREATE TABLE IF NOT EXISTS `received_payments` (
 
 
 -- Dumping structure for table grill_bar.selling_prices
-CREATE TABLE IF NOT EXISTS `selling_prices` (
-  `drinkNo` int(11) NOT NULL AUTO_INCREMENT,
-  `drink_name` varchar(40) DEFAULT NULL,
-  `selling_price` decimal(9,2) DEFAULT NULL,
-  PRIMARY KEY (`drinkNo`),
-  KEY `drink_name` (`drink_name`),
-  CONSTRAINT `selling_prices_ibfk_1` FOREIGN KEY (`drink_name`) REFERENCES `store_drinks` (`drink_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
 
 
 -- Dumping structure for table grill_bar.store_drinks
@@ -195,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `transactions` (
 
 -- Dumping structure for view grill_bar.dailysales
 -- Removing temporary table and create final VIEW structure
-DROP TABLE IF EXISTS `dailysales`;
+
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`127.0.0.1` VIEW `dailysales` AS select drink_name AS 'DRINK NAME',sum(quantity) AS 'TOTAL QUANTITY',sum(quantity*price) AS 'TOTAL AMOUNT' from items_sold  WHERE DATE(time)=CURDATE() GROUP BY drink_name ;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

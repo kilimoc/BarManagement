@@ -18,7 +18,7 @@ USE `grill_bar`;
 -- Dumping structure for table grill_bar.administrator
 CREATE TABLE IF NOT EXISTS `administrator` (
   `first_name` varchar(50) DEFAULT NULL,
-  `last_name` varchar(50) DEFAULT NULL,
+  `last_name` varchar(50) DEFAULT NULL,grill_bargrill_bar
   `id_number` varchar(50) DEFAULT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(50) DEFAULT NULL,

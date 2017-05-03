@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -91,12 +92,15 @@ public class Employees extends javax.swing.JDialog {
         jToggleButton1 = new javax.swing.JToggleButton();
         allEmployees = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        grillBarEmployees = new javax.swing.JTable();
         jLabel17 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         jLabel7.setText("jLabel7");
 
@@ -397,7 +401,7 @@ public class Employees extends javax.swing.JDialog {
 
         MainPanel.add(jPanel5, "updateemp");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        grillBarEmployees.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -408,7 +412,7 @@ public class Employees extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(grillBarEmployees);
 
         jLabel17.setText("All Employees Details");
 
@@ -445,14 +449,6 @@ public class Employees extends javax.swing.JDialog {
 
         jMenu1.setText("Employees");
 
-        jMenuItem1.setText("Update Employee Info");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem1);
-
         jMenuItem2.setText("See All Employees");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -463,6 +459,24 @@ public class Employees extends javax.swing.JDialog {
 
         jMenuBar1.add(jMenu1);
 
+        jMenu2.setText("Employee Operations");
+
+        jMenuItem3.setText("Remove Employee");
+        jMenu2.add(jMenuItem3);
+
+        jMenuItem4.setText("Update Employee ");
+        jMenu2.add(jMenuItem4);
+
+        jMenuItem1.setText("Add New Employee");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu2);
+
         setJMenuBar(jMenuBar1);
 
         pack();
@@ -472,13 +486,9 @@ public class Employees extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_respActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        mycard=(CardLayout)MainPanel.getLayout();
-        mycard.show(MainPanel, "updateemp");
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-         cancel.setVisible(false);
+         getAllEmployees();
+        cancel.setVisible(false);
          save.setVisible(false);
         mycard=(CardLayout)MainPanel.getLayout();
         mycard.show(MainPanel, "allemp");
@@ -487,6 +497,11 @@ public class Employees extends javax.swing.JDialog {
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
        newEmployee();
     }//GEN-LAST:event_saveActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+       mycard=(CardLayout)MainPanel.getLayout();
+       mycard.show(MainPanel, "newemployee");
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -500,6 +515,7 @@ public class Employees extends javax.swing.JDialog {
     private javax.swing.JButton cancel;
     private javax.swing.JTabbedPane e_Registration;
     private javax.swing.JTextField fname;
+    private javax.swing.JTable grillBarEmployees;
     private javax.swing.JTextField idno;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
@@ -521,9 +537,12 @@ public class Employees extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -531,7 +550,6 @@ public class Employees extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
@@ -555,5 +573,15 @@ public class Employees extends javax.swing.JDialog {
            JOptionPane.showMessageDialog(null, "There was an error in Registration.Please contact the System Developer"+ex.getMessage(),"Techflay Software Solutions",JOptionPane.ERROR_MESSAGE);
         }
         
+    }
+    private void getAllEmployees(){
+        try {
+            state=conn.prepareStatement("SELECT * FROM employees");
+             rs=state.executeQuery();
+             grillBarEmployees.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (SQLException ex) {
+            Logger.getLogger(Employees.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
     }
 }
