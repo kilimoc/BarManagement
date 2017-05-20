@@ -81,8 +81,6 @@ public class SettleOrder extends javax.swing.JDialog {
         amountDue = new javax.swing.JTextField();
         amountPayeddesc = new javax.swing.JLabel();
         amountPayed = new javax.swing.JTextField();
-        changedes = new javax.swing.JLabel();
-        change = new javax.swing.JTextField();
         transactbtn = new javax.swing.JButton();
         tcodedes = new javax.swing.JLabel();
         tcodeT = new javax.swing.JTextField();
@@ -119,10 +117,21 @@ public class SettleOrder extends javax.swing.JDialog {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("Total");
 
-        itemCount.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        itemCount.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        itemCount.setForeground(new java.awt.Color(153, 153, 0));
+        itemCount.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        itemCount.setEnabled(false);
 
-        waiter.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        waiter.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        waiter.setForeground(new java.awt.Color(153, 153, 0));
         waiter.setText("KILIMO K CORTNELIUS");
+        waiter.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        waiter.setEnabled(false);
+
+        orderValue.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        orderValue.setForeground(new java.awt.Color(153, 153, 0));
+        orderValue.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        orderValue.setEnabled(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -149,7 +158,7 @@ public class SettleOrder extends javax.swing.JDialog {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
                 .addGap(25, 25, 25)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,11 +187,6 @@ public class SettleOrder extends javax.swing.JDialog {
         amountPayeddesc.setText("Amount Payed");
 
         amountPayed.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 1, 12)); // NOI18N
-
-        changedes.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 1, 12)); // NOI18N
-        changedes.setText("Change");
-
-        change.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 1, 12)); // NOI18N
 
         transactbtn.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 1, 12)); // NOI18N
         transactbtn.setText("Transact");
@@ -216,7 +220,7 @@ public class SettleOrder extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(306, Short.MAX_VALUE)
                 .addComponent(paymodedes, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(mode, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -232,7 +236,10 @@ public class SettleOrder extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel4.setText("Discount Amount");
+
+        disc_amount.setText("0.00");
 
         javax.swing.GroupLayout paymentPanelLayout = new javax.swing.GroupLayout(paymentPanel);
         paymentPanel.setLayout(paymentPanelLayout);
@@ -263,10 +270,7 @@ public class SettleOrder extends javax.swing.JDialog {
                                 .addGroup(paymentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(amountPayed, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
                                     .addComponent(disc_amount))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(changedes, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(change, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         paymentPanelLayout.setVerticalGroup(
@@ -279,9 +283,7 @@ public class SettleOrder extends javax.swing.JDialog {
                     .addComponent(amountduedes)
                     .addComponent(amountDue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(amountPayeddesc, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(amountPayed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(change, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(changedes, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(amountPayed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(paymentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tcodedes)
@@ -310,7 +312,8 @@ public class SettleOrder extends javax.swing.JDialog {
        String amountpayable=amountDue.getText();
        String amountPayed=this.amountPayed.getText();
        String transaction_code=tcodeT.getText();
-       String transaction_mode=mode.getSelectedItem().toString();      
+       String transaction_mode=mode.getSelectedItem().toString();  
+       String discounts=disc_amount.getText();
         if(mode.getSelectedIndex() != 0){
             if(amountPayed.equals("") || Float.parseFloat(amountPayed) <= 0){
                  JOptionPane.showMessageDialog(null, "Please Amount Paid Field Should not be empty or less than 0","Techflay Software Solutions",JOptionPane.WARNING_MESSAGE);
@@ -321,13 +324,15 @@ public class SettleOrder extends javax.swing.JDialog {
                         JOptionPane.showMessageDialog(null, "You Must Insert Transaction Code To Transact","Techflay Software Solutions",JOptionPane.WARNING_MESSAGE);
                     }
                     else{
-                    cashac.savePayments(amountpayable, amountPayed, orderNo, transaction_code, transaction_mode);
+                    cashac.savePayments(discounts,amountpayable, amountPayed, orderNo, transaction_code, transaction_mode);
+                    cashac.recordDiscount(orderNo, waiter.getText(), Double.parseDouble(disc_amount.getText()));
                     dispose();
                     }
                     
                 }
                 else{
-                    cashac.savePayments(amountpayable, amountPayed, orderNo, transaction_code, transaction_mode);
+                    cashac.savePayments(discounts,amountpayable, amountPayed, orderNo, transaction_code, transaction_mode);
+                    cashac.recordDiscount(orderNo, waiter.getText(), Double.parseDouble(disc_amount.getText()));
                     dispose();
                 }
                  
@@ -339,7 +344,7 @@ public class SettleOrder extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Please You must Select Transaction Mode","Techflay Software Solutions",JOptionPane.WARNING_MESSAGE);
         }
         
-        cashac.recordDiscount(orderNo, waiter.getText(), Double.parseDouble(disc_amount.getText()));
+       
         
     }//GEN-LAST:event_transactbtnActionPerformed
 
@@ -366,8 +371,6 @@ public class SettleOrder extends javax.swing.JDialog {
     private javax.swing.JTextField amountPayed;
     private javax.swing.JLabel amountPayeddesc;
     private javax.swing.JLabel amountduedes;
-    private javax.swing.JTextField change;
-    private javax.swing.JLabel changedes;
     private javax.swing.JPanel containerPayment;
     private javax.swing.JTextField disc_amount;
     private javax.swing.JTextField itemCount;

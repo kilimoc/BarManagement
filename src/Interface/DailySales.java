@@ -6,21 +6,16 @@
 package Interface;
 
 import bm.admin.DatabaseConfiguration;
-import java.awt.BorderLayout;
+import bm.manager.WorkerActions;
 import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.InputStream;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
-import net.sf.jasperreports.swing.JRViewer;
+import net.proteanit.sql.DbUtils;
+
 
 /**
  *
@@ -29,16 +24,18 @@ import net.sf.jasperreports.swing.JRViewer;
 public class DailySales extends javax.swing.JFrame {
 
     /**
-     * Creates new form DailySales
+     * Creates new form DailySalesReport
      */
     DatabaseConfiguration dbc = new DatabaseConfiguration();
+    WorkerActions work=new WorkerActions();
     private Connection conn;
     private PreparedStatement prepare;
     private ResultSet rs;
     public DailySales() {
         initComponents();
         conn=dbc.getConnection();
-        loadDailySalesReport();
+        dailySales.setModel(DbUtils.resultSetToTableModel(work.getDailySales()));
+      
         
         
         
@@ -61,20 +58,44 @@ public class DailySales extends javax.swing.JFrame {
     private void initComponents() {
 
         dailySalesReport = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        dailySales = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         dailySalesReport.setBackground(new java.awt.Color(255, 255, 255));
 
+        dailySales.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(dailySales);
+
         javax.swing.GroupLayout dailySalesReportLayout = new javax.swing.GroupLayout(dailySalesReport);
         dailySalesReport.setLayout(dailySalesReportLayout);
         dailySalesReportLayout.setHorizontalGroup(
             dailySalesReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 775, Short.MAX_VALUE)
+            .addGap(0, 700, Short.MAX_VALUE)
+            .addGroup(dailySalesReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(dailySalesReportLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         dailySalesReportLayout.setVerticalGroup(
             dailySalesReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 458, Short.MAX_VALUE)
+            .addGap(0, 387, Short.MAX_VALUE)
+            .addGroup(dailySalesReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(dailySalesReportLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)))
         );
 
         getContentPane().add(dailySalesReport, java.awt.BorderLayout.CENTER);
@@ -108,6 +129,9 @@ public class DailySales extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(DailySales.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -118,24 +142,12 @@ public class DailySales extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable dailySales;
     private javax.swing.JPanel dailySalesReport;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
-    private void loadDailySalesReport() {
-        try{
-		InputStream stream = getClass().getResourceAsStream(("/projectReports/dailyDrinksSold.jrxml"));
-		JasperDesign jd = JRXmlLoader.load(stream);
-  		
-		JasperReport jr = JasperCompileManager.compileReport(jd);
-		JasperPrint jp = JasperFillManager.fillReport(jr, null,conn);
-		dailySalesReport.removeAll();
-		dailySalesReport.setLayout(new BorderLayout());
-		JRViewer jrviewer = new JRViewer(jp);
-		dailySalesReport.add(jrviewer);
-		dailySalesReport.revalidate();
-		dailySalesReport.repaint(50L);
-		} catch (Exception e) {e.printStackTrace();
-                }
-       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
+
+    
 }

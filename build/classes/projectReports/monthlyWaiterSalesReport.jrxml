@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="monthlyWaiterSalesReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="91c5167c-4eb1-40f1-86d1-c0049872ceb7">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="30"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT waiter_name AS 'WORKER',drink_name AS 'DRINK',unit_price AS'SELLING PRICE',sum(quantity) AS 'TOTAL UNITS',sum(quantity*unit_price) AS 'EXPECTED TOTAL RETURNS' FROM items_sold;]]>
+	</queryString>
+	<field name="WORKER" class="java.lang.String"/>
+	<field name="DRINK" class="java.lang.String"/>
+	<field name="SELLING PRICE" class="java.math.BigDecimal"/>
+	<field name="TOTAL UNITS" class="java.math.BigDecimal"/>
+	<field name="EXPECTED TOTAL RETURNS" class="java.math.BigDecimal"/>
+	<variable name="totalSales" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{EXPECTED TOTAL RETURNS}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="63" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="802" height="20" forecolor="#CCCC00" uuid="b76841a6-d95a-402f-9abe-5b13a73015aa"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[THE GRILL PRIME JUNCTION ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="802" height="20" forecolor="#CCCC00" uuid="c2371873-573d-4cfd-9f62-0708bf9ac164"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BAR & RESTAURANT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="802" height="20" forecolor="#CCCC00" uuid="eabfd1e9-7c6f-436c-b8ab-b4273af17232"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ELDORET]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="466" y="2" width="169" height="20" uuid="193a8649-b108-4269-a2ff-456134510173"/>
+				<textElement>
+					<font fontName="Arial Black" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{WORKER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="320" y="2" width="146" height="20" uuid="63e3147c-724d-44f0-8e4a-4f9fdb89da36"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Monthly Sales Report For]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="2" width="134" height="20" uuid="985123c2-bd4d-467c-8df3-e26f29a86dc7"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="172" height="20" uuid="2b3bedf2-18ea-478f-9b96-5da9dfbe9d68"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[DRINK]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="172" y="0" width="108" height="20" uuid="3db61df8-9e0e-424c-90d6-7909764ec34b"/>
+				<textElement>
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[SELLING PRICE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="342" y="0" width="149" height="20" uuid="89e245f6-7da2-446d-9fcd-d7df2844a268"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[TOTAL UNITS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="600" y="0" width="164" height="20" uuid="6be9eb71-e468-4a7f-ad2d-78db9a3acdbf"/>
+				<textElement>
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[EXPECTED TOTAL RETURNS]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="172" height="20" uuid="d8c33781-99c9-49df-819d-ffe8c2c07fc5"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{DRINK}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="172" y="0" width="108" height="20" uuid="a13091ff-c98a-4c0e-ad26-46c8b31a21cf"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{SELLING PRICE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="342" y="0" width="149" height="20" uuid="e046198a-f5a7-4359-b1ba-e2caa42f60db"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{TOTAL UNITS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="600" y="0" width="164" height="20" uuid="d7a87c63-ef9d-481b-a147-fd25b574e5cd"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{EXPECTED TOTAL RETURNS}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<textField>
+				<reportElement x="600" y="0" width="164" height="20" uuid="c1ddd43d-7da6-44ce-ba53-d63379452773"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalSales}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

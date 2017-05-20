@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dailyStockLevel" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b7f1ad44-5b6f-4059-ac66-124acb6247d8">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT  counter_drinks.drink_name AS 'DRINK', counter_drinks.total_units AS 'OPENING STOCK' , IfNULL(SUM(items_sold.quantity),0) AS 'QUANTITY SOLD',(counter_drinks.total_units- IfNULL(SUM(items_sold.quantity),0)) AS  'CLOSING STOCK'  from counter_drinks LEFT OUTER JOIN items_sold ON counter_drinks.drink_name=items_sold.drink_name GROUP BY counter_drinks.drink_name]]>
+	</queryString>
+	<field name="DRINK" class="java.lang.String"/>
+	<field name="OPENING STOCK" class="java.lang.Integer"/>
+	<field name="QUANTITY SOLD" class="java.math.BigDecimal"/>
+	<field name="CLOSING STOCK" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="64" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="800" height="20" forecolor="#CCCC00" uuid="aa9e92f1-cb59-41e5-b54f-1e3749aeab33"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="14"/>
+				</textElement>
+				<text><![CDATA[THE GRILL PRIME JUNCTION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="20" width="800" height="20" forecolor="#CCCC00" uuid="b0d15498-7826-47ae-940e-082b35c2599a"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="14"/>
+				</textElement>
+				<text><![CDATA[BAR & RESTAURANT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="40" width="800" height="20" forecolor="#CCCC00" uuid="c1bc35f9-7bd6-4024-a752-955c9ed5b184"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="14"/>
+				</textElement>
+				<text><![CDATA[LOCATED IN ELDORET]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="239" y="0" width="100" height="35" uuid="ed643784-891c-4c6c-8a87-36f753b19fee"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sales Report On:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="339" y="0" width="237" height="35" uuid="af5fea28-5eda-419c-b560-0c8a96c9a0ca"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="200" height="20" uuid="1ccfb789-c6d1-49d3-907b-9025295b4cef"/>
+				<textElement>
+					<font fontName="Arial Black" size="12" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[DRINK]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="200" height="20" uuid="98d2b1cd-ee98-40ee-92b3-7f560a850fa1"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="12" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[OPENING STOCK]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="0" width="200" height="20" uuid="dc833bdf-f384-4658-ac17-f39810a6cb25"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="12" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[QUANTITY SOLD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="600" y="0" width="200" height="20" uuid="320c6c89-6110-47e6-a54c-38267def2cbd"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="12" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[CLOSING STOCK]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="200" height="20" uuid="48fa6d4d-0c91-4215-8fcc-50df91519fed"/>
+				<textFieldExpression><![CDATA[$F{DRINK}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="200" height="20" uuid="ed2e8641-3ab6-43cf-8364-f6bd60f4a03e"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{OPENING STOCK}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="0" width="200" height="20" uuid="5a1c1a55-8ae6-425f-bf68-8d51e15daa5c"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{QUANTITY SOLD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="600" y="0" width="200" height="20" uuid="9c00ca5e-390e-43cf-ade3-399961b3707d"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{CLOSING STOCK}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

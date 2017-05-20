@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="salesReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b4015b3c-9276-402f-9ccc-40bc2d81d244">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="131"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
-		<![CDATA[SELECT * FROM sales_reportView;]]>
+		<![CDATA[SELECT drink_name AS 'DRINK NAME',sum(quantity) AS 'TOTAL QNTY',unit_price AS 'SELLING PRICE',sum(quantity*unit_price) AS 'TOTAL RETURNS' from items_sold GROUP BY drink_name;]]>
 	</queryString>
 	<field name="DRINK NAME" class="java.lang.String"/>
-	<field name="BUYING PRICE" class="java.math.BigDecimal"/>
-	<field name="SELLING PRICE" class="java.lang.Integer"/>
-	<field name="QUANTITY SOLD" class="java.math.BigDecimal"/>
-	<field name="TOTAL EXPENSE" class="java.math.BigDecimal"/>
-	<field name="TOTAL RETURNSS" class="java.math.BigDecimal"/>
-	<field name="PROFITS" class="java.math.BigDecimal"/>
+	<field name="TOTAL QNTY" class="java.math.BigDecimal"/>
+	<field name="SELLING PRICE" class="java.math.BigDecimal"/>
+	<field name="TOTAL RETURNS" class="java.math.BigDecimal"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -50,115 +47,73 @@
 				</textElement>
 				<text><![CDATA[GENERAL SALES REPORT]]></text>
 			</staticText>
-			<textField pattern="EEEEE dd MMMMM yyyy">
+			<textField pattern="dd MMMMM yyyy">
 				<reportElement x="56" y="2" width="128" height="22" uuid="318fb934-1a06-48f7-8012-21ff952df70f"/>
 				<textElement>
 					<font fontName="Arial Black" size="14" isItalic="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="0" y="0" width="56" height="22" forecolor="#CCCC00" uuid="fe4526b9-9fa5-40a4-a78b-5a0e171d31ec"/>
-				<textElement textAlignment="Center">
-					<font fontName="Arial Black" size="14"/>
-				</textElement>
-				<text><![CDATA[Date]]></text>
-			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="25" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="5" width="112" height="20" forecolor="#009999" uuid="beb06852-4eff-4980-8a54-00fbfa711de0"/>
-				<textElement>
-					<font fontName="Times New Roman" size="10" isBold="true"/>
+				<reportElement x="0" y="0" width="200" height="20" forecolor="#CCCCFF" uuid="9a6d392f-445c-4757-a4dc-662809c10d86"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DRINK NAME]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="128" y="5" width="100" height="20" forecolor="#009999" uuid="9f423687-4d7c-4069-9f40-a77e90a3443d"/>
+				<reportElement x="200" y="0" width="200" height="20" forecolor="#CCCCFF" uuid="555a517e-ff72-4602-b42b-343074591fff"/>
 				<textElement textAlignment="Center">
-					<font fontName="Times New Roman" size="10" isBold="true"/>
+					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[BUYING PRICE]]></text>
+				<text><![CDATA[TOTAL QNTY]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="258" y="5" width="112" height="20" forecolor="#009999" uuid="7a13d6c1-aa55-47f4-81b9-ba28fd951dd3"/>
+				<reportElement x="400" y="0" width="200" height="20" forecolor="#CCCCFF" uuid="3a5bda6c-6524-4082-adfe-d23c6a942525"/>
 				<textElement textAlignment="Center">
-					<font fontName="Times New Roman" size="10" isBold="true"/>
+					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[SELLING PRICE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="384" y="2" width="112" height="20" forecolor="#009999" uuid="f16b72f5-a90c-47db-8a4f-1716c64daeee"/>
+				<reportElement x="600" y="0" width="200" height="20" forecolor="#CCCCFF" uuid="490d487b-985b-43ff-9fde-d8045467e7f9"/>
 				<textElement textAlignment="Center">
-					<font fontName="Times New Roman" size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[QUANTITY SOLD]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="612" y="5" width="100" height="20" forecolor="#009999" uuid="4f0c44ab-3bed-40a8-baea-ac7b8438fe20"/>
-				<textElement textAlignment="Center">
-					<font fontName="Times New Roman" size="10" isBold="true"/>
+					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TOTAL RETURNS]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="727" y="5" width="75" height="20" forecolor="#009999" uuid="f97dc464-7ae4-4713-9527-0b979c59258e"/>
-				<textElement textAlignment="Center">
-					<font fontName="Times New Roman" size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[PROFITS]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="512" y="5" width="100" height="20" forecolor="#009999" uuid="5bb87437-2cc7-4878-b0a1-082493bb7008"/>
-				<textElement textAlignment="Center">
-					<font fontName="Times New Roman" size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[TOTAL EXPENSE]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="35" splitType="Stretch">
+		<band height="24" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="11" width="100" height="20" uuid="22259d95-87c2-4993-aa45-fa29d33985f8"/>
+				<reportElement x="0" y="0" width="200" height="20" uuid="188015d7-b775-41e0-a35c-b0af0ffe3a8f"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{DRINK NAME}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="128" y="10" width="100" height="20" uuid="0855226f-b131-44a7-80bf-0cb3628a8ad8"/>
+				<reportElement x="200" y="0" width="200" height="20" uuid="7017412f-183b-4453-8204-4ec91b722c41"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{BUYING PRICE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{TOTAL QNTY}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="258" y="11" width="100" height="20" uuid="70ac1fae-5136-4b8e-9607-b5c5afcfae16"/>
+				<reportElement x="400" y="0" width="200" height="20" uuid="23890650-1172-4be2-a523-9cd4a8a8112f"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{SELLING PRICE}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="384" y="10" width="100" height="20" uuid="b8c98eec-2478-4b10-982f-026a66a486e0"/>
+				<reportElement x="600" y="0" width="200" height="20" uuid="9afd7f7a-8bb0-49a3-84cf-0b47599955d4"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{QUANTITY SOLD}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="612" y="10" width="100" height="20" uuid="02c1e159-86f6-4509-80c2-6daff2ac11cd"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{TOTAL RETURNSS}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="727" y="10" width="75" height="20" uuid="01d2df24-d510-479f-b808-efbdde4d3441"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{PROFITS}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="512" y="10" width="100" height="20" uuid="46fe3fd8-8bbb-443e-bb40-29749644af26"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{TOTAL EXPENSE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{TOTAL RETURNS}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="2" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
 		<band height="23" splitType="Stretch">

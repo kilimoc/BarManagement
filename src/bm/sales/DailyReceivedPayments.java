@@ -5,7 +5,9 @@
  */
 package bm.sales;
 
+import Interface.CashierActivities;
 import bm.admin.DatabaseConfiguration;
+import bm.manager.ManagerActions;
 import java.awt.CardLayout;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,6 +29,8 @@ public class DailyReceivedPayments extends javax.swing.JDialog {
      * Creates new form DailyReceivedPayments
      */
     DatabaseConfiguration dbc = new DatabaseConfiguration();
+    CashierGeneralMethods methods=new CashierGeneralMethods();
+    ManagerActions manage=new ManagerActions();
     private Connection conn;
     private PreparedStatement prepare;
     private ResultSet rs;
@@ -36,6 +40,7 @@ public class DailyReceivedPayments extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         conn=dbc.getConnection();
         transactionPerMode() ;
+        totalCollection.setText(String.valueOf(methods.getDailyTotalSales(manage.getCurrentDayMonth().get(1)).get(0)));
         
     }
 

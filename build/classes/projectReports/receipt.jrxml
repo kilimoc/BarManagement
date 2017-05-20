@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="receipt" language="groovy" pageWidth="297" pageHeight="421" columnWidth="257" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="43c5225e-08b4-42ed-a9d2-079c90ce8a00">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[select order_no AS "ORDER NO",drink_name AS "DRINK",quantity AS "QNTY",unit_price AS "S.PRICE",quantity*unit_price AS "TOTAL",waiter_name AS "WAITER" from items_sold]]>
+	</queryString>
+	<field name="ORDER NO" class="java.lang.Integer"/>
+	<field name="DRINK" class="java.lang.String"/>
+	<field name="QNTY" class="java.lang.Integer"/>
+	<field name="S.PRICE" class="java.math.BigDecimal"/>
+	<field name="TOTAL" class="java.math.BigDecimal"/>
+	<field name="WAITER" class="java.lang.String"/>
+	<variable name="totalCost" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOTAL}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="32" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="257" height="14" uuid="3da5675d-27f7-46af-9dbb-1891c635045a"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[THE GRILL PRIME JUNCTION RESTAURANT ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="14" width="257" height="14" uuid="035a8955-b24e-41fe-9f81-e25cd15a2075"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ELDORET]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="105" y="15" width="100" height="20" uuid="1ebe8631-184f-40e2-aa25-2fbf3618c690"/>
+				<textElement>
+					<font fontName="Arial Black" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ORDER NO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="15" width="100" height="20" uuid="3292e803-7463-46e2-a99a-d26f7559bb8e"/>
+				<text><![CDATA[ORDER NO]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="88" height="20" uuid="ff72e2c7-9bea-4b83-a928-1318f0748015"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial Black" size="8"/>
+				</textElement>
+				<text><![CDATA[DRINK]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="105" y="0" width="45" height="20" uuid="afaa602b-2c97-40d2-a067-8592dcc8cc89"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial Black" size="8"/>
+				</textElement>
+				<text><![CDATA[QNTY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="156" y="1" width="49" height="20" uuid="0aa2c6d0-4559-48d3-9688-45cc875d8c92"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial Black" size="8"/>
+				</textElement>
+				<text><![CDATA[S.PRICE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="226" y="1" width="31" height="20" uuid="2df4f320-a04b-4a52-8cbf-9e1f34342c2c"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial Black" size="8"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="105" height="20" uuid="3dc7f42c-b466-4c4d-b2bc-96f96aabbab8"/>
+				<textFieldExpression><![CDATA[$F{DRINK}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="105" y="0" width="45" height="20" uuid="6e2460c3-426a-49a5-8fbc-21324d87e802"/>
+				<textFieldExpression><![CDATA[$F{QNTY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="156" y="6" width="60" height="20" uuid="d6f27864-1eb4-48d7-b3c1-d3715212a271"/>
+				<textFieldExpression><![CDATA[$F{S.PRICE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="226" y="6" width="31" height="20" uuid="42937565-5740-4a01-b678-674bf7f28923"/>
+				<textFieldExpression><![CDATA[$F{TOTAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="1" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="5" y="0" width="252" height="20" uuid="7e37ece9-ac5e-40b9-a73b-6c4b6f16f709"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Thank You So Much.Welcome Again]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="41" splitType="Stretch">
+			<staticText>
+				<reportElement x="5" y="20" width="121" height="20" uuid="7781d87d-b2fb-495a-89b1-ffe0ea89208e"/>
+				<text><![CDATA[You Were Served By]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="126" y="20" width="100" height="20" uuid="fd6c926f-6d5b-4e1c-b396-50bf46a85ecb"/>
+				<textElement>
+					<font fontName="Arial Black"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{WAITER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="26" y="0" width="100" height="20" uuid="6cd9f090-6b0f-4ddb-97d9-36e4df432d36"/>
+				<text><![CDATA[Total Cost]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="126" y="0" width="131" height="20" uuid="7b683f18-63a5-4f3f-a33b-182a4b17d1f6"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalCost}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CumulativeWaiterSales" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e8a2e9e0-7777-41d9-a223-ce7e80a8e0fd">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT waiter_name AS 'NAME',SUM(quantity) AS 'TOTAL ITEMS SOLD',SUM(quantity*unit_price) AS 'TOTAL RETURNS' FROM items_sold GROUP BY waiter_name;]]>
+	</queryString>
+	<field name="NAME" class="java.lang.String"/>
+	<field name="TOTAL ITEMS SOLD" class="java.math.BigDecimal"/>
+	<field name="TOTAL RETURNS" class="java.math.BigDecimal"/>
+	<variable name="totalSales" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOTAL RETURNS}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="66" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="801" height="20" forecolor="#CCCC00" uuid="50bbb069-0c21-4c4d-992c-d43d714aa457"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="12"/>
+				</textElement>
+				<text><![CDATA[THE GRILL PRIME JUNCTION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="20" width="801" height="20" forecolor="#CCCC00" uuid="2cdf6a52-ca88-4702-a8eb-9fe38e6cd0a9"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="12"/>
+				</textElement>
+				<text><![CDATA[BAR & RESTAURANT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="40" width="801" height="20" forecolor="#CCCC00" uuid="889e3870-8cb1-41bc-8b17-857120aba1b0"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="12"/>
+				</textElement>
+				<text><![CDATA[ELDORET]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="349" y="4" width="452" height="20" uuid="cf43a824-5f10-4e59-9596-dc7dbbd15401"/>
+				<textElement>
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[SALES OF ALL WORKERS CUMULATIVELY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="4" width="100" height="20" uuid="7bffe155-0d9f-43d9-a30b-b3aba07a934f"/>
+				<text><![CDATA[Generated On:]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="101" y="4" width="100" height="20" uuid="8ae81fbb-5f4f-4dbc-b87c-7bd1c1df45f6"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="267" height="20" uuid="8a4153b6-64b7-48c2-8557-e7dece52b279"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="12" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[NAME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="267" y="0" width="267" height="20" uuid="19228222-8159-4890-b629-f644b0f25adf"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="12" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL ITEMS SOLD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="534" y="0" width="267" height="20" uuid="db804d77-f348-4428-bcdf-ba5b071c1e74"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="12" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL RETURNS]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="267" height="20" uuid="01a681db-7e34-4521-bcf2-dc0212a84213"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{NAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="267" y="0" width="267" height="20" uuid="aa728fc6-cb30-49ed-8aa5-2dd7c01315b8"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{TOTAL ITEMS SOLD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="534" y="0" width="267" height="20" uuid="7927dff4-e5d2-4f63-8ee3-3e73f97ae208"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{TOTAL RETURNS}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="534" y="0" width="267" height="20" uuid="e1ecdecc-94b7-4c05-b970-bc5d5ffc295c"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial Black" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalSales}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="434" y="4" width="100" height="20" uuid="43a36231-0165-4b59-a0f5-30ba01e432e1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[GRAND TOTAL]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

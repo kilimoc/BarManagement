@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="monthlyWaiterSalesReport" language="groovy" pageWidth="595" pageHeight="421" orientation="Landscape" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="91c5167c-4eb1-40f1-86d1-c0049872ceb7">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT DISTINCT(transaction_mode) AS 'PAYMENT MODE',SUM(amount_payed) AS 'AMOUNT RECEIVED' from transactions WHERE date(time)=CURDATE() GROUP BY transaction_mode ;]]>
+	</queryString>
+	<field name="PAYMENT MODE" class="java.lang.String"/>
+	<field name="AMOUNT RECEIVED" class="java.math.BigDecimal"/>
+	<variable name="dailyReceipts" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{AMOUNT RECEIVED}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="63" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="20" forecolor="#CCCC00" uuid="b76841a6-d95a-402f-9abe-5b13a73015aa"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[THE GRILL PRIME JUNCTION ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="555" height="20" forecolor="#CCCC00" uuid="c2371873-573d-4cfd-9f62-0708bf9ac164"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BAR & RESTAURANT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="555" height="20" forecolor="#CCCC00" uuid="eabfd1e9-7c6f-436c-b8ab-b4273af17232"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ELDORET]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="134" y="2" width="421" height="20" uuid="63e3147c-724d-44f0-8e4a-4f9fdb89da36"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Black" size="14"/>
+				</textElement>
+				<text><![CDATA[AMOUNT RECEIVED DISTRIBUTIONS]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="2" width="134" height="20" uuid="985123c2-bd4d-467c-8df3-e26f29a86dc7"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="215" height="20" uuid="a42c724b-c17e-4f01-a0e2-db5f688c8ace"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial Black" isUnderline="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[PAYMENT MODE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="215" y="0" width="340" height="20" uuid="51958da1-d867-4bdc-be86-cd1d7a55d7e1"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial Black" isUnderline="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[AMOUNT RECEIVED]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="215" height="20" uuid="716fbff1-92af-4968-9429-9c2a94435d12"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{PAYMENT MODE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="215" y="0" width="340" height="20" uuid="744b564a-5360-4075-80d3-7ed8db1723b9"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{AMOUNT RECEIVED}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<textField>
+				<reportElement x="215" y="4" width="340" height="20" uuid="eac9ef17-b931-41f4-ac9a-a6d1d9373c14"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{dailyReceipts}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="115" y="4" width="100" height="20" uuid="37bc6e1b-1006-4ad5-b4d3-45811f68ad94"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Arial Black" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[GRAND TOTAL]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

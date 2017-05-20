@@ -35,22 +35,14 @@ public class CashierActivities {
     public static void main(String [] args){
         CashierActivities active=new CashierActivities();
         System.out.println(active.closeDailyStock().get(1));
+        System.out.println(active.getplusDiscount());
        
         
         
-    }
+    }    
     
-    
-    protected void updateOrder(){
-        //This is used to update an order.
-        
-    }
-    
-    public void settleOrder(){
-        //records all the for each customer
-        
-        
-    }
+   
+   
    
     
     protected ArrayList<Double> closeDailyStock(){
@@ -87,21 +79,12 @@ public class CashierActivities {
         }
         return totalcollection;
     }
-    public void getDailySales(String date){
-        //This is required to get te
-    }
     
-    public void getMonthlySales(int month){
-        
-    }
-    public void getAllSales(){
-        
-    }
+
+    
     
     //This method is used to get the account of the waiter.The amount owed in their account.
-    public void getWaiterAccountDetails(){
-        
-    }
+  
     protected ResultSet getorderItems(String orderNo){
         try {
             state=conn.prepareStatement("SELECT  drink_name AS 'Drink',quantity AS 'Quantity Bought',unit_price AS 'UNIT PRICE',(quantity*unit_price) AS 'TOTAL AMOUNT' FROM items_sold WHERE order_no = '"+orderNo+"' and p_status=0");
@@ -136,11 +119,13 @@ public class CashierActivities {
         return orderDetails;        
     }
     
-    protected void savePayments(String amountPayable,String amountPayed,String orderNo,String transaction_code,String transaction_mode) {
+    protected void savePayments(String discount,String amountPayable,String amountPayed,String orderNo,String transaction_code,String transaction_mode) {
         
     try {
         float Payable = Float.parseFloat(amountPayable);
-        float Payed = Float.parseFloat(amountPayed);
+        float Payed = Float.parseFloat(amountPayed)+Float.parseFloat(discount);
+     
+        
         if(Payable <= Payed){
             //Cleared debt
             state=conn.prepareStatement("SELECT order_no from received_payments WHERE order_no='"+orderNo+"'");
@@ -148,7 +133,7 @@ public class CashierActivities {
             if(rs.next()){
                 state=conn.prepareStatement("UPDATE received_payments SET amount_payed=amount_payed+"+Payable+" WHERE order_no='"+orderNo+"'");
                 state.execute();
-                recordTransaction(orderNo,amountPayed,transaction_code,transaction_mode);
+                recordTransaction(orderNo,amountPayed,transaction_mode,transaction_code);
            
             }
             else{
@@ -156,7 +141,7 @@ public class CashierActivities {
                          + "VALUES ( (SELECT username FROM system_users WHERE status = 1),  '"+orderNo+"', '"+transaction_mode+"',"
                          + " "+Payable+" , '"+transaction_code+"')");
                  state.execute();
-                recordTransaction(orderNo,amountPayed,transaction_code,transaction_mode);
+               recordTransaction(orderNo,amountPayed,transaction_mode,transaction_code);
             } 
             conn.prepareStatement("UPDATE items_sold SET p_status = '1' WHERE order_no='"+orderNo+"'").execute();
             JOptionPane.showMessageDialog(null, "Order Payment Updated","Techflay Software Solutions",JOptionPane.INFORMATION_MESSAGE);
@@ -167,7 +152,7 @@ public class CashierActivities {
             if(rs.next()){
                 state=conn.prepareStatement("UPDATE received_payments SET amount_payed=amount_payed+"+Payed+" WHERE order_no='"+orderNo+"'");
                 state.execute();
-                recordTransaction(orderNo,amountPayed,transaction_code,transaction_mode);
+              recordTransaction(orderNo,amountPayed,transaction_mode,transaction_code);
            
             }
             else{
@@ -176,7 +161,7 @@ public class CashierActivities {
                          + " "+Payed+" , '"+transaction_code+"')");
                  state.execute();
                  
-                 recordTransaction(orderNo,amountPayed,transaction_code,transaction_mode);
+                recordTransaction(orderNo,amountPayed,transaction_mode,transaction_code);
             } 
             JOptionPane.showMessageDialog(null, "Order Payment Updated","Techflay Software Solutions",JOptionPane.INFORMATION_MESSAGE);
         }
@@ -189,11 +174,7 @@ public class CashierActivities {
     private void recordTransaction(String orderNo,String amountPayed,String transaction_mode,String transaction_code){
     try {        
         double Payed = Float.parseFloat(amountPayed);
-        state=conn.prepareStatement("INSERT INTO transactions (cashier_username, order_no, transaction_mode, amount_payed, Transaction_code) VALUES ( (SELECT username FROM system_users WHERE status = 1),?,?,?,?)");
-        state.setString(1, orderNo);
-        state.setString(2, transaction_mode);
-        state.setString(3, amountPayed);
-        state.setString(4, transaction_code);       
+        state=conn.prepareStatement("INSERT INTO transactions (cashier_username, order_no, transaction_mode, amount_payed, Transaction_code) VALUES ( (SELECT username FROM system_users WHERE status = 1),'"+orderNo+"','"+transaction_mode+"','"+amountPayed+"','"+transaction_code+"')");          
         state.execute();
         JOptionPane.showMessageDialog(null, "Transaction Recorded Successfully");
     } catch (SQLException ex) {
@@ -213,7 +194,7 @@ public class CashierActivities {
                 amount=0;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(bm.sales.SettleOrder.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CashierActivities.class.getName()).log(Level.SEVERE, null, ex);
         }
         return amount;
         
@@ -275,7 +256,7 @@ public class CashierActivities {
    protected void recordDiscount(String orderno,String waiter,double amount){
         if(amount>0){
             try {
-            state=conn.prepareStatement("INSERT INTO discount (order_no,waiter,amount) VALUES('"+orderno+"','"+waiter+"','"+amount+"')");
+            state=conn.prepareStatement("INSERT INTO discount (order_no,waiter_name,amount) VALUES('"+orderno+"','"+waiter+"','"+amount+"')");
             state.execute();
             JOptionPane.showMessageDialog(null, "Discount Recorded Successfully");
            
@@ -314,6 +295,63 @@ public class CashierActivities {
             Logger.getLogger(CashierActivities.class.getName()).log(Level.SEVERE, null, ex);
         }
        return total_sales;
-   }
+   } 
+   
+   public double getplusDiscount(){      
+       double change=0,totalplusdiscount=0,totalsales=0.00;
+        try {
+            state=conn.prepareStatement("SELECT (received_payments.amount_payed+discount.amount) AS 'totalplusdiscount' from received_payments INNER JOIN discount ON received_payments.order_no=discount.order_no");
+            rs=state.executeQuery();
+            while(rs.next()){
+                totalplusdiscount=rs.getDouble("totalplusdiscount");
+                
+            }
+            state=conn.prepareCall("SELECT SUM(quantity*unit_price)as 'total_order' FROM items_sold GROUP BY order_no");
+            rs=state.executeQuery();
+            
+            while(rs.next()){
+                totalsales=rs.getDouble("total_order");
+            }
+            change=totalsales-totalplusdiscount;        
+        
+        } catch (SQLException ex) {
+            Logger.getLogger(CashierActivities.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return change;    
+}
+public ResultSet getStockLevel(){
+    try{
+      state=conn.prepareStatement("SELECT  counter_drinks.drink_name AS 'DRINK', counter_drinks.total_units AS 'OPENING STOCK' , IfNULL(SUM(items_sold.quantity),0) AS 'QUANTITY SOLD',(counter_drinks.total_units- IfNULL(SUM(items_sold.quantity),0)) AS  'CLOSING STOCK'  from counter_drinks LEFT OUTER  JOIN items_sold ON counter_drinks.drink_name=items_sold.drink_name GROUP BY counter_drinks.drink_name");
+      rs=state.executeQuery();
+      
+    }
+    catch(SQLException ex){
+        ex.printStackTrace();
+    }
+    return rs;
+}
+public  void closeStock(){
+        try {
+            state=conn.prepareStatement("CREATE TABLE  shiftingStock LIKE counter_drinks");
+            state.executeUpdate();
+            
+            state=conn.prepareStatement("INSERT INTO shiftingStock SELECT counter_drinks.drink_name,counter_drinks.category,((counter_drinks.total_units)-IfNULL(items_sold.quantity,0)) AS 'CLOSING STOCK',counter_drinks.selling_price FROM counter_drinks LEFT OUTER JOIN items_sold ON counter_drinks.drink_name=items_sold.drink_name");
+            state.execute();
+            
+            state=conn.prepareStatement("DROP TABLE counter_drinks");
+            state.executeUpdate();
+            
+            state=conn.prepareStatement("RENAME TABLE shiftingStock TO counter_drinks");
+            state.executeUpdate();
+            
+            JOptionPane.showMessageDialog(null, "Complete");
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(CashierActivities.class.getName()).log(Level.SEVERE, null, ex);
+        }
     
+}
+   
+   
 }

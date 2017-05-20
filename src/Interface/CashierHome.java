@@ -8,6 +8,8 @@ package Interface;
 import addins.MyCalculator;
 import bm.admin.ConfirmProcess;
 import bm.home.StartScreen;
+import bm.manager.Miscellenous;
+import bm.sales.DailyReceivedPayments;
 import bm.sales.Home;
 import static com.sun.javafx.runtime.async.BackgroundExecutor.getTimer;
 import java.awt.Color;
@@ -111,20 +113,23 @@ public class CashierHome extends javax.swing.JFrame implements Runnable{
         settle = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         close = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jPanel10 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         unsettledO = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu6 = new javax.swing.JMenu();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
@@ -132,8 +137,6 @@ public class CashierHome extends javax.swing.JFrame implements Runnable{
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem14 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
         logoutmenu = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -179,7 +182,7 @@ public class CashierHome extends javax.swing.JFrame implements Runnable{
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(loggedInText, javax.swing.GroupLayout.DEFAULT_SIZE, 613, Short.MAX_VALUE)
+            .addComponent(loggedInText, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -292,7 +295,7 @@ public class CashierHome extends javax.swing.JFrame implements Runnable{
 
         getContentPane().add(footerPanel, java.awt.BorderLayout.PAGE_END);
 
-        jPanel3.setLayout(new java.awt.GridLayout(2, 2));
+        jPanel3.setLayout(new java.awt.GridLayout(0, 2));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -330,7 +333,7 @@ public class CashierHome extends javax.swing.JFrame implements Runnable{
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
         update.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/updateOrder.png"))); // NOI18N
-        update.setText("<html><strong>Update Order</strong><br/>Updates already active customer order</html>");
+        update.setText("<html><strong>Special Order</strong><br/>Updates already active customer order</html>");
         update.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 updateMouseMoved(evt);
@@ -394,7 +397,7 @@ public class CashierHome extends javax.swing.JFrame implements Runnable{
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
 
         close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Techflay/closeStock.png"))); // NOI18N
-        close.setText("<html><strong>Close Day Stock</strong><br/>Closes the daily stock.This is done when there are no more selling of drinks</html>");
+        close.setText("<html><strong>Receipts</strong><br/>Shows You the amount of Money Received On Daily Based in the various payment modes.</html>");
         close.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 closeMouseMoved(evt);
@@ -424,6 +427,65 @@ public class CashierHome extends javax.swing.JFrame implements Runnable{
 
         jPanel3.add(jPanel7);
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 242));
+
+        jLabel2.setText("UPDATE STOCK");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 256, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                    .addContainerGap(90, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(39, Short.MAX_VALUE)))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 131, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                    .addContainerGap(58, Short.MAX_VALUE)
+                    .addComponent(jLabel2)
+                    .addContainerGap(59, Short.MAX_VALUE)))
+        );
+
+        jPanel3.add(jPanel2);
+
+        jPanel10.setBackground(new java.awt.Color(255, 255, 242));
+
+        jLabel3.setText("CLOSE DAILY STOCK");
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 256, Short.MAX_VALUE)
+            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel10Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel3)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 131, Short.MAX_VALUE)
+            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel10Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel3)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+
+        jPanel3.add(jPanel10);
+
         getContentPane().add(jPanel3, java.awt.BorderLayout.CENTER);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "UNSETTLED ORDERS", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
@@ -451,24 +513,21 @@ public class CashierHome extends javax.swing.JFrame implements Runnable{
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 298, Short.MAX_VALUE)
+            .addGap(0, 369, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.LINE_END);
 
-        jMenu6.setText("Refresh");
-        jMenu6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu6ActionPerformed(evt);
-            }
-        });
-        jMenuBar1.add(jMenu6);
-
         jMenu1.setText("Sales");
 
         jMenuItem1.setText("Today");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setText("Current Week");
@@ -478,11 +537,24 @@ public class CashierHome extends javax.swing.JFrame implements Runnable{
         jMenu1.add(jMenuItem3);
 
         jMenuItem4.setText("Total Sales");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem4);
+
+        jMenuItem11.setText("Current Stock Level");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem11);
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Reports");
+        jMenu2.setText("View Reports");
 
         jMenuItem5.setText("End of Day Sales");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
@@ -495,10 +567,12 @@ public class CashierHome extends javax.swing.JFrame implements Runnable{
         jMenuItem6.setText("End Of Month Sales");
         jMenu2.add(jMenuItem6);
 
-        jMenuItem7.setText("End of Day Revenue");
-        jMenu2.add(jMenuItem7);
-
-        jMenuItem8.setText("End of Month Revenue");
+        jMenuItem8.setText("Received Payments Summary");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem8);
 
         jMenuBar1.add(jMenu2);
@@ -506,6 +580,11 @@ public class CashierHome extends javax.swing.JFrame implements Runnable{
         jMenu3.setText("Expense");
 
         jMenuItem9.setText("Miscellenous ");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem9);
 
         jMenuBar1.add(jMenu3);
@@ -526,22 +605,6 @@ public class CashierHome extends javax.swing.JFrame implements Runnable{
 
         jMenuItem10.setText("Update Details");
         jMenu4.add(jMenuItem10);
-
-        jMenuItem14.setText("Waiter Float");
-        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem14ActionPerformed(evt);
-            }
-        });
-        jMenu4.add(jMenuItem14);
-
-        jMenuItem13.setText("Waiter Control Account");
-        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem13ActionPerformed(evt);
-            }
-        });
-        jMenu4.add(jMenuItem13);
 
         logoutmenu.setText("Logout");
         logoutmenu.addActionListener(new java.awt.event.ActionListener() {
@@ -646,15 +709,12 @@ public class CashierHome extends javax.swing.JFrame implements Runnable{
         
         ConfirmProcess cp=new ConfirmProcess();
         cp.setVisible(true);*/
-         CashierActivities active=new CashierActivities();
+        new DailyReceipts().setVisible(true);
+        CashierActivities active=new CashierActivities();
         JOptionPane.showMessageDialog(null, "<html><b>These are todays report</b></html>\n\t1:Total Sales: "+active.closeDailyStock().get(0)+"\n\t2:Total Received:"+active.closeDailyStock().get(1),"Techflay Software Solutions",JOptionPane.OK_CANCEL_OPTION);
         
          active.SaveDailyTransaction();
     }//GEN-LAST:event_closeMouseClicked
-
-    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
-       new WaiterControlAccount().setVisible(true);
-    }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     private void logoutmenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutmenuActionPerformed
        new SystemUsers().logoutUser();
@@ -664,18 +724,10 @@ public class CashierHome extends javax.swing.JFrame implements Runnable{
     }//GEN-LAST:event_logoutmenuActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-       //new DailySales().setVisible(true);
-       //new DailySales().setVisible(true);
-       new DailySales().setVisible(true);
+       //new DailySalesReport().setVisible(true);
+       //new DailySalesReport().setVisible(true);
+       new DailySalesReport().setVisible(true);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
-
-    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
-     new WaiterFloat().setVisible(true);
-    }//GEN-LAST:event_jMenuItem14ActionPerformed
-
-    private void jMenu6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu6ActionPerformed
-       unsettledO.setModel(DbUtils.resultSetToTableModel(active.getUnsettledOrders()));
-    }//GEN-LAST:event_jMenu6ActionPerformed
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
       //This wil refresh major functions in the form and set things in order.
@@ -685,6 +737,31 @@ public class CashierHome extends javax.swing.JFrame implements Runnable{
         totalSales.setText("Ksh."+active.getTotalDailySales());
       
     }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+       new DailyReceivedPayments(CashierHome.this).setVisible(true);
+       loadTotalRecordedReceipt();
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        new StockLevel().setVisible(true);
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+      new Miscellenous(CashierHome.this).setVisible(true);
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        new DailySales().setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+      active.closeStock();
+    }//GEN-LAST:event_jLabel3MouseClicked
 
     /**
      * @param args the command line arguments
@@ -729,28 +806,29 @@ public class CashierHome extends javax.swing.JFrame implements Runnable{
     private javax.swing.JPanel footerPanel;
     private javax.swing.JPanel header;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -804,6 +882,10 @@ public class CashierHome extends javax.swing.JFrame implements Runnable{
     public void printTime(){  
        currenttime.setText("Time :"+timeString);  
   }  
+
+    private void loadTotalRecordedReceipt() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
         
         

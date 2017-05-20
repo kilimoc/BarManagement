@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="210" pageHeight="297" columnWidth="170" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="502d1cbf-9128-4a38-b331-2382f82abc8f">
 	<property name="ireport.zoom" value="3.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="95"/>
+	<property name="ireport.y" value="231"/>
 	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
 	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
@@ -14,8 +14,8 @@
 		</conditionalStyle>
 	</style>
 	<queryString>
-		<![CDATA[select  *,SUM(price*quantity)  as sum_total,price*quantity as total from items_sold LEFT JOIN order_table ON items_sold.order_no =
-order_table.order_no WHERE items_sold.order_no = 4
+		<![CDATA[select  *,SUM(unit_price*quantity)  as sum_total,unit_price*quantity as total from items_sold LEFT JOIN order_table ON items_sold.order_no =
+order_table.order_no WHERE items_sold.order_no = 7
 group by items_sold.drink_name]]>
 	</queryString>
 	<field name="item_id" class="java.lang.Integer">
@@ -30,17 +30,23 @@ group by items_sold.drink_name]]>
 	<field name="quantity" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="price" class="java.lang.Integer">
+	<field name="unit_price" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="time" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="p_status" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="waiter_name" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="waiter" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="sum_total" class="java.math.BigDecimal"/>
-	<field name="total" class="java.lang.Long"/>
+	<field name="total" class="java.math.BigDecimal"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -180,6 +186,14 @@ group by items_sold.drink_name]]>
 						<font fontName="Tahoma" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="19" y="0" width="115" height="20" uuid="e7664c4b-17be-4d7e-b5f3-db0c3071b8dd"/>
+					<text><![CDATA[unit_price]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="248" y="1" width="100" height="20" uuid="2518e5b8-c86c-4c5e-a1bc-0007bee1058b"/>
+					<textFieldExpression><![CDATA[$F{unit_price}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>

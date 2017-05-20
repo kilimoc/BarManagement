@@ -11,11 +11,18 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -132,27 +139,222 @@ public class ManagerActions {
         }
          return units;
     }
-    protected void saveDrinks(String drinkname,String quantity,String bprice){
-      //  prepare=conn.prepareStatement("INSERT INTO store_drinks () VALUES(?,?,?)");
-        
+   
+    protected void saveNewDrinks(ArrayList<String> values){
+         try {
+            prepare=conn.prepareStatement("INSERT INTO store_drinks(drink_name,cartons,units,wc_price,category,inserted_in)VALUES(?,?,?,?,?,?)");
+            prepare.setString(1, values.get(0));
+            prepare.setString(2,  values.get(1));
+            prepare.setString(3,  values.get(2));
+            prepare.setString(4,  values.get(3));
+            prepare.setString(5,  values.get(4));
+            prepare.setString(6,  values.get(5));
+            prepare.execute();
+            JOptionPane.showMessageDialog(null, "Record Inserted Successfully");
+                    
+                    } catch (SQLException ex) {
+            Logger.getLogger(ManagerActions.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         
     }
-    protected void saveBottledDrinks(String category,String name,String quantity,String price){
-        
-            try {
-                prepare=conn.prepareStatement("INSERT INTO store_drinks (drink_name,units,wc_price,category) VALUES(?,?,?,?)");
-                prepare.setString(1, name);
-                prepare.setString(2, quantity);
-                prepare.setString(1, name);
-                prepare.setString(1, name);
-                prepare.execute();
+    public void getDrinkCategories(JComboBox drinkcat){
+         try {
+            prepare=conn.prepareStatement("SELECT DISTINCT(category) FROM store_drinks");
+            rs= prepare.executeQuery();
+            while(rs.next()){
+                String categoryDrinks=rs.getString("category");
+                drinkcat.addItem(categoryDrinks);
                 
-            } catch (SQLException ex) {
-                Logger.getLogger(ManagerActions.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+      public void loadcategoryDrinks(JComboBox first,JComboBox second){
+         try {
+            prepare=conn.prepareStatement("SELECT DISTINCT(drink_name) FROM store_drinks  WHERE category='"+first.getSelectedItem().toString()+"' ");
+            rs= prepare.executeQuery();
+            second.removeAllItems();
+            second.addItem("---Select Drink Name---");
+            while(rs.next()){
+                String categoryDrinks=rs.getString("drink_name");
+                second.addItem(categoryDrinks);
+                
+            }
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+     
+      //This method is controlled.
+      public int getDrinkCrateCount(String drinkname){
+          int number=0;
+        try {
+            prepare=conn.prepareStatement("SELECT units FROM store_drinks WHERE drink_name='"+drinkname+"'");
+            rs=prepare.executeQuery();
+            if(rs.next()){
+                number=rs.getInt("units");
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ManagerActions.class.getName()).log(Level.SEVERE, null, ex);
+        }
+          
+          return number;
+          
+      }
+    public  String getInsertedForm(String drinkname){
+        String savedAs="";
+         try {
+            prepare=conn.prepareStatement("SELECT inserted_in FROM store_drinks WHERE drink_name='"+drinkname+"'");
+            rs=prepare.executeQuery();
+            if(rs.next()){
+                savedAs=rs.getString("inserted_in");
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ManagerActions.class.getName()).log(Level.SEVERE, null, ex);
+        }
+          
+          return savedAs;
+    }
+     //This is used to update the store_drinks table when its category returned is found to bottled.
+    protected void saveBottledDrinksToCounter(String name,String quantity,String sellingprice){
+        try {
+            prepare=conn.prepareStatement("SELECT inserted_in FROM store_drinks WHERE drink_name='");
+            rs=prepare.executeQuery();
+            if(rs.next()){
+               // savedAs=rs.getString("inserted_in");
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ManagerActions.class.getName()).log(Level.SEVERE, null, ex);
+        }
+          
+          //return savedAs;
+        
+    }
+    //This is used to update the store_drinks table when its category returned is found to crated.
+    protected void  insertToCounter(String drink_name,String category,String totalunits,String sellingprices){
+         try {
+            prepare=conn.prepareStatement("INSERT INTO counter_drinks(drink_name,category,total_units,selling_price)VALUES(?,?,?,?)");
+            prepare.setString(1, drink_name);
+            prepare.setString(2, category);            
+            prepare.setString(3, totalunits);
+            prepare.setString(4, sellingprices);
+            
+            prepare.execute();
+            JOptionPane.showMessageDialog(null, "Counter Updated Successfully");        
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ManagerActions.class.getName()).log(Level.SEVERE, null, ex);
+        }
+          
+        
+    }
+   
+        
+    protected void updateStoreDrinkValue(String name,int quantity){
+          try {
+            prepare=conn.prepareStatement("UPDATE store_drinks SET cartons=`cartons`-"+quantity+" WHERE drink_name='"+name+"'");         
+            prepare.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Store Drinks  Updated Successfully");        
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ManagerActions.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+    }
+         protected void updateBottledStoreDrinkValue(String name,int quantity){
+          try {
+            prepare=conn.prepareStatement("UPDATE store_drinks SET units=`units`-"+quantity+" WHERE drink_name='"+name+"'");         
+            prepare.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Store Drinks  Updated Successfully");        
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ManagerActions.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    protected ResultSet getAlDrinks(JComboBox mydrink){
+         try {
+           prepare=conn.prepareStatement("SELECT drink_name FROM counter_drinks ORDER BY drink_name ASC");         
+           rs=prepare.executeQuery();
+           while(rs.next()){
+               mydrink.addItem(rs.getString("drink_name"));
+               
+           }
+        
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ManagerActions.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         return rs;
+    }
+    protected void updateSellingPrices(String drinkname,String sprice){
+        try {
+           prepare=conn.prepareStatement("UPDATE counter_drinks SET selling_price='"+sprice+"' WHERE drink_name='"+drinkname+"'");         
+           prepare.executeUpdate();
+        
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ManagerActions.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    public void getDailySales(JTable mytable,String date){
+        try {
+           prepare=conn.prepareStatement("SELECT drink_name AS 'DRINK',SUM(quantity) AS 'TOTAL UNITS',sum(unit_price*quantity) AS 'TOTAL AMOUNT' FROM items_sold WHERE date(time)=CURDATE() GROUP BY drink_name ORDER BY drink_name");         
+           rs=prepare.executeQuery();
+           mytable.setModel(DbUtils.resultSetToTableModel(rs));
+        
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ManagerActions.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void getWeeklySales(JTable mytable,String endDate){
+        try {
+           prepare=conn.prepareStatement("SELECT drink_name AS 'DRINK',SUM(quantity) AS 'TOTAL UNITS',sum(unit_price*quantity) AS 'TOTAL AMOUNT' FROM items_sold WHERE date(time) BETWEEN DATE_SUB('"+endDate+"',INTERVAL 7 DAY) AND '"+endDate+"' GROUP BY drink_name");         
+           rs=prepare.executeQuery();
+           mytable.setModel(DbUtils.resultSetToTableModel(rs));
+        
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ManagerActions.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }   
     
+    public void getMonthlySales(JTable mytable,String month){
+        try {
+           prepare=conn.prepareStatement("SELECT drink_name AS 'DRINK',SUM(quantity) AS 'TOTAL UNITS',sum(unit_price*quantity) AS 'TOTAL AMOUNT' FROM items_sold WHERE MONTH(time)='"+month+"' GROUP BY drink_name");         
+           rs=prepare.executeQuery();
+           mytable.setModel(DbUtils.resultSetToTableModel(rs));
+        
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ManagerActions.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+   
+    public ArrayList<String> getCurrentDayMonth(){
+        ArrayList<String> activedateMonth=new ArrayList<>();
+         String activedate="";
+         String activeMonth="";      
+        DateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        DateTimeFormatter dtf=DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        Date date=new Date();
+        activedate=sdf.format(date); 
+        activedateMonth.add(activedate);
+        Calendar cal=Calendar.getInstance();
+        activeMonth=new SimpleDateFormat("MM").format(cal.getTime());
+        activedateMonth.add(activeMonth);
+         
+         return activedateMonth;
+    }
     
 }

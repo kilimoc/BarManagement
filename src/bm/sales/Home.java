@@ -25,6 +25,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import security.SystemUsers;
 
 /**
@@ -443,11 +445,17 @@ public class Home extends javax.swing.JFrame {
                 String drink_name = orderContent.getModel().getValueAt(i, 0).toString();
                 String quantity = orderContent.getModel().getValueAt(i, 1).toString();
                 String price = orderContent.getModel().getValueAt(i, 2).toString();
-               conn.prepareStatement("INSERT INTO items_sold (order_no, drink_name, quantity, unit_price) VALUES ("
-                       + "'"+order_no+"', '"+drink_name+"', '"+quantity+"', '"+price+"')").execute();
+               conn.prepareStatement("INSERT INTO items_sold (order_no, drink_name, quantity, unit_price,waiter_name) VALUES ("
+                       + "'"+order_no+"', '"+drink_name+"', '"+quantity+"', '"+price+"','"+waiter+"')").execute();
              
             }
             JOptionPane.showMessageDialog(null, "<html>Order number<strong><u> "+order_no+"</u></strong> saved successfully</html>");
+            dispose();
+            new Receipt(Home.this, String.valueOf(order_no)).setVisible(true);
+            
+            
+            
+            
             mymodel.setRowCount(0);
             jLabel3.setText("00");
             jLabel5.setText("00");
@@ -458,7 +466,7 @@ public class Home extends javax.swing.JFrame {
     else{
           JOptionPane.showMessageDialog(null, "Please Select Waiter UserName","Techflay Software Solutions 1.0.0",JOptionPane.WARNING_MESSAGE);
       }
-      
+   
     
     }//GEN-LAST:event_saveActionPerformed
 
@@ -523,16 +531,17 @@ public class Home extends javax.swing.JFrame {
                 String drink_name = orderContent.getModel().getValueAt(i, 0).toString();
                 String quantity = orderContent.getModel().getValueAt(i, 1).toString();
                 String price = orderContent.getModel().getValueAt(i, 2).toString();
-                conn.prepareStatement("INSERT INTO items_sold (order_no, drink_name, quantity, unit_price) VALUES ("
-                       + "'"+order_no+"', '"+drink_name+"', '"+quantity+"', '"+price+"')").execute();
+                conn.prepareStatement("INSERT INTO items_sold (order_no, drink_name, quantity, unit_price,waiter_name) VALUES ("
+                       + "'"+order_no+"', '"+drink_name+"', '"+quantity+"', '"+price+"','"+waiter+"')").execute();
              
             }
-             JOptionPane.showMessageDialog(null, "<html>Order number<strong><u> "+order_no+"</u></strong> saved successfully</html>");
+             JOptionPane.showMessageDialog(null, "<html>Order number<strong><u> "+order_no+"</u></strong> Updated successfully</html>");
             update.setVisible(false);
             save.setVisible(true);
             mymodel.setRowCount(0);
             jLabel3.setText("00");
             jLabel5.setText("00");
+            dispose();
         } catch (SQLException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -708,18 +717,15 @@ public class Home extends javax.swing.JFrame {
                             prepare = conn.prepareStatement("SELECT * FROM counter_drinks WHERE drink_name='" + specificdrinks.getText() + "'");
                             rs = prepare.executeQuery();
                             while (rs.next()) {
-                                String drink = rs.getString("drink_name");
-                                String cartons = rs.getString("cartons");
+                                String drink = rs.getString("drink_name");                                
                                 float sellingP=rs.getFloat("selling_price");                     
                                 int qty = 1;
                                 float total =sellingP*qty;
                                 Object[] row = {drink, qty,sellingP,total};
                                 mymodel.addRow(row);
                                 totalVatAndPrice();
-                            }
-                           //orderContent.setModel(DbUtils.resultSetToTableModel(rs));
-
-                            //To change body of generated methods, choose Tools | Templates.
+                            }                            
+                         
                         } catch (SQLException ex) {
                             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -736,7 +742,7 @@ public class Home extends javax.swing.JFrame {
     private void loadAllDrinks() {
 
         try {
-            GridLayout grid = new GridLayout(0, 3, 10, 10);
+            GridLayout grid = new GridLayout(0, 4, 0, 0);
             drinks.removeAll();
             drinks.setLayout(grid);
             drinks.revalidate();
@@ -762,8 +768,7 @@ public class Home extends javax.swing.JFrame {
                             prepare = conn.prepareStatement("SELECT * FROM counter_drinks WHERE drink_name='" + allbuttons.getText() + "'");
                             rs = prepare.executeQuery();
                             while (rs.next()) {
-                                String drink = rs.getString("drink_name");
-                                String cartons = rs.getString("cartons");
+                                String drink = rs.getString("drink_name");                                
                                 float sellingP=rs.getFloat("selling_price");                     
                                 int qty = 1;
                                 float total =sellingP*qty;
